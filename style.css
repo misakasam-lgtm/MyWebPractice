@@ -1,0 +1,75 @@
+/* 背景的样式 */
+body {
+    background: url('img/background1.png') no-repeat center center fixed;
+    background-size: cover;
+}
+/* 这是h1的样式 */
+h1 {
+    font-size: 50px;
+    text-align: center;
+    font-weight: 700;
+    color: deeppink;
+     text-shadow:
+        5px 0 white,
+       -5px 0 white,
+        0 5px white,
+        0 -5px white;
+ }
+p{
+     font-size: 20px;
+    font-weight: 500;
+    color: yellowgreen;
+     text-shadow:
+        1px 0 white,
+       -1px 0 white,
+        0 1px white,
+        0 -1px white;
+}
+hr {
+    height: 3px;
+    background-color: darkblue;
+    box-shadow:
+        0 2px white,
+        0 -2px white;
+    border: none;
+}
+
+.full-width {
+    display: block;      /* 去掉行内间距 */
+    width: 100%;         /* 占满容器宽度 */
+    height: auto;        /* 高度按比例自适应 */
+}
+.MainBotton{
+     padding: 30px 70px;
+    border-radius: 8px;
+background: #ff9eb6;
+box-shadow:  16px 16px 32px #d68599,
+             -16px -16px 32px #ffb7d3;
+}
+.ButtonText{
+      font-size: 20px;
+    text-align: center;
+    font-weight: 800;
+    color: yellowgreen;
+     text-shadow:
+        0.5px 0 white,
+       -0.5px 0 white,
+        0 0.5px white,
+        0 -0.5px white;
+}
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 6px solid #f3f3f3;   /* 浅色背景圈 */
+  border-top: 6px solid deeppink; /* 高亮旋转条 */
+  border-radius: 50%;           /* 圆形 */
+  display: inline-block;
+    vertical-align: middle;
+  animation: spin 1s linear infinite; /* 无限旋转 */
+  margin: 0px;           /* 跟着 */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

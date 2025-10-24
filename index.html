@@ -2,37 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BIM计算器</title>
+    <title>这是一个目录</title>
+      <link rel="stylesheet" href="./style.css">
+    <style>
+
+    </style>
+
+
 </head>
 <body>
-<h1 style="text-align: center">这是一个BMI计算器</h1>
-<button class="WeightAndHeight" onclick="BMIcalculate()" style="display: block; margin: 0 auto">点击输入身高体重</button>
-</body>
-<script>
-    function BMIcalculate() {
-        let weight = Number(prompt('请输入体重(kg)'));
-        let height = Number(prompt('请输入身高(m)'))
-        let BMI = weight / height ** 2
-        if (isNaN(weight) || isNaN(height)) {
-            alert("请输入数字")
-        }
-        else if (height === 0) {
-            alert("身高不能为0")
-        }
-        else {
-            let Yourweight = ""
-            if (BMI <= 18) {
-                Yourweight = "偏瘦"
-            } else if (BMI < 23.5) {
-                Yourweight = "正常"
-            } else if (BMI < 28) {
-                Yourweight = "偏胖"
-            } else {
-                Yourweight = "良子"
-            }
-            alert("您的BMI是" + BMI.toFixed(2) + "，您的体重为" + Yourweight)
-        }
-    }
-</script>
+<div style=" background-image: url(img/Headimg.png)  ;background-size: cover;  background-position: center ;display: flex
+;justify-content: center;align-items: center">
+<h1>这是一个目录喵</h1>
+</div>
+<!--<img src="Headimg.png" alt="加载不出了喵" class="full-width">-->
+<hr>
+<p>这是一些练习用的小工具</p>
+<a href="BMICalculator.html"><button class="MainBotton ButtonText">BMI计算器</button></a>
+<p>更新中。。。<span class="spinner"></span> </p>
 
+</body>
 </html>
