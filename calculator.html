@@ -40,19 +40,19 @@
          <button class="num_button" onclick="appendnum(1)">1</button>
          <button class="num_button" onclick="appendnum(2)">2</button>
          <button class="num_button" onclick="appendnum(3)">3</button>
-         <button class="num_button" onclick="add()">+</button><br>
+         <button class="num_button" onclick="Operate(1)">+</button><br>
          <button class="num_button" onclick="appendnum(4)">4</button>
          <button class="num_button" onclick="appendnum(5)">5</button>
          <button class="num_button" onclick="appendnum(6)">6</button>
-         <button class="num_button" onclick="minus()">-</button><br>
+         <button class="num_button" onclick="Operate(2)">-</button><br>
          <button class="num_button" onclick="appendnum(7)">7</button>
          <button class="num_button" onclick="appendnum(8)">8</button>
          <button class="num_button" onclick="appendnum(9)">9</button>
-         <button class="num_button" onclick="multiply()">×</button><br>
+         <button class="num_button" onclick="Operate(3)">×</button><br>
         <button class="num_button" onclick="AC()">AC </button>
         <button class="num_button" onclick="appendnum(0)">0</button>
         <button class="num_button" onclick="point()">.</button>
-         <button class="num_button" onclick="divide()">÷</button>
+         <button class="num_button" onclick="Operate(4)">÷</button>
         <br>
         <button class="num_button" onclick="equal()">= </button>
     </div>
@@ -65,12 +65,27 @@
     let Ccount = 0
     let Dcount = 0
     let operatorPending = false
+    let OperateCount = ""
     function appendnum(num) {
         document.getElementById("result").value += num
         operatorPending = false;
     }
     function point() {
         document.getElementById("result").value += ".";
+    }
+    function Operate(op) {
+        let input = Number(document.getElementById("result").value)
+        if (input !== 0) {
+            result = input
+            OperateCount = op
+            document.getElementById("result").value = ""
+            operatorPending = true
+        }
+        else{
+            OperateCount = op
+        }
+    }
+        /*
     }
     function add() {
         if (!operatorPending) {
@@ -103,48 +118,48 @@
             document.getElementById("result").value = ""
             operatorPending = true
         }
-    }
-    function equal(a){
-        a = Number(document.getElementById("result").value)
-        if (Acount > 0) {
-            result = a + result
-            document.getElementById("result").value = result;
-            result = ""
-        }
-        else if (Bcount > 0) {
-            result =  result - a
-            document.getElementById("result").value = result;
-            result = ""
-        }
-        else if (Ccount > 0) {
-             result =  result * a
-            document.getElementById("result").value = result;
-            result = ""
-        }
-        else if (Dcount > 0) {
-            if (a !== 0) {
-                result = result / a
+            */
+        function equal(a) {
+            a = Number(document.getElementById("result").value)
+            if (OperateCount === 1) {
+                result = a + result
                 document.getElementById("result").value = result;
                 result = ""
+            } else if (OperateCount === 2) {
+                result = result - a
+                document.getElementById("result").value = result;
+                result = ""
+            } else if (OperateCount === 3) {
+                result = result * a
+                document.getElementById("result").value = result;
+                result = ""
+            } else if (OperateCount === 4) {
+                if (a !== 0) {
+                    result = result / a
+                    document.getElementById("result").value = result;
+                    result = ""
+                } else {
+                    document.getElementById("result").value = "错误，除数不能为0"
+                }
             }
-            else{
-                document.getElementById("result").value = "错误，除数不能为0"
-            }
+            Acount = 0
+            Bcount = 0
+            Ccount = 0
+            Dcount = 0
+            OperateCount = ""
+            operatorPending = false
         }
-        Acount = 0
-        Bcount =0
-        Ccount = 0
-        Dcount = 0
-        operatorPending = false
-    }
-    function AC() {
-        result = ""
-        document.getElementById("result").value = result;
-        Acount = 0
-        Bcount =0
-        Ccount = 0
-        Dcount = 0
-    }
+
+        function AC() {
+            result = ""
+            document.getElementById("result").value = result;
+            Acount = 0
+            Bcount = 0
+            Ccount = 0
+            Dcount = 0
+            OperateCount = ""
+            operatorPending = false
+        }
 
 </script>
 </html>
