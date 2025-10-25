@@ -49,12 +49,12 @@
          <button class="num_button" onclick="appendnum(8)">8</button>
          <button class="num_button" onclick="appendnum(9)">9</button>
          <button class="num_button" onclick="multiply()">×</button><br>
+        <button class="num_button" onclick="AC()">AC </button>
+        <button class="num_button" onclick="appendnum(0)">0</button>
+        <button class="num_button" onclick="point()">.</button>
          <button class="num_button" onclick="divide()">÷</button>
-         <button class="num_button" onclick="appendnum(0)">0</button>
-         <button class="num_button">.</button>
-         <button class="num_button" onclick="equal()">= </button>
         <br>
-         <button class="num_button" onclick="AC()">AC </button>
+        <button class="num_button" onclick="equal()">= </button>
     </div>
 </div>
 </body>
@@ -64,55 +64,78 @@
     let Bcount =0
     let Ccount = 0
     let Dcount = 0
+    let operatorPending = false
     function appendnum(num) {
         document.getElementById("result").value += num
+        operatorPending = false;
+    }
+    function point() {
+        document.getElementById("result").value += ".";
     }
     function add() {
-        result = Number(document.getElementById("result").value);
-        Acount += 1
-        document.getElementById("result").value = ""
+        if (!operatorPending) {
+            result = Number(document.getElementById("result").value);
+            Acount += 1
+            document.getElementById("result").value = ""
+            operatorPending = true
+        }
     }
     function minus() {
-        result = Number(document.getElementById("result").value);
-        Bcount += 1
-        document.getElementById("result").value = ""
+        if (!operatorPending) {
+            result = Number(document.getElementById("result").value);
+            Bcount += 1
+            document.getElementById("result").value = ""
+            operatorPending = true
+        }
     }
     function multiply() {
-       result = Number(document.getElementById("result").value);
-        Ccount += 1
-        document.getElementById("result").value = ""
+        if (!operatorPending) {
+            result = Number(document.getElementById("result").value);
+            Ccount += 1
+            document.getElementById("result").value = ""
+            operatorPending = true
+        }
     }
     function divide() {
-        result = Number(document.getElementById("result").value);
-        Dcount += 1
-        document.getElementById("result").value = ""
+        if (!operatorPending) {
+            result = Number(document.getElementById("result").value);
+            Dcount += 1
+            document.getElementById("result").value = ""
+            operatorPending = true
+        }
     }
     function equal(a){
         a = Number(document.getElementById("result").value)
-        if (Acount > Bcount || Acount >Ccount ||Acount> Dcount) {
+        if (Acount > 0) {
             result = a + result
             document.getElementById("result").value = result;
             result = ""
         }
-        else if (Bcount > Acount || Bcount >Ccount ||Bcount> Dcount) {
+        else if (Bcount > 0) {
             result =  result - a
             document.getElementById("result").value = result;
             result = ""
         }
-        else if (Ccount > Acount || Ccount >Bcount ||Ccount> Dcount) {
+        else if (Ccount > 0) {
              result =  result * a
             document.getElementById("result").value = result;
             result = ""
         }
-        else if (Dcount > Acount || Dcount >Bcount ||Dcount> Ccount) {
-             result =  result / a
-            document.getElementById("result").value = result;
-            result = ""
+        else if (Dcount > 0) {
+            if (a !== 0) {
+                result = result / a
+                document.getElementById("result").value = result;
+                result = ""
+            }
+            else{
+                document.getElementById("result").value = "错误，除数不能为0"
+            }
         }
         Acount = 0
         Bcount =0
         Ccount = 0
         Dcount = 0
+        operatorPending = false
     }
     function AC() {
         result = ""
