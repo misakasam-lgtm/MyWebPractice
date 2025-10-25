@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>html属性练习</title>
+    <link rel="stylesheet" href="./外部样式.css">
+    <style>
+        h1{color: deepskyblue; font-size: 20px;}
+        .taffy > h3 {
+            color: white;
+            background-color: aqua;
+            width: 300px;
+            height: 200px;
+            border-style: dashed solid dotted double;
+            border-color: orange;
+            border-width: 3px 6px 12px 9px;
+            display: inline-block;
+
+        }
+        .fudong{
+            background-color: orange;
+            border-color: orange;
+            border-style: solid;
+            overflow: hidden;
+        }
+        .fudong > .zuofudong {
+            float: left;
+            width: 200px;
+            height: 100px;
+            border-style: dashed;
+            border-color: orange;
+            background-color: aqua;
+        }
+        .fudong > .youfudong {
+            float: right;
+            width: 200px;
+            height: 100px;
+            border-style: dashed;
+            border-color: green;
+            background-color: pink;
+        }
+        .dingwei{
+            background-color: aqua;
+            border-color: orange;
+            border-style: solid;
+            overflow: hidden;
+        }
+        .dingwei > .budong{
+            border-color: orange;
+            border-style: solid;
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+        .dingwei > .related{
+            background-color: blue;
+            border-color: orange;
+            border-style: solid;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            left: 200px;
+            bottom: -50px;
+        }
+        .guanggao{
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1> html属性练习(使用了内部样式表)</h1>
+    <h2 style="color: red;border: 3px solid pink; display: inline-block" >html属性练习(使用了内联样式)</h2>
+    <h3>这是外联样式的测试</h3>
+    <div class="taffy">
+        <h3> 这是子类样式的测试(与上一行同样使用了h3)</h3>
+
+    </div>
+    <hr>
+    <h2>浮动练习</h2>
+    <div class="fudong">
+        <div class="zuofudong">这是左浮动</div>
+        <div class="youfudong">这是右浮动</div>
+
+
+    </div>
+    <hr>
+    <div class="dingwei">
+        <div class="budong" >不动</div>
+        <div class="related" style="color: white">动</div>
+        <div class="budong">不动</div>
+    </div>
+    <div class="guanggao"><img src="12.png" width="100px"></div>
+
+    <p>html属性练习 <b>html属性练习</b> html属性练习</p>
+    <p> <b>加粗</b>，<u>下划线</u> ，<s>删除线</s>， <i>斜体</i> </p>
+
+    <ul>
+        <li>无序列表
+        <li>无序列表
+        <li>无序列表
+    </ul>
+    <ol>
+        <li>有序列表
+        <li>有序列表
+        <li>有序列表
+    </ol>
+    <table border="1">
+        <tr>
+            <th>列标题1</th>
+            <th>列标题2</th>
+            <th>列标题3</th>
+        </tr>
+        <tr>
+            <td>元素1</td>
+            <td>元素2</td>
+            <td>元素3</td>
+        </tr>
+         <tr>
+            <td>元素1</td>
+            <td>元素2</td>
+            <td>元素3</td>
+        </tr>
+         <tr>
+            <td>元素1</td>
+            <td>元素2</td>
+            <td>元素3</td>
+        </tr>
+        </table>
+    <hr>
+    <p>这里是超链接练习</p>
+    <a href="https://www.baidu.com">百度</a>
+    <br>
+    <a href="https://www.baidu.com" target="_blank">百度（新标签）</a>
+    <!--blank是为了让网页在新标签打开，不加则直接跳转-->
+    <hr>
+    <p>这里是图片的练习</p>
+    <img src="1.jpg" alt = "加载失败">
+    <p>这是本地图片</p>
+    <a href="https://www.baidu.com/"><img src="https://img0.baidu.com/it/u=1948774321,333299454&fm=253&app=120&f=GIF?w=640&h=360" alt="这是一个娜娜" width="380" height="220"></a>
+    <p>这是网络图片,点击会进入百度</p>
+    <hr>
+    <p>这里是表单的练习
+    <form action="#">
+        <label>用户名</label>
+        <input type="text" placeholder="输入一句话吧">
+        <br>
+        <label>密码</label><!--这里label和span效果一样，但是只能给input用-->
+       <input type="text" value="请输入内容">
+        <p> 这里的密码文字输入不会消失</p>
+        <label for="pwd">密码（加密版）</label>
+        <input type="password" id="pwd" placeholder="请输入密码">
+        <br>
+        <label>性别</label>
+        <input type="radio" name="gender">男<input type="radio" name="gender">女
+        <br>
+        <label>爱好</label>
+        <input type="checkbox" name="hobby">唱
+        <input type="checkbox" name="hobby">跳
+        <input type="checkbox" name="hobby">rap
+        <input type="checkbox" name="hobby">篮球<br>
+        <input type="submit" value="提交">
+    </form>
+    <p>听一首歌吧</p>
+    <audio controls  src="なるみや%20-%20リードコントロール.mp3"></audio><br>
+    <p>这是视频</p>
+    <video controls src="VID_20250923_210145_097.mp4" width="380" height="700"></video>
+    <br>
+    <hr>
+<p>选择框与文本域练习</p>
+
+    <label for="city">选择城市：</label>
+        <select id="city" name="city">
+             <option value="">请选择城市</option>
+             <option value="beijing">北京</option>
+             <option value="shanghai">上海</option>
+             <option value="guangzhou">广州</option>
+             <option value="shenzhen">深圳</option>
+        </select>
+    <br><br>
+
+    <label for="intro">个人简介：</label><br>
+    <textarea id="intro" name="intro" rows="4" cols="40" placeholder="请输入你的简介……"></textarea>
+    <br><br>
+
+    <button type="button" onclick="alert('你点击了普通按钮')">点我试试</button>
+    <button type="submit">提交</button>
+    <button type="reset">重置</button>
+</body>
+</html>
