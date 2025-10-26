@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+            text-align: center;
+        }
+        #score{
+            color: darkblue;
+            font-weight: bold;
+            text-align: center;
+            background: deeppink;
+            display: inline-block;
+            margin: 2px;
+        }
+        button{
+            color: white;
+            background: deeppink;
+            font-weight: bold;
+            font-size: 28px;
+            margin: 2px auto;
+        }
+        .opbtm{
+            width: 80px;
+            height: 80px;
+        }
+        hr{
+            width: 60%;
+        }
+        button:hover {
+    transform: scale(1.05);
+    background: #ffafc4;}
+    </style>
+</head>
+<body>
+<h1>贪吃蛇喵</h1>
+<div style="text-align: center"><div id="score">分数:0分喵</div></div>
+<canvas id = "Snakegame" width="400" height="400"></canvas><hr>
+<button class = "opbtm" id = "up" onclick="move(0,-1)">↑</button>
+<br>
+<button class = "opbtm" id = "left" onclick="move(-1,0)" style="">←</button>
+<button class = "opbtm" id ="down" onclick="move(0,1)">↓</button>
+<button class = "opbtm" id = "right" onclick="move(1,0)" style="">→</button>
+
+
+<hr>
+<button id = "startbtn" onclick="main()">开始喵！</button>
+
+</body>
+<script>
+const convas = document.getElementById("Snakegame");
+const ctx = convas.getContext("2d");
+const  SnakeSize = 20
+let score = 0;
+let snake =[
+    {x:200,y:200},
+    {x:190,y:200},
+    {x:180,y:200},
+]
+let food = {x:100,y:100}
+function NewFood() {
+    food.x =SnakeSize * Math.floor(Math.random() * convas.width/SnakeSize);
+    food.y =SnakeSize * Math.floor(Math.random() * convas.height/SnakeSize)
+    drawFood()
+
+}
+let dx = SnakeSize;
+let dy = 0
+function move(a,b) {
+    dx = a*SnakeSize;
+    dy = b*SnakeSize;
+}
+
+function clearCanvas(){
+    ctx.fillStyle = "white";
+    ctx.fillRect(0,0,convas.width,convas.height);
+}//绘制和清空背景
+function drawSnake(){
+    ctx.fillStyle = "pink";
+    snake.forEach(segment=>{
+    ctx.fillRect(segment.x,segment.y,SnakeSize,SnakeSize);})
+}
+function  drawFood(){
+    ctx.fillStyle = "green";
+    ctx.fillRect(food.x,food.y,SnakeSize,SnakeSize);
+}
+function moveSnake() {
+    const head = {x: snake[0].x + dx, y: snake[0].y + dy}
+    if (head.x < 0 || head.x > convas.width || head.y < 0 || head.y > convas.height) {
+        alert("似了喵T T")
+        reset()
+    }
+    else {
+        snake.unshift(head)
+        if (head.x === food.x && head.y === food.y) {
+            score = score + 1
+            updatesocre()
+            NewFood()
+        } else {
+            snake.pop()
+        }
+    }
+}
+function updatesocre(){
+    document.getElementById("score").innerHTML = "分数:"+score+"分喵";
+}
+
+
+function main() {
+    gameloop = setTimeout(function tick() {
+        clearCanvas()
+        moveSnake()
+        drawSnake()
+        drawFood()
+        main()
+    },200);
+}
+function reset(){
+    clearCanvas(gameloop)
+    snake =[
+    {x:200,y:200},
+    {x:190,y:200},
+    {x:180,y:200},]
+        score = 0
+    drawSnake()
+}
+</script>
+</html>
