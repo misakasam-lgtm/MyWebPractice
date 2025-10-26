@@ -72,6 +72,10 @@ background: #ff9eb6;
 box-shadow:  8px 8px 8px #d68599,
              -8px -8px 8px #ffb7d3;
 }
+.MainBotton:hover {
+    transform: scale(1.05);
+    background: #ffafc4;
+}
 .ButtonText{
       font-size: 20px;
     text-align: center;

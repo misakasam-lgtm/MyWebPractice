@@ -117,6 +117,7 @@ function updatesocre(){
 }
 let gametimes = 0
 function gamestart(){
+    document.getElementById("score").innerHTML = "分数:"+0+"分喵"
     gametimes += 1;
     if(gametimes < 2){
         main()
@@ -146,6 +147,7 @@ function reset(){
         score = 0
     drawSnake()
     NewFood()
+    document.getElementById("score").innerHTML = "分数:"+0+"分喵"
 }
 </script>
 </html>
