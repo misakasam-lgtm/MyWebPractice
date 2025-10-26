@@ -16,6 +16,14 @@
             display: inline-block;
             margin: 2px;
         }
+        #times{
+            color: darkblue;
+            font-weight: bold;
+            text-align: center;
+            background: deeppink;
+            display: inline-block;
+            margin: 2px;
+        }
         button{
             color: white;
             background: deeppink;
@@ -37,7 +45,7 @@
 </head>
 <body>
 <h1>贪吃蛇喵</h1>
-<div style="text-align: center"><div id="score">分数:0分喵</div></div>
+<div style="text-align: center"><div id="score">分数:0分喵</div><br><div id="times">你已游玩0次</div></div>
 <canvas id = "Snakegame" width="400" height="400"></canvas><hr>
 <button class = "opbtm" id = "up" onclick="move(0,-1)">↑</button>
 <br>
@@ -47,7 +55,7 @@
 
 
 <hr>
-<button id = "startbtn" onclick="main()">开始喵！</button>
+<button id = "startbtn" onclick="gamestart()">开始喵！</button>
 
 </body>
 <script>
@@ -107,8 +115,19 @@ function moveSnake() {
 function updatesocre(){
     document.getElementById("score").innerHTML = "分数:"+score+"分喵";
 }
-
-
+let gametimes = 0
+function gamestart(){
+    gametimes += 1;
+    if(gametimes < 2){
+        main()
+    }
+    else {
+        clearTimeout(gameloop)
+        reset()
+        main()
+    }
+    document.getElementById("times").innerHTML = "你已游玩"+gametimes+"次";
+}
 function main() {
     gameloop = setTimeout(function tick() {
         clearCanvas()
@@ -119,13 +138,14 @@ function main() {
     },200);
 }
 function reset(){
-    clearCanvas(gameloop)
+    clearTimeout(gameloop)
     snake =[
     {x:200,y:200},
     {x:190,y:200},
     {x:180,y:200},]
         score = 0
     drawSnake()
+    NewFood()
 }
 </script>
 </html>
