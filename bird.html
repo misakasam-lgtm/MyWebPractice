@@ -35,7 +35,7 @@
 <div id="score">分数:0分喵</div><hr>
 <canvas id="canvas" width="800" height="600"></canvas>
 <hr>
-<div style="text-align: center"><button id = "startbtn" onclick="startgame()">开始</button></div>
+<div style="text-align: center"><button id = "startbtn" onclick="startgame()">开始</button>    <button onclick="freeze()">暂停</button> </div>
 <button id = "jumpbtn" onclick="jump()" >跳！</button>
 
 </body>
@@ -71,9 +71,9 @@
     }
     function createblock(){
         ctx.fillStyle = "black";
-        block1.forEach(setment=>{ctx.fillRect(setment.x, setment.y, birdbody, birdbody)
+        block1.forEach(setment=>{ctx.fillRect(setment.x, setment.y, birdbody, -setment.y)
     })
-        block2.forEach(setment=>{ctx.fillRect(setment.x, setment.y, birdbody, birdbody)
+        block2.forEach(setment=>{ctx.fillRect(setment.x, setment.y, birdbody, canvas.height-setment.y)
     })
     }
     function movebird() {
@@ -90,7 +90,7 @@
             scoreplus = true;
         }
         if (-birdbody<=bird[0].x -block1[0].x) {
-            if (bird[0].y <= block1[0].y || bird[0].y >= block2[0].y) {
+            if (bird[0].y < block1[0].y || bird[0].y > block2[0].y) {
                 alert("似了喵")
                 reset()
             } else {
@@ -114,8 +114,10 @@
     function newblock() {
         block1.unshift({x:canvas.width + dx,y:250-Math.floor(Math.random() * canvas.height/3)});
         block2.unshift({x:canvas.width + dx,y:block1[0].y + 100});
-        block1.pop()
-        block2.pop()
+        if (block1[0]<birdbody) {
+            block1.pop()
+            block2.pop()
+        }
     }
     function nextblock() {
         if (bird[0].x > block1[0].x) {
@@ -123,7 +125,7 @@
         }
     }
     function jump(){
-        const birdjump = {x:bird[0].x,y:bird[0].y - 4*dy};
+        const birdjump = {x:bird[0].x,y:bird[0].y - 3*dy};
         bird.unshift(birdjump)
     }
 
@@ -164,6 +166,10 @@
         dy = birdbody
         score = 0
         document.getElementById("score").innerHTML= "分数:"+score+"分喵"
+    }
+    function freeze() {
+        dx = 0
+        dy = 0
     }
 
 </script>
