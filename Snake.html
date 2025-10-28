@@ -81,12 +81,12 @@ function NewFood() {
 }
 let dx = SnakeSize;
 let dy = 0
-
+let movefeetx = dx
+let movefeety = dy
 function move(a,b) {
-    if ((dx===0 && b*SnakeSize !== -dy)||(dy===0 && a*SnakeSize !== -dx)) {
-        dx = a * SnakeSize;
-        dy = b * SnakeSize;
-    }
+    if ((dx===0 && b*SnakeSize === -dy)||(dy===0 && a*SnakeSize === -dx)) return
+        movefeetx = a * SnakeSize;
+        movefeety = b * SnakeSize;
 }
 
 function clearCanvas(){
@@ -103,6 +103,8 @@ function  drawFood(){
     ctx.fillRect(food.x,food.y,SnakeSize,SnakeSize);
 }
 function moveSnake() {
+    dx = movefeetx
+    dy = movefeety
     const head = {x: snake[0].x + dx, y: snake[0].y + dy}
     if (head.x < 0 || head.x > convas.width || head.y < 0 || head.y > convas.height||snake.some(segment=> segment.x===head.x && segment.y===head.y)) {
         alert("似了喵T T")
@@ -155,8 +157,8 @@ function reset(){
     {x:180,y:200},]
      score = 0
     speed = 200
-    dx = SnakeSize;
-    dy = 0
+    movefeetx = SnakeSize;
+    movefeety = 0
     drawSnake()
     NewFood()
     document.getElementById("score").innerHTML = "分数:"+0+"分喵"
