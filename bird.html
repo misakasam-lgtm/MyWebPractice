@@ -9,13 +9,14 @@
             color: white;
             background: deeppink;
             font-weight: bold;
-            font-size: 28px;
-            margin: 2px auto;
+            font-size: 50px;
+            margin: 10px auto;
         }
          button:hover {
     transform: scale(1.05);
     background: #ffafc4;}
         #score{
+            font-size: 30px;
             color: darkblue;
             font-weight: bold;
             text-align: center;
@@ -33,10 +34,12 @@
 <body>
 <h1>小鸟游戏</h1>
 <div id="score">分数:0分喵</div><hr>
-<canvas id="canvas" width="800" height="600"></canvas>
+<div style="display: flex;align-items: center;justify-content: center;">
+<canvas id="canvas" width="800" height="600" onclick="jump()"></canvas>
+    </div>
 <hr>
-<div style="text-align: center"><button id = "startbtn" onclick="startgame()">开始</button>    <button onclick="freeze()">暂停</button> </div>
-<button id = "jumpbtn" onclick="jump()" >跳！</button>
+<div style="text-align: center"><button id = "startbtn" onclick="startgame()">开始</button> </div>
+   <button onclick="freeze()">暂停/继续</button>
 
 </body>
 <script>
@@ -44,6 +47,7 @@
     const ctx = canvas.getContext("2d");
     const birdbody = 20
     let score = 0;
+    let gamelife = true
     let bird = [
         {x:200,y:300},
     ]
@@ -51,10 +55,11 @@
         {x:500,y:250},
     ]
     let block2 = [
-        {x:500,y:350},
+        {x:500,y:400},
     ]
     let dx = -birdbody
     let dy = birdbody
+    let speed = 100
     function clearCanvas() {
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -62,12 +67,9 @@
     function drawbird() {
         ctx.fillStyle = "yellow";
           if(bird[0].y >canvas.height+birdbody||bird[0].y <0-2*birdbody){
-            alert("似了喵")
-            reset()}
-          else
-              {
-                  ctx.fillRect(bird[0].x, bird[0].y, birdbody, birdbody);
-              }
+            gamelife = false;
+          startgame()}
+        ctx.fillRect(bird[0].x, bird[0].y, birdbody, birdbody);
     }
     function createblock(){
         ctx.fillStyle = "black";
@@ -78,6 +80,7 @@
     }
     function movebird() {
         const birdposition = {x:bird[0].x ,y:bird[0].y + dy};
+        dy = dy +birdbody/5;
         bird.unshift(birdposition);
         bird.pop()
         drawbird()
@@ -90,9 +93,9 @@
             scoreplus = true;
         }
         if (-birdbody<=bird[0].x -block1[0].x) {
-            if (bird[0].y < block1[0].y || bird[0].y > block2[0].y) {
-                alert("似了喵")
-                reset()
+            if (bird[0].y < block1[0].y-birdbody || bird[0].y > block2[0].y+birdbody) {
+                gamelife = false;
+                startgame()
             } else {
                 if(scoreplus) {
                     score += 1
@@ -113,11 +116,9 @@
     }
     function newblock() {
         block1.unshift({x:canvas.width + dx,y:250-Math.floor(Math.random() * canvas.height/3)});
-        block2.unshift({x:canvas.width + dx,y:block1[0].y + 100});
-        if (block1[0]<birdbody) {
+        block2.unshift({x:canvas.width + dx,y:block1[0].y + 150});
             block1.pop()
             block2.pop()
-        }
     }
     function nextblock() {
         if (bird[0].x > block1[0].x) {
@@ -125,51 +126,60 @@
         }
     }
     function jump(){
-        const birdjump = {x:bird[0].x,y:bird[0].y - 3*dy};
+        dy = birdbody
+        const birdjump = {x:bird[0].x,y:bird[0].y - 4*dy};
         bird.unshift(birdjump)
     }
-
+    let pause = false
     function main() {
-        gameloop = setTimeout(function game() {
-        clearCanvas()
-        movebird()
-        moveblock()
-        createblock()
-        nextblock()
-        main()
-    },100);
+        gameloop = setInterval(function game() {
+                    clearCanvas()
+                    if (!pause) {
+                        movebird()
+                        moveblock()
+                        createblock()
+                        nextblock()
+                    }
+            }, speed);
     }
     let gametimes = 0
     function startgame(){
         gametimes += 1;
-        if (gametimes < 2) {
-            main()
+        if(gamelife) {
+            if (gametimes < 2) {
+                main()
+            } else {
+                reset()
+                main()
+            }
         }
         else {
-            clearTimeout(gameloop)
+            alert("似了喵")
             reset()
-            main()
+            startgame()
         }
     }
     function reset(){
+        clearInterval(gameloop)
         clearCanvas()
         bird = [
         {x:200,y:300},
     ]
-        block1 = [
-        {x:500,y:250},
-    ]
-        block2 = [
-        {x:500,y:350},
-    ]
+       block1 = []
+        block2 = []
+    // 初始化第一根柱子
+         block1.push({x:500, y:250});
+         block2.push({x:500, y:400});
+         scoreplus = true
         dx = -birdbody
         dy = birdbody
         score = 0
         document.getElementById("score").innerHTML= "分数:"+score+"分喵"
+        speed = 100
+        gamelife = true
     }
     function freeze() {
-        dx = 0
-        dy = 0
+        pause = !pause
     }
 
 </script>
