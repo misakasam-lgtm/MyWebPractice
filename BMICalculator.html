@@ -131,7 +131,7 @@ body{
 .word{
     text-align: right;
     color: deeppink;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
 }
 input{
@@ -143,8 +143,8 @@ input{
 <body>
 <h1>这是一个BMI计算器</h1>
 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-<div class="word">体重(kg):<input id = "user_weight"><br>
-    身高(m):<input id = "user_height">
+<div class="word">体重(kg): <input placeholder="kg" id= "user_weight"><br>
+    身高(cm): <input  placeholder="cm" id= "user_height">
 </div>
 </div>
 <br><br>
@@ -154,10 +154,17 @@ input{
 </button>
 </body>
 <script>
-
+    const input_weight = document.getElementById("user_weight");
+    const input_height = document.getElementById("user_height");
+    function remove(){
+        this.value = this.value
+        .replace(/\D/g,"")
+    }
+    input_height.addEventListener("input", remove);
+    input_weight.addEventListener("input", remove);
     function BMIcalculate() {
         let weight =Number (document.getElementById("user_weight").value);
-        let height =Number (document.getElementById("user_height").value);
+        let height =Number (document.getElementById("user_height").value)/100;
         /*
         let weight = Number(prompt('请输入体重(kg)'));
         let height = Number(prompt('请输入身高(m)'))
