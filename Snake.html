@@ -74,9 +74,15 @@ let speed = 200;
 function NewFood() {
     food.x =SnakeSize * Math.floor(Math.random() * convas.width/SnakeSize);
     food.y =SnakeSize * Math.floor(Math.random() * convas.height/SnakeSize)
-    if(speed>55)
-    speed -= 5
-    drawFood()
+    if (snake.some(segment=>(segment.x===food.x&&segment.y===food.y))){
+        NewFood()
+    }
+    else {
+        if (speed > 100) {
+            speed -= 5
+        }
+        drawFood()
+    }
 
 }
 let dx = SnakeSize;
