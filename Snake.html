@@ -70,11 +70,12 @@ let snake =[
     {x:180,y:200},
 ]
 let food = {x:100,y:100}
-let dt = 0
+let speed = 200;
 function NewFood() {
     food.x =SnakeSize * Math.floor(Math.random() * convas.width/SnakeSize);
     food.y =SnakeSize * Math.floor(Math.random() * convas.height/SnakeSize)
-    dt += 5
+    if(speed>55)
+    speed -= 5
     drawFood()
 
 }
@@ -148,7 +149,7 @@ function main() {
         drawSnake()
         drawFood()
         main()
-    },200-dt);
+    },speed);
 }
 function reset(){
     clearTimeout(gameloop)
@@ -157,7 +158,7 @@ function reset(){
     {x:190,y:200},
     {x:180,y:200},]
      score = 0
-    dt = 0
+    speed = 200
     dx = SnakeSize;
     dy = 0
     drawSnake()
