@@ -32,8 +32,8 @@
             margin: 2px auto;
         }
         .opbtm{
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height:120px;
         }
         hr{
             width: 60%;
@@ -74,7 +74,7 @@ let dt = 0
 function NewFood() {
     food.x =SnakeSize * Math.floor(Math.random() * convas.width/SnakeSize);
     food.y =SnakeSize * Math.floor(Math.random() * convas.height/SnakeSize)
-    dt += 10
+    dt += 5
     drawFood()
 
 }
@@ -82,8 +82,14 @@ let dx = SnakeSize;
 let dy = 0
 
 function move(a,b) {
-    dx = a*SnakeSize;
-    dy = b*SnakeSize;
+    if (dx===0 && b*SnakeSize === -dy) {
+    }
+    else if (dy===0 && a*SnakeSize === -dx) {
+    }
+    else {
+        dx = a * SnakeSize;
+        dy = b * SnakeSize;
+    }
 }
 
 function clearCanvas(){
@@ -150,8 +156,10 @@ function reset(){
     {x:200,y:200},
     {x:190,y:200},
     {x:180,y:200},]
-        score = 0
+     score = 0
     dt = 0
+    dx = SnakeSize;
+    dy = 0
     drawSnake()
     NewFood()
     document.getElementById("score").innerHTML = "分数:"+0+"分喵"
