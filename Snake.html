@@ -56,7 +56,7 @@
 
 <hr>
 <button id = "startbtn" onclick="gamestart()">开始喵！</button>
-<br><button id = "shutdownbtn" onclick="move(0,0)">暂停一下！</button>
+<br><button id = "shutdownbtn" onclick="freeze()">暂停一下！</button > <button onclick="replay()">继续</button>
 
 </body>
 <script>
@@ -140,12 +140,21 @@ function gamestart(){
     }
     document.getElementById("times").innerHTML = "你已游玩"+gametimes+"次";
 }
+let paused = false
+function replay(){
+    paused = false
+}
+function freeze(){
+    paused = true
+}
 function main() {
     gameloop = setTimeout(function tick() {
         clearCanvas()
-        moveSnake()
-        drawSnake()
-        drawFood()
+        if(!paused) {
+            moveSnake()
+        }
+            drawSnake()
+            drawFood()
         main()
     },speed);
 }
