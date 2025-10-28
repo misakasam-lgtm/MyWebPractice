@@ -125,21 +125,43 @@
     background: linear-gradient(#ececec, #dcdcdc);
     transition: all 0.08s ease;
 }
+body{
+    text-align: center;
+}
+.word{
+    text-align: right;
+    color: deeppink;
+    font-size: 30px;
+    font-weight: bold;
+}
+input{
+    height: 30px;
+}
 </style>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<h1 style="text-align: center">这是一个BMI计算器</h1>
-
+<h1>这是一个BMI计算器</h1>
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+<div class="word">体重(kg):<input id = "user_weight"><br>
+    身高(m):<input id = "user_height">
+</div>
+</div>
+<br><br>
 <button class="cart-button" onclick="BMIcalculate()" style="display: block; margin: 0 auto">
     <div class="glass-effect"></div>
-    <span class="button-text" style="font-family:幼圆 ;font-size: 30px;color: hotpink"><b>点击输入体重身高</b> </span>
+    <span class="button-text" style="font-family:幼圆 ;font-size: 30px;color: hotpink"><b>计算</b> </span>
 </button>
 </body>
 <script>
+
     function BMIcalculate() {
+        let weight =Number (document.getElementById("user_weight").value);
+        let height =Number (document.getElementById("user_height").value);
+        /*
         let weight = Number(prompt('请输入体重(kg)'));
         let height = Number(prompt('请输入身高(m)'))
+        */
         let BMI = weight / height ** 2
         if (isNaN(weight) || isNaN(height)) {
             alert("请输入数字")
@@ -160,6 +182,8 @@
             }
             alert("您的BMI是" + BMI.toFixed(2) + "，您的体重为" + Yourweight)
         }
+        document.getElementById("user_weight").value = ""
+        document.getElementById("user_height").value = ""
     }
 </script>
 
