@@ -61,8 +61,17 @@
     let dy = birdbody
     let speed = 100
     function clearCanvas() {
+        ctx.fillStyle = "#cceeff";
+         ctx.fillRect(0, 0, canvas.width, canvas.height); // 天空蓝背景
+         ctx.fillStyle = "green";
+        ctx.fillRect(0, canvas.height - 50, canvas.width, 50); // 地面
         ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.shadowColor = "rgba(0,0,0,0.2)";
+        ctx.shadowBlur = 15;
+        ctx.roundRect(100, 50, 300 , 50,50);//云
+        ctx.roundRect(550, 70, 200 , 90,50);
+        ctx.fill()
+        ctx.shadowBlur = 0
     }
     function drawbird() {
         ctx.fillStyle = "yellow";
@@ -72,7 +81,7 @@
         ctx.fillRect(bird[0].x, bird[0].y, birdbody, birdbody);
     }
     function createblock(){
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "darkblue";
         block1.forEach(setment=>{ctx.fillRect(setment.x, setment.y, birdbody, -setment.y)
     })
         block2.forEach(setment=>{ctx.fillRect(setment.x, setment.y, birdbody, canvas.height-setment.y)
@@ -85,6 +94,13 @@
         bird.pop()
         drawbird()
     }
+    function speedup() {
+        if(speed>50) {
+                    clearInterval(gameloop)
+                    speed -= 1
+                    main()
+                }
+    }
     let scoreplus = true
     function moveblock() {
         const blockposition1 = {x: block1[0].x + dx, y: block1[0].y};
@@ -93,7 +109,7 @@
             scoreplus = true;
         }
         if (-birdbody<=bird[0].x -block1[0].x) {
-            if (bird[0].y < block1[0].y-birdbody || bird[0].y > block2[0].y+birdbody) {
+            if (bird[0].y < block1[0].y-birdbody*0.5 || bird[0].y > block2[0].y+birdbody*0.5) {
                 gamelife = false;
                 startgame()
             } else {
@@ -106,6 +122,7 @@
                 block1.pop()
                 block2.pop()
                 document.getElementById("score").innerHTML= "分数:"+score+"分喵"
+                speedup()
             }
         } else {
             block1.unshift(blockposition1)
