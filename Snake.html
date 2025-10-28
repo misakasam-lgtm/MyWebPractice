@@ -83,11 +83,7 @@ let dx = SnakeSize;
 let dy = 0
 
 function move(a,b) {
-    if (dx===0 && b*SnakeSize === -dy) {
-    }
-    else if (dy===0 && a*SnakeSize === -dx) {
-    }
-    else {
+    if ((dx===0 && b*SnakeSize !== -dy)||(dy===0 && a*SnakeSize !== -dx)) {
         dx = a * SnakeSize;
         dy = b * SnakeSize;
     }
