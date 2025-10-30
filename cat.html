@@ -230,7 +230,7 @@
             clearcanvans();
             cats.forEach(cat => {
                 let speed = 0.5+ Math.random()*0.5
-                 if (Math.random() < 0.005) {speed=100*Math.random()}
+                 if (Math.random() < 0.005) {speed=0.15*canvas.width*Math.random()}
                 cat.x += speed;
                 drawCat(ctx, cat.x, cat.y, catwidth, cat.color);
             });
