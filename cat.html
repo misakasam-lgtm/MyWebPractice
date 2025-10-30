@@ -76,7 +76,7 @@
     <h1>猫咪赛跑</h1>
     <div>
         <canvas id="canvas" width="800" height="500" style="border:1px solid deeppink;"></canvas><br>
-        <button onclick="main()" id="startBtn">开始!</button><br>
+        <button onclick="main()" id="startBtn">直接开始!</button><br>
         <div>
           <div class=tips> 你的鱼干： <span  id="fish">2000</span> </div><br><br>
             <div class="tips" style="margin: 10px"><label>你要使用:<input id = "user_bet" class=tips type="number"></label> 给
@@ -200,11 +200,12 @@
         ctx.lineTo(x - size * 0.1, y + size * 0.75);
         ctx.stroke();
     }
+
     let gameReady = true;
     function moveCat() {
             clearcanvans();
             cats.forEach(cat => {
-                let speed = Math.random() * 5 - 2
+                let speed = (Math.random() -0.5)*7 +1
                 cat.x += speed;
                 drawCat(ctx, cat.x, cat.y, catwidth, cat.color);
             });
@@ -287,6 +288,7 @@
             let last_fish = Number(document.getElementById("fish").innerText) - Number(user_choice.amount);
             document.getElementById("fish").innerHTML = `${last_fish}`;
             choiceon = false;
+            main()
         }
         else {
             alert("没鱼了喵")
@@ -302,15 +304,17 @@
             user_choice = {cat:null,amount:0}
         }
         else {
-            if (Number(document.getElementById("fish").innerText) === 0){
-            alert("破产了喵，点击领取2000鱼干")
-            document.getElementById("fish").innerText = "2000"}
+            if (Number(document.getElementById("fish").innerText) === 0) {
+                alert("破产了喵")
+            }
 
             else {
             alert("没猜中，你的鱼被吃完了喵")
                     }
         }
     }
+    setInterval(function setloop() {if(!gameReady)document.getElementById("fish").innerText = Number(document.getElementById("fish").innerText) + 20},1000
+    )
 
 </script>
 
