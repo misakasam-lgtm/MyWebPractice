@@ -2,10 +2,15 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>猫咪赛跑</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        .container {
+              width: 90%;
+               padding: 2vw;
+}
         table {
             width: 80%;
             margin: 20px auto;
@@ -55,13 +60,24 @@
         
         .tips {
             color: darkblue;
-            font-size: 20px;
+            font-size: clamp(12px, 4vw, 20px);
             font-weight: bold;
-            text-align: center;
-            display: inline-block;
-            margin-right: 10px
+             display: flex;
+            justify-content: center;
+            align-items: center; /* 垂直居中 */
+            gap: 2%;           /* 元素间距 */
+            flex-wrap: wrap;
+            margin-bottom: 2px;
         }
-        
+        .tips input, .tips button {
+            display: inline-block;
+        }
+        @media (max-width: 500px) {
+         .tips input, .tips button {
+        display: inline-block;
+        margin: 5px 0;
+           }
+        }
         #startBtn {
             margin: 20px;
         }
@@ -74,21 +90,24 @@
 
 <body>
     <h1>猫咪赛跑</h1>
-    <div>
-        <canvas id="canvas" width="800" height="500" style="border:1px solid deeppink;"></canvas><br>
-        <div>
-          <div class=tips> 你的鱼干： <span  id="fish">2000</span> </div><br><br>
-            <div class="tips" style="margin: 10px"><label>你要使用:<input id = "user_bet" class=tips type="number"></label> 给
-                <div style="margin: 10px">
-                <label><input type="radio" name="chooseCat" value="Ace Taffy">Ace Taffy</label>
-               <label> <input type="radio" name="chooseCat" value="Seren Azuma">Seren Azuma</label>
-               <label> <input type="radio" name="chooseCat" value="NyaRu">NyaRu</label>
-              <label>  <input type="radio" name="chooseCat" value="Diana">Diana</label>
-                    </div>
-                <button onclick="bet()">确认</button>
-            </div>
-        </div>
+    <div class="tips">
+        <canvas id="canvas"  style="border:1px solid deeppink;width:100%; max-width:800px; height:auto"></canvas><br>
     </div>
+
+    <div class="tips"> 你的鱼干： <span  id="fish">2000</span> </div>
+    <div class="tips"><label>你要使用:<input id = "user_bet" class=tips type="number"></label>给</div>
+    <div class="tips">
+        <label><input type="radio" name="chooseCat" value="Ace Taffy">Ace Taffy</label>
+        <label> <input type="radio" name="chooseCat" value="Seren Azuma">Seren Azuma</label>
+        <label> <input type="radio" name="chooseCat" value="NyaRu">NyaRu</label>
+        <label>  <input type="radio" name="chooseCat" value="Diana">Diana</label>
+    </div>
+    <div class="tips">
+        <button onclick="bet()">确认</button>
+    </div>
+
+
+
     <table id="winner">
         <tr>
             <th>局数</th>
@@ -100,8 +119,10 @@
     addEventListener("load", clearcanvans)
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetWidth*0.65;
     let winner
-    let catwidth = 40;
+    let catwidth = 0.05*canvas.width;
     let cats = [{
         x: canvas.width * 0.1,
         y: canvas.height * 0.3,
@@ -133,7 +154,7 @@
 
         ctx.fillStyle = "#F00B0B";
         ctx.fillRect(canvas.width * 0.15, canvas.height * 0.2, 10, canvas.height * 0.8);
-        ctx.fillRect(canvas.width - 100, canvas.height * 0.2, 10, canvas.height * 0.8);
+        ctx.fillRect(canvas.width *7 / 8, canvas.height * 0.2, 10, canvas.height * 0.8);
 
         let runway = [{
             x: canvas.width * 0.15 + 10,
@@ -146,11 +167,11 @@
             y: canvas.height * 0.8
         }, ];
         ctx.fillStyle = "white";
-        runway.forEach(line => ctx.fillRect(line.x, line.y, canvas.width, 10));
+        runway.forEach(line => ctx.fillRect(line.x, line.y, canvas.width, 0.01*canvas.width));
 
         ctx.fillStyle = "deeppink";
-        ctx.font = "16px sans-serif";
-        cats.forEach(cat=>{ctx.fillText(cat.name, 10, cat.y + 30)});
+        ctx.font = "clamp(8px, 2vw, 18px) sans-serif";
+        cats.forEach(cat=>{ctx.fillText(cat.name, 0.015*canvas.width, cat.y + catwidth)});
     }
 
     function drawCat(ctx, x, y, size, color) {
@@ -213,11 +234,11 @@
                 cat.x += speed;
                 drawCat(ctx, cat.x, cat.y, catwidth, cat.color);
             });
-            if (!cats.some(cat => (cat.x > canvas.width - 100))) {
+            if (!cats.some(cat => (cat.x > canvas.width - 0.12*canvas.width))) {
                 gameReady = false
                 requestAnimationFrame(moveCat);
             } else {
-                winner = cats.find(cat => (cat.x > canvas.width - 100));
+                winner = cats.find(cat => (cat.x > canvas.width - 0.12*canvas.width));
                 winner_check()
                 reset()
                 clearcanvans();
@@ -313,7 +334,7 @@
             }
 
             else {
-            alert("没猜中，你的鱼被吃完了喵,获胜者是"+winner.name)
+            alert("没猜中，你的鱼被吃完了喵，获胜者是"+winner.name)
                     }
         }
     }
