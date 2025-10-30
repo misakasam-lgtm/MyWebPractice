@@ -241,10 +241,10 @@
                 requestAnimationFrame(moveCat);
             } else {
                 winner = cats.find(cat => (cat.x > canvas.width - 0.12*canvas.width));
-                winner_check()
-                reset()
+                winner_check();
                 clearcanvans();
-                winnerCollect(winner.name,user_choice.cat,winfish-user_choice.amount);
+                winnerCollect(winner.name,user_choice.cat,(winfish - user_choice.amount));
+                reset()
             }
     }
 
@@ -278,19 +278,29 @@
     }, ];
         gameReady = true;
         choiceon = true;
+        user_choice = {cat:null,amount:0}
     }
     let gametimes = 0
+
 
     function winnerCollect(a,b,c) {
         gametimes += 1;
         const tableBody = document.getElementById("winner");
         const tr = document.createElement("tr");
+        if (winner.name===b){
         tr.innerHTML = `
-      <td>${gametimes}</td>
-      <td>${a}</td>
-      <td>${b}</td>
-      <td>${c}</td>
-    `;
+      <td style="background: pink">${gametimes}</td>
+      <td style="background: pink">${a}</td>
+      <td style="background: pink">${b}</td>
+      <td style="background: pink">${c}</td>
+    `}
+        else {
+            tr.innerHTML =`
+            <td>${gametimes}</td>
+            <td>${a}</td>
+            <td>${b}</td>
+            <td>${c}</td>
+        `}
         tableBody.appendChild(tr)
     }
     let user_choice = {cat:null,amount:0}
@@ -330,7 +340,6 @@
             alert(winner.name+"获胜"+"你赢得了"+winfish);
             let newfish = Number(document.getElementById("fish").innerText) + winfish
             document.getElementById("fish").innerHTML = `${Number(newfish)}`;
-            user_choice = {cat:null,amount:0}
         }
         else {
             if (Number(document.getElementById("fish").innerText) === 0) {
