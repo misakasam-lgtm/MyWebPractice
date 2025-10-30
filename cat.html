@@ -76,7 +76,6 @@
     <h1>猫咪赛跑</h1>
     <div>
         <canvas id="canvas" width="800" height="500" style="border:1px solid deeppink;"></canvas><br>
-        <button onclick="main()" id="startBtn">直接开始!</button><br>
         <div>
           <div class=tips> 你的鱼干： <span  id="fish">2000</span> </div><br><br>
             <div class="tips" style="margin: 10px"><label>你要使用:<input id = "user_bet" class=tips type="number"></label> 给
@@ -205,7 +204,8 @@
     function moveCat() {
             clearcanvans();
             cats.forEach(cat => {
-                let speed = (Math.random() -0.5)*7 +1
+                let speed = 0.5+ Math.random()*0.5
+                 if (Math.random() < 0.005) {speed=100*Math.random()}
                 cat.x += speed;
                 drawCat(ctx, cat.x, cat.y, catwidth, cat.color);
             });
@@ -309,7 +309,7 @@
             }
 
             else {
-            alert("没猜中，你的鱼被吃完了喵")
+            alert("没猜中，你的鱼被吃完了喵,获胜者是"+winner.name)
                     }
         }
     }
