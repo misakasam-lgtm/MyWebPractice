@@ -322,7 +322,7 @@
     let winfish = 0
     function winner_check(){
         if (user_choice.cat === winner.name){
-            winfish = 2*user_choice.amount;
+            winfish = 4*user_choice.amount;
             alert(winner.name+"获胜"+"你赢得了"+winfish);
             let newfish = Number(document.getElementById("fish").innerText) + winfish
             document.getElementById("fish").innerHTML = `${Number(newfish)}`;
