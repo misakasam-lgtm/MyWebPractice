@@ -112,6 +112,8 @@
         <tr>
             <th>局数</th>
             <th>获胜猫</th>
+            <th>你的选择</th>
+            <th>鱼干变动</th>
         </tr>
     </table>
 </body>
@@ -242,7 +244,7 @@
                 winner_check()
                 reset()
                 clearcanvans();
-                winnerCollect(winner.name);
+                winnerCollect(winner.name,user_choice.cat,winfish-user_choice.amount);
             }
     }
 
@@ -279,13 +281,15 @@
     }
     let gametimes = 0
 
-    function winnerCollect(a) {
+    function winnerCollect(a,b,c) {
         gametimes += 1;
         const tableBody = document.getElementById("winner");
         const tr = document.createElement("tr");
         tr.innerHTML = `
       <td>${gametimes}</td>
       <td>${a}</td>
+      <td>${b}</td>
+      <td>${c}</td>
     `;
         tableBody.appendChild(tr)
     }
