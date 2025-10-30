@@ -90,6 +90,7 @@
 
 <body>
     <h1>猫咪赛跑</h1>
+    <div class="tips">游戏说明: 开局拥有2000鱼干，赢得1万鱼干即可获胜，结算后低于200鱼干将会失败</div>
     <div class="tips">
         <canvas id="canvas"  style="border:1px solid deeppink;width:100%; max-width:800px; height:auto"></canvas><br>
     </div>
@@ -334,16 +335,31 @@
         }
     }
     let winfish = 0
+    let gamewin = false
     function winner_check(){
+        winfish = 0
         if (user_choice.cat === winner.name){
             winfish = 4*user_choice.amount;
-            alert(winner.name+"获胜"+"你赢得了"+winfish);
             let newfish = Number(document.getElementById("fish").innerText) + winfish
             document.getElementById("fish").innerHTML = `${Number(newfish)}`;
-        }
+            if(Number(newfish)>10000 && !gamewin) {
+                gamewin = true
+                let again = confirm("你通关了喵，确认：挑战更高分，取消：重新开始")
+                if (!again) {
+                    document.getElementById("fish").innerHTML = "2000"
+                    gamewin = false
+                }
+            }
+                else {
+                    alert(winner.name+"获胜"+"你赢得了"+winfish+"个鱼干");
+                }
+
+            }
         else {
-            if (Number(document.getElementById("fish").innerText) === 0) {
-                alert("破产了喵")
+            if (Number(document.getElementById("fish").innerText) <= 200) {
+                alert("破产了喵,点击重新开始")
+                document.getElementById("fish").innerHTML = "2000"
+                gamewin = false
             }
 
             else {
