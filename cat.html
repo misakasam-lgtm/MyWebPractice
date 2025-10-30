@@ -105,22 +105,22 @@
     let cats = [{
         x: canvas.width * 0.1,
         y: canvas.height * 0.3,
-        color: "red",
+        color: "pink",
         name: "Ace Taffy"
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.5,
-        color: "blue",
+        color: "white",
         name: "Seren Azuma"
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.7,
-        color: "green",
+        color: "aqua",
         name: "NyaRu"
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.9,
-        color: "yellow",
+        color: "red",
         name: "Diana"
     }, ];
 
@@ -147,6 +147,10 @@
         }, ];
         ctx.fillStyle = "white";
         runway.forEach(line => ctx.fillRect(line.x, line.y, canvas.width, 10));
+
+        ctx.fillStyle = "deeppink";
+        ctx.font = "16px sans-serif";
+        cats.forEach(cat=>{ctx.fillText(cat.name, 10, cat.y + 30)});
     }
 
     function drawCat(ctx, x, y, size, color) {
@@ -229,26 +233,26 @@
 
     function reset() {
         cats = [{
-            x: canvas.width * 0.1,
-            y: canvas.height * 0.3,
-            color: "red",
-            name: "Ace Taffy"
-        }, {
-            x: canvas.width * 0.1,
-            y: canvas.height * 0.5,
-            color: "blue",
-            name: "Seren Azuma"
-        }, {
-            x: canvas.width * 0.1,
-            y: canvas.height * 0.7,
-            color: "green",
-            name: "NyaRu"
-        }, {
-            x: canvas.width * 0.1,
-            y: canvas.height * 0.9,
-            color: "yellow",
-            name: "Diana"
-        }, ];
+        x: canvas.width * 0.1,
+        y: canvas.height * 0.3,
+        color: "pink",
+        name: "Ace Taffy"
+    }, {
+        x: canvas.width * 0.1,
+        y: canvas.height * 0.5,
+        color: "white",
+        name: "Seren Azuma"
+    }, {
+        x: canvas.width * 0.1,
+        y: canvas.height * 0.7,
+        color: "aqua",
+        name: "NyaRu"
+    }, {
+        x: canvas.width * 0.1,
+        y: canvas.height * 0.9,
+        color: "red",
+        name: "Diana"
+    }, ];
         gameReady = true;
         choiceon = true;
     }
