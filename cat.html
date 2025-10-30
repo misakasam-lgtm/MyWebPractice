@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>猫咪赛跑</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        thead {
+            background-color: #ffb347;
+            /* 渐变可以改成纯色或渐变 */
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        thead th {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        tr {
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+        
+        tr:hover {
+            background-color: #ffe0b2;
+        }
+        
+        tbody td {
+            padding: 12px 15px;
+        }
+        
+        caption {
+            caption-side: top;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .tips {
+            color: darkblue;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            margin-right: 10px
+        }
+        
+        #startBtn {
+            margin: 20px;
+        }
+        
+        #fish {
+            background: deeppink
+        }
+    </style>
+</head>
+
+<body>
+    <h1>猫咪赛跑</h1>
+    <div>
+        <canvas id="canvas" width="800" height="500" style="border:1px solid deeppink;"></canvas><br>
+        <button onclick="main()" id="startBtn">开始!</button><br>
+        <div>
+          <div class=tips> 你的鱼干： <span  id="fish">2000</span> </div><br><br>
+            <div class="tips" style="margin: 10px"><label>你要使用:<input id = "user_bet" class=tips type="number"></label> 给
+                <div style="margin: 10px">
+                <label><input type="radio" name="chooseCat" value="Ace Taffy">Ace Taffy</label>
+               <label> <input type="radio" name="chooseCat" value="Seren Azuma">Seren Azuma</label>
+               <label> <input type="radio" name="chooseCat" value="NyaRu">NyaRu</label>
+              <label>  <input type="radio" name="chooseCat" value="Diana">Diana</label>
+                    </div>
+                <button onclick="bet()">确认</button>
+            </div>
+        </div>
+    </div>
+    <table id="winner">
+        <tr>
+            <th>局数</th>
+            <th>获胜猫</th>
+        </tr>
+    </table>
+</body>
+<script>
+    addEventListener("load", clearcanvans)
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let winner
+    let catwidth = 40;
+    let cats = [{
+        x: canvas.width * 0.1,
+        y: canvas.height * 0.3,
+        color: "red",
+        name: "Ace Taffy"
+    }, {
+        x: canvas.width * 0.1,
+        y: canvas.height * 0.5,
+        color: "blue",
+        name: "Seren Azuma"
+    }, {
+        x: canvas.width * 0.1,
+        y: canvas.height * 0.7,
+        color: "green",
+        name: "NyaRu"
+    }, {
+        x: canvas.width * 0.1,
+        y: canvas.height * 0.9,
+        color: "yellow",
+        name: "Diana"
+    }, ];
+
+    function clearcanvans() {
+        ctx.fillStyle = "aqua";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "lightgreen";
+        ctx.fillRect(0, canvas.height * 0.2, canvas.width, canvas.height * 0.8);
+
+        ctx.fillStyle = "#F00B0B";
+        ctx.fillRect(canvas.width * 0.15, canvas.height * 0.2, 10, canvas.height * 0.8);
+        ctx.fillRect(canvas.width - 100, canvas.height * 0.2, 10, canvas.height * 0.8);
+
+        let runway = [{
+            x: canvas.width * 0.15 + 10,
+            y: canvas.height * 0.4
+        }, {
+            x: canvas.width * 0.15 + 10,
+            y: canvas.height * 0.6
+        }, {
+            x: canvas.width * 0.15 + 10,
+            y: canvas.height * 0.8
+        }, ];
+        ctx.fillStyle = "white";
+        runway.forEach(line => ctx.fillRect(line.x, line.y, canvas.width, 10));
+    }
+
+    function drawCat(ctx, x, y, size, color) {
+        // 猫头
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 左耳
+        ctx.beginPath();
+        ctx.moveTo(x + size * 0.1, y + size * 0.3);
+        ctx.lineTo(x + size * 0.3, y - size * 0.3);
+        ctx.lineTo(x + size * 0.5, y + size * 0.3);
+        ctx.closePath();
+        ctx.fill();
+
+        // 右耳
+        ctx.beginPath();
+        ctx.moveTo(x + size * 0.5, y + size * 0.3);
+        ctx.lineTo(x + size * 0.7, y - size * 0.3);
+        ctx.lineTo(x + size * 0.9, y + size * 0.3);
+        ctx.closePath();
+        ctx.fill();
+
+        // 眼睛
+        ctx.fillStyle = "black";
+        ctx.beginPath();
+        ctx.arc(x + size * 0.3, y + size * 0.4, size * 0.08, 0, Math.PI * 2);
+        ctx.arc(x + size * 0.7, y + size * 0.4, size * 0.08, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 胡子
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        // 右边胡子
+        ctx.moveTo(x + size * 0.7, y + size * 0.6);
+        ctx.lineTo(x + size * 1.1, y + size * 0.5);
+        ctx.moveTo(x + size * 0.7, y + size * 0.7);
+        ctx.lineTo(x + size * 1.1, y + size * 0.6);
+        ctx.moveTo(x + size * 0.7, y + size * 0.75);
+        ctx.lineTo(x + size * 1.1, y + size * 0.75);
+        // 左边胡子
+        ctx.moveTo(x + size * 0.3, y + size * 0.6);
+        ctx.lineTo(x - size * 0.1, y + size * 0.5);
+        ctx.moveTo(x + size * 0.3, y + size * 0.7);
+        ctx.lineTo(x - size * 0.1, y + size * 0.6);
+        ctx.moveTo(x + size * 0.3, y + size * 0.75);
+        ctx.lineTo(x - size * 0.1, y + size * 0.75);
+        ctx.stroke();
+    }
+    let gameReady = true;
+    function moveCat() {
+            clearcanvans();
+            cats.forEach(cat => {
+                let speed = Math.random() * 5 - 2
+                cat.x += speed;
+                drawCat(ctx, cat.x, cat.y, catwidth, cat.color);
+            });
+            if (!cats.some(cat => (cat.x > canvas.width - 100))) {
+                gameReady = false
+                requestAnimationFrame(moveCat);
+            } else {
+                winner = cats.find(cat => (cat.x > canvas.width - 100));
+                winner_check()
+                reset()
+                clearcanvans();
+                winnerCollect(winner.name);
+            }
+    }
+
+    function main() {
+        if (!gameReady) return
+            clearcanvans();
+            moveCat();
+    }
+
+    function reset() {
+        cats = [{
+            x: canvas.width * 0.1,
+            y: canvas.height * 0.3,
+            color: "red",
+            name: "Ace Taffy"
+        }, {
+            x: canvas.width * 0.1,
+            y: canvas.height * 0.5,
+            color: "blue",
+            name: "Seren Azuma"
+        }, {
+            x: canvas.width * 0.1,
+            y: canvas.height * 0.7,
+            color: "green",
+            name: "NyaRu"
+        }, {
+            x: canvas.width * 0.1,
+            y: canvas.height * 0.9,
+            color: "yellow",
+            name: "Diana"
+        }, ];
+        gameReady = true;
+        choiceon = true;
+    }
+    let gametimes = 0
+
+    function winnerCollect(a) {
+        gametimes += 1;
+        const tableBody = document.getElementById("winner");
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+      <td>${gametimes}</td>
+      <td>${a}</td>
+    `;
+        tableBody.appendChild(tr)
+    }
+    let user_choice = {cat:null,amount:0}
+    let choiceon = true
+    const ratio = document.getElementsByName("chooseCat");
+    function bet(){
+        if (!gameReady) return;
+        if(!choiceon)return;
+         const user_bet = Number(document.getElementById("user_bet").value);
+         let user_cat = null
+        if(Number(document.getElementById("fish").innerText) - user_bet>=0) {
+            ratio.forEach(c => {
+                if (c.checked) {
+                    user_cat = c.value
+                }
+            });
+            if(user_cat === null || user_bet===0){
+                alert("请正确投喂！")
+                return;
+            }
+            user_choice.cat = user_cat;
+            user_choice.amount = user_bet;
+            alert("你给" + user_choice.cat + "投喂了" + user_choice.amount);
+            let last_fish = Number(document.getElementById("fish").innerText) - Number(user_choice.amount);
+            document.getElementById("fish").innerHTML = `${last_fish}`;
+            choiceon = false;
+        }
+        else {
+            alert("没鱼了喵")
+        }
+    }
+    let winfish = 0
+    function winner_check(){
+        if (user_choice.cat === winner.name){
+            winfish = 2*user_choice.amount;
+            alert(winner.name+"获胜"+"你赢得了"+winfish);
+            let newfish = Number(document.getElementById("fish").innerText) + winfish
+            document.getElementById("fish").innerHTML = `${Number(newfish)}`;
+            user_choice = {cat:null,amount:0}
+        }
+        else {
+            if (Number(document.getElementById("fish").innerText) === 0){
+            alert("破产了喵，点击领取2000鱼干")
+            document.getElementById("fish").innerText = "2000"}
+
+            else {
+            alert("没猜中，你的鱼被吃完了喵")
+                    }
+        }
+    }
+
+</script>
+
+</html>
