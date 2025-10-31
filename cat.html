@@ -350,9 +350,9 @@
     function winner_check(){
         winfish = 0
         if (user_choice.cat === winner.name){
-            winfish = winner.rate* user_choice.amount;
+            winfish = Math.round(winner.rate* user_choice.amount);
             let newfish = Number(document.getElementById("fish").innerText) + winfish
-            document.getElementById("fish").innerHTML = `${Number(newfish)}`;
+            document.getElementById("fish").innerHTML = `${Math.round(Number(newfish))}`;
             if(Number(newfish)>10000 && !gamewin) {
                 gamewin = true
                 let again = confirm("你通关了喵，确认：挑战更高分，取消：重新开始")
@@ -389,9 +389,10 @@
           tableBody.deleteRow(2 - 1); // 从第二行开始删（保持表头）
             }
         const average = cats.reduce((acc, item) => acc+item.catSpeed,0)/cats.length;
-        cats.forEach(cat=>{
-            let rate = (average/cat.catSpeed )**1.3 * 2.5
-            cat.rate = Math.floor(rate*100)/100})
+        cats.forEach(cat=> {
+            let rate = (average / cat.catSpeed) ** 1.3 * 2.5
+            cat.rate = Number(rate.toFixed(2))
+        })
         tr.innerHTML = `
         <td>${cats[0].rate}</td>
         <td>${cats[1].rate}</td>
