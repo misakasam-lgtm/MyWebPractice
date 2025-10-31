@@ -4,19 +4,10 @@
     <meta charset="UTF-8">
     <title>小鸟游戏</title>
     <link rel="stylesheet" href="style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        button{
-            color: white;
-            background: deeppink;
-            font-weight: bold;
-            font-size: 50px;
-            margin: 10px auto;
-        }
-         button:hover {
-    transform: scale(1.05);
-    background: #ffafc4;}
         #score{
-            font-size: 30px;
+            font-size: clamp(18px, 5vw, 30px);
             color: darkblue;
             font-weight: bold;
             text-align: center;
@@ -25,51 +16,50 @@
             margin: 2px;
         }
           body{
-              margin: auto;
+              margin: 4vw;
             text-align: center;
-            width: 60%;
            }
     </style>
 </head>
 <body>
 <h1>小鸟游戏</h1>
 <div id="score">分数:0分喵</div><hr>
-<div style="display: flex;align-items: center;justify-content: center;">
-<canvas id="canvas" width="800" height="600" onclick="jump()"></canvas>
-    </div>
+<canvas id="canvas" style="max-width: 800px ;height:auto" onclick="jump()"></canvas>
 <hr>
-<div style="text-align: center"><button id = "startbtn" onclick="startgame()">开始</button> </div>
-   <button onclick="freeze()">暂停/继续</button>
+<button id = "startbtn" onclick="startgame()">开始</button>
+<button onclick="freeze()">暂停/继续</button>
 
 </body>
 <script>
+    addEventListener("resize",updatescreen)
+    addEventListener("load",updatescreen)
+    addEventListener("load",clearCanvas)
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
-    const birdbody = 20
+    let birdbody
+    function updatescreen() {
+    canvas.width = innerWidth*0.95;
+    canvas.height = innerWidth*0.75;
+    birdbody = Math.floor(canvas.width/40);
+    }
     let score = 0;
     let gamelife = true
-    let bird = [
-        {x:200,y:300},
-    ]
-    let block1 = [
-        {x:500,y:250},
-    ]
-    let block2 = [
-        {x:500,y:400},
-    ]
-    let dx = -birdbody
-    let dy = birdbody
+    let bird = []
+    let block1 = []
+    let block2 = []
+    let dx
+    let dy
     let speed = 100
     function clearCanvas() {
         ctx.fillStyle = "#cceeff";
          ctx.fillRect(0, 0, canvas.width, canvas.height); // 天空蓝背景
          ctx.fillStyle = "green";
-        ctx.fillRect(0, canvas.height - 50, canvas.width, 50); // 地面
+        ctx.fillRect(0, canvas.height - 3*birdbody, canvas.width, 3*birdbody); // 地面
         ctx.fillStyle = "white";
         ctx.shadowColor = "rgba(0,0,0,0.2)";
         ctx.shadowBlur = 15;
-        ctx.roundRect(100, 50, 300 , 50,50);//云
-        ctx.roundRect(550, 70, 200 , 90,50);
+        ctx.roundRect(5*birdbody, 3*birdbody, 10*birdbody , 3*birdbody,3*birdbody);//云
+        ctx.roundRect(canvas.width-3*birdbody, 3*birdbody, 10*birdbody , 5*birdbody,3*birdbody);
         ctx.fill()
         ctx.shadowBlur = 0
     }
@@ -132,8 +122,8 @@
         }
     }
     function newblock() {
-        block1.unshift({x:canvas.width + dx,y:250-Math.floor(Math.random() * canvas.height/3)});
-        block2.unshift({x:canvas.width + dx,y:block1[0].y + 150});
+        block1.unshift({x:canvas.width + dx,y:Math.floor(Math.random() * canvas.height*3/4)});
+        block2.unshift({x:canvas.width + dx,y:block1[0].y + 6*birdbody});
             block1.pop()
             block2.pop()
     }
@@ -161,9 +151,11 @@
     }
     let gametimes = 0
     function startgame(){
+        updatescreen();
         gametimes += 1;
         if(gamelife) {
             if (gametimes < 2) {
+                resetposition()
                 main()
             } else {
                 reset()
@@ -176,20 +168,24 @@
             startgame()
         }
     }
-    function reset(){
-        clearInterval(gameloop)
-        clearCanvas()
+    function resetposition() {
         bird = [
-        {x:200,y:300},
+        {x:canvas.width*0.3,y:canvas.height*0.5},
     ]
        block1 = []
         block2 = []
     // 初始化第一根柱子
-         block1.push({x:500, y:250});
-         block2.push({x:500, y:400});
+         block1.push(
+        {x:canvas.width*0.6,y:canvas.height*0.6},);
+         block2.push({x:canvas.width*0.6,y:canvas.height*0.6+6*birdbody});
          scoreplus = true
         dx = -birdbody
         dy = birdbody
+    }
+    function reset(){
+        clearInterval(gameloop)
+        resetposition()
+        clearCanvas()
         score = 0
         document.getElementById("score").innerHTML= "分数:"+score+"分喵"
         speed = 100

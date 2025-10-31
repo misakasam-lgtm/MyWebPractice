@@ -29,7 +29,7 @@ h2{
         0 -1px white;
 }
 p{
-     font-size: 20px;
+     font-size: clamp(10px,4vw,20px);
     font-weight: 500;
     color: yellowgreen;
      text-shadow:
@@ -39,7 +39,7 @@ p{
         0 -1px white;
 }
 hr {
-    height: 3px;
+    height: clamp(2px,1vw,2px);
     background-color: darkblue;
     box-shadow:
         0 2px white,
@@ -54,8 +54,8 @@ hr {
 }
 .button-container {
     display: flex;
-    justify-content: left; /* 从左开始*/
-    gap: 20px;              /* 按钮间距 */
+    justify-content: center; /* 从左开始*/
+    gap: clamp(10px,4vw,20px);              /* 按钮间距 */
     flex-wrap: wrap;        /* 按钮多了自动换行 */
     align-items: stretch; /* 让所有按钮在同一行高度一致 */
 }
@@ -63,19 +63,19 @@ hr {
             color: white;
             background: deeppink;
             font-weight: bold;
-            font-size: 28px;
+            font-size:clamp(12px,6vw,28px);
             margin: 2px auto;
         }
 button:hover {
     transform: scale(1.05);
     background: #ffafc4;}
 .MainBotton{
-     width: 150px;           /* 固定宽度 */
-    height: 80px;           /* 固定高度 */
+     width: clamp(80px,50vw,150px);           /* 固定宽度 */
+    height: clamp(50px,50vw,80px);           /* 固定高度 */
     white-space: normal;    /* 允许文字换行 */
     word-break: break-word; /* 超长文字换行 */
     text-align: center;     /* 文字居中 */
-    font-size: 16px;        /* 调整字体大小 */
+    font-size: clamp(10px,6vw,20px);        /* 调整字体大小 */
     padding: 5px;           /* 内边距 */
     border-radius: 8px;
 background: #ff9eb6;
@@ -87,7 +87,7 @@ box-shadow:  8px 8px 8px #d68599,
     background: #ffafc4;
 }
 .ButtonText{
-      font-size: 20px;
+      font-size: clamp(10px,6vw,20px);
     text-align: center;
     font-weight: 800;
     color: yellowgreen;
@@ -98,8 +98,8 @@ box-shadow:  8px 8px 8px #d68599,
         0 -0.5px white;
 }
 .spinner {
-  width: 20px;
-  height: 20px;
+  width: clamp(10px,4vw,20px);
+  height: clamp(10px,4vw,20px);
   border: 6px solid #f3f3f3;   /* 浅色背景圈 */
   border-top: 6px solid deeppink; /* 高亮旋转条 */
   border-radius: 50%;           /* 圆形 */

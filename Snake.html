@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>贪吃蛇</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body{
             text-align: center;
@@ -24,16 +25,9 @@
             display: inline-block;
             margin: 2px;
         }
-        button{
-            color: white;
-            background: deeppink;
-            font-weight: bold;
-            font-size: 28px;
-            margin: 2px auto;
-        }
         .opbtm{
-            width: 120px;
-            height:120px;
+            width: clamp(20px,12vw,70px);
+            height: clamp(20px,12vw,70px);
         }
         hr{
             width: 60%;
@@ -46,7 +40,7 @@
 <body>
 <h1>贪吃蛇喵</h1>
 <div style="text-align: center"><div id="score">分数:0分喵</div><br><div id="times">你已游玩0次</div></div>
-<canvas id = "Snakegame" width="400" height="400"></canvas><hr>
+<canvas id = "Snakegame" style=" width:100% ;max-width: 400px; height:auto"></canvas><hr>
 <button class = "opbtm" id = "up" onclick="move(0,-1)">↑</button>
 <br>
 <button class = "opbtm" id = "left" onclick="move(-1,0)" style="">←</button>
@@ -56,24 +50,35 @@
 
 <hr>
 <button id = "startbtn" onclick="gamestart()">开始喵！</button>
-<br><button id = "shutdownbtn" onclick="freeze()">暂停一下！</button > <button onclick="replay()">继续</button>
+<br><button id = "shutdownbtn" onclick="freeze()">暂停/继续</button >
 
 </body>
 <script>
-const convas = document.getElementById("Snakegame");
-const ctx = convas.getContext("2d");
-const  SnakeSize = 20
+addEventListener("resize", updateScreen)
+addEventListener("load", updateScreen)
+addEventListener("load", clearCanvas)
+const canvas = document.getElementById("Snakegame");
+let SnakeSize = 0.05 * canvas.width;
+const ctx = canvas.getContext("2d");
+function updateScreen() {
+    const GRID = Math.floor(innerWidth*0.95/20)
+    let updateWidth = Math.floor(innerWidth*0.95/GRID)
+    let updateHeight = Math.floor(innerWidth*0.95/GRID)
+    canvas.width = updateWidth * GRID;
+    canvas.height = updateHeight * GRID;
+    SnakeSize = GRID
+    reset()
+    clearCanvas();
+}
+
+
 let score = 0;
-let snake =[
-    {x:200,y:200},
-    {x:190,y:200},
-    {x:180,y:200},
-]
-let food = {x:100,y:100}
+let snake =[]
+let food = {}
 let speed = 200;
 function NewFood() {
-    food.x =SnakeSize * Math.floor(Math.random() * convas.width/SnakeSize);
-    food.y =SnakeSize * Math.floor(Math.random() * convas.height/SnakeSize)
+    food.x = SnakeSize * Math.floor(Math.random() * (canvas.width / SnakeSize));
+    food.y = SnakeSize * Math.floor(Math.random() * (canvas.height / SnakeSize));
     if (snake.some(segment=>(segment.x===food.x&&segment.y===food.y))){
         NewFood()
     }
@@ -97,7 +102,7 @@ function move(a,b) {
 
 function clearCanvas(){
     ctx.fillStyle = "white";
-    ctx.fillRect(0,0,convas.width,convas.height);
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 }//绘制和清空背景
 function drawSnake(){
     ctx.fillStyle = "pink";
@@ -112,7 +117,7 @@ function moveSnake() {
     dx = movefeetx
     dy = movefeety
     const head = {x: snake[0].x + dx, y: snake[0].y + dy}
-    if (head.x < 0 || head.x > convas.width || head.y < 0 || head.y > convas.height||snake.some(segment=> segment.x===head.x && segment.y===head.y)) {
+    if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height||snake.some(segment=> segment.x===head.x && segment.y===head.y)) {
         alert("似了喵T T")
         gametimes +=1
         document.getElementById("times").innerHTML = "你已游玩"+gametimes+"次";
@@ -137,6 +142,7 @@ function gamestart(){
     document.getElementById("score").innerHTML = "分数:"+0+"分喵"
     gametimes += 1;
     if(gametimes < 2){
+        setposition()
         main()
     }
     else {
@@ -147,11 +153,8 @@ function gamestart(){
     document.getElementById("times").innerHTML = "你已游玩"+gametimes+"次";
 }
 let paused = false
-function replay(){
-    paused = false
-}
 function freeze(){
-    paused = true
+    paused = !paused
 }
 function main() {
     gameloop = setTimeout(function tick() {
@@ -164,18 +167,22 @@ function main() {
         main()
     },speed);
 }
-function reset(){
-    clearTimeout(gameloop)
-    snake =[
-    {x:200,y:200},
-    {x:190,y:200},
-    {x:180,y:200},]
+function setposition(){
+     snake =[
+    {x:10*SnakeSize,y:10*SnakeSize},
+    {x:9*SnakeSize,y:10*SnakeSize},
+    {x:8*SnakeSize,y:10*SnakeSize},
+        ]
      score = 0
     speed = 200
     movefeetx = SnakeSize;
     movefeety = 0
     drawSnake()
     NewFood()
+}
+function reset(){
+    clearTimeout(gameloop)
+    setposition()
     document.getElementById("score").innerHTML = "分数:"+0+"分喵"
 }
 </script>
