@@ -8,7 +8,7 @@ body {
 
 /* 这是h1的样式 */
 h1{
-    font-size: 50px;
+    font-size: clamp(30px, 10vw, 50px);
     text-align: center;
     font-weight: 700;
     color: deeppink;
@@ -19,7 +19,7 @@ h1{
         0 -5px white;
  }
 h2{
-    font-size: 25px;
+    font-size: clamp(10px, 4vw, 25px);
     font-weight: 700;
     color: yellowgreen;
      text-shadow:

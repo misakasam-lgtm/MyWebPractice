@@ -90,7 +90,8 @@
 
 <body>
     <h1>猫咪赛跑</h1>
-    <div class="tips">游戏说明: 开局拥有2000鱼干，赢得1万鱼干即可获胜，结算后低于200鱼干将会失败</div>
+    <h2>游戏说明: 开局拥有2000鱼干，赢得1万鱼干即可获胜，结算后低于200鱼干将会失败<br>
+        开始赛跑后，每秒会获得20鱼干，猫的状态会影响获胜奖励</h2>
     <div class="tips">
         <canvas id="canvas"  style="border:1px solid deeppink;width:100%; max-width:800px; height:auto"></canvas><br>
     </div>
@@ -106,9 +107,16 @@
     <div class="tips">
         <button onclick="bet()">确认</button>
     </div>
-
-
-
+    <h2>获胜奖励</h2>
+    <table id="betRate">
+        <tr>
+            <th>Ace Taffy</th>
+            <th>Seren Azuma</th>
+            <th>NyaRu</th>
+            <th>Diana</th>
+        </tr>
+    </table>
+    <h2>结果统计</h2>
     <table id="winner">
         <tr>
             <th>局数</th>
@@ -120,6 +128,7 @@
 </body>
 <script>
     addEventListener("load", clearcanvans)
+    addEventListener("load", updateRate)
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = canvas.offsetWidth;
@@ -130,22 +139,26 @@
         x: canvas.width * 0.1,
         y: canvas.height * 0.3,
         color: "pink",
-        name: "Ace Taffy"
+        name: "Ace Taffy",
+        catSpeed: 0
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.5,
         color: "white",
-        name: "Seren Azuma"
+        name: "Seren Azuma",
+        catSpeed: 0
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.7,
         color: "aqua",
-        name: "NyaRu"
+        name: "NyaRu",
+        catSpeed: 0
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.9,
         color: "red",
-        name: "Diana"
+        name: "Diana",
+        catSpeed: 0
     }, ];
 
     function clearcanvans() {
@@ -229,11 +242,12 @@
     }
 
     let gameReady = true;
+
     function moveCat() {
             clearcanvans();
             cats.forEach(cat => {
-                let speed = 0.5+ Math.random()*0.5
-                 if (Math.random() < 0.005) {speed=0.15*canvas.width*Math.random()}
+                let speed = 3*cat.catSpeed+ Math.random()*0.5
+                 if (Math.random() < cat.catSpeed*0.05) {speed=0.1*canvas.width}
                 cat.x += speed;
                 drawCat(ctx, cat.x, cat.y, catwidth, cat.color);
             });
@@ -260,26 +274,31 @@
         x: canvas.width * 0.1,
         y: canvas.height * 0.3,
         color: "pink",
-        name: "Ace Taffy"
+        name: "Ace Taffy",
+        catSpeed: 0
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.5,
         color: "white",
-        name: "Seren Azuma"
+        name: "Seren Azuma",
+        catSpeed: 0
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.7,
         color: "aqua",
-        name: "NyaRu"
+        name: "NyaRu",
+        catSpeed: 0
     }, {
         x: canvas.width * 0.1,
         y: canvas.height * 0.9,
         color: "red",
-        name: "Diana"
+        name: "Diana",
+        catSpeed: 0
     }, ];
         gameReady = true;
         choiceon = true;
         user_choice = {cat:null,amount:0}
+        updateRate()
     }
     let gametimes = 0
 
@@ -369,6 +388,27 @@
     }
     setInterval(function setloop() {if(!gameReady)document.getElementById("fish").innerText = Number(document.getElementById("fish").innerText) + 20},1000
     )
+
+    function updateRate(){
+        cats.forEach(cat=>{cat.catSpeed = 0.05+Math.random()*0.06})
+        const tableBody = document.getElementById("betRate");
+        const tr = document.createElement("tr");
+          while (tableBody.rows.length > 1) { // 如果你上面加了说明行就 >2，否则 >1
+          tableBody.deleteRow(2 - 1); // 从第二行开始删（保持表头）
+            }
+        const average = cats.reduce((acc, item) => acc+item.catSpeed,0)/cats.length;
+        function truninrate(a){
+            let rate = (average/cats[a].catSpeed )**2 * 4
+            return rate.toFixed(2)
+        }
+        tr.innerHTML = `
+        <td>${truninrate(0)}</td>
+        <td>${truninrate(1)}</td>
+        <td>${truninrate(2)}</td>
+        <td>${truninrate(3)}</td>
+        `
+        tableBody.appendChild(tr)
+    }
 
 </script>
 
