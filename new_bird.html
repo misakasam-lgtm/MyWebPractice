@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小鸟游戏</title>
+    <link rel="stylesheet" href="style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .title{
+            font-size: clamp(18px, 5vw, 30px);
+            color: darkblue;
+            font-weight: bold;
+            text-align: center;
+            background: deeppink;
+            display: inline-block;
+            margin: 2px;
+        }
+          body{
+              margin: 4vw;
+            text-align: center;
+           }
+    </style>
+</head>
+<body>
+<h1>小鸟游戏</h1>
+<div class="title">分数:<span id="score">0</span>分喵</div><hr>
+<canvas id="canvas" style="max-width: 800px ;height:auto" onclick="jump()"></canvas>
+<hr>
+<button id = "startbtn" onclick="startGame()">开始</button>
+<button onclick="freeze()">暂停/继续</button>
+</body>
+<script>
+    addEventListener("resize",updateScreen)
+    addEventListener("load",reset)
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let birdbody
+    function updateScreen() {
+    canvas.width = innerWidth*0.95;
+    canvas.height = innerWidth*0.75;
+    birdbody = Math.floor(canvas.width/40);
+    }
+    let bird = []
+    let block1 = []
+    let block2 = []
+    let dx=0
+    let dy=0
+    let gameTimes = 0
+    let score = 0
+    let score_plus
+    let weight = 1
+    let gameLife = true
+    let speed = 100
+    let pause = false
+
+    function clearCanvas() {
+        ctx.fillStyle = "#cceeff";
+         ctx.fillRect(0, 0, canvas.width, canvas.height); // 天空蓝背景
+         ctx.fillStyle = "green";
+        ctx.fillRect(0, canvas.height - 3*birdbody, canvas.width, 3*birdbody); // 地面
+        ctx.fillStyle = "white";
+        ctx.shadowColor = "rgba(0,0,0,0.2)";
+        ctx.shadowBlur = 15;
+        ctx.roundRect(5*birdbody, 3*birdbody, 10*birdbody , 3*birdbody,3*birdbody);//云
+        ctx.roundRect(canvas.width-3*birdbody, 3*birdbody, 10*birdbody , 5*birdbody,3*birdbody);
+        ctx.fill()
+    }
+    function newBlock() {
+        const newBlocky = Math.floor(Math.random() * canvas.height * 3 / 4)
+        block1.unshift({x: canvas.width, y: newBlocky});
+        block2.unshift({x: canvas.width, y: newBlocky + 6 * birdbody});
+        while (block1.length > 2) {
+            block1.pop()
+            block2.pop()
+        }
+    }
+
+
+    function resetPosition() {
+        bird = {x:canvas.width*0.3,y:canvas.height*0.5}
+        block1 = [{x:canvas.width*0.6,y:canvas.height*0.6}]
+        block2 = [{x:canvas.width*0.6,y:canvas.height*0.6+6*birdbody}]
+        dx = -birdbody
+        dy = birdbody
+    }
+
+     function reset(){
+        updateScreen()
+        resetPosition()
+        clearCanvas()
+         clearInterval(gameLoop)
+        score = 0
+        document.getElementById("score").innerHTML= score
+        speed = 100
+        score_plus = true
+        weight = 1
+        gameLife = true
+         speed = 100
+         pause = false
+    }
+
+    function drawBird() {
+        ctx.fillStyle = "yellow";
+          if(bird.y >canvas.height+birdbody||bird.y <0-2*birdbody){
+              gameLife = false
+          }
+        bird.y += weight/8*birdbody + birdbody;
+        ctx.fillRect(bird.x, bird.y, birdbody, birdbody)
+        weight +=1
+        Wincheck()
+    }
+    function drawBlock(){
+        block1.forEach(setment=>{
+                    setment.x -=birdbody
+                    ctx.fillStyle = "darkblue"
+                    ctx.fillRect(setment.x,0,birdbody,setment.y)
+                })
+        block2.forEach(setment=>{
+                    setment.x -=birdbody
+                    ctx.fillStyle = "darkblue"
+                    ctx.fillRect(setment.x,setment.y,birdbody,canvas.height-setment.y)
+                })
+
+    }
+
+    function moveblock() {
+        if (birdbody>=block1[0].x-bird.x){
+            if (bird.y < block1[0].y-0.5*birdbody || bird.y > block2[0].y+0.5*birdbody){
+                gameLife = false
+            }
+            else {
+                scorePlus()
+                drawBlock()
+                newBlock()
+            }
+        }
+        else {
+            score_plus = true
+            drawBlock()
+        }
+        Wincheck()
+    }
+
+    function jump(){
+        weight = -15
+    }
+    function Wincheck(){
+        if(!gameLife){
+            alert("似了喵")
+            startGame()
+            }
+    }
+    function scorePlus(){
+        if (score_plus) {
+            score += 1
+            document.getElementById("score").innerHTML = score
+            score_plus = false
+            speedUp()
+        }
+    }
+    function startGame(){
+        gameTimes+=1
+        if(gameTimes<2){
+            main()
+        }
+        else {
+            reset()
+            main()
+        }
+    }
+    function speedUp(){
+        if (speed>50) {
+            speed -= 1
+            clearInterval(gameLoop)
+            main()
+        }
+    }
+    function freeze(){
+        pause = !pause
+    }
+    let gameLoop
+    function main(){
+        gameLoop = setInterval(function(){
+            if(!pause) {
+                clearCanvas()
+                drawBird()
+                moveblock()
+            }
+            }
+            ,speed
+        )
+    }
+
+
+</script>
+</html>
