@@ -9,6 +9,15 @@
         body{
             text-align: center;
         }
+        h2{
+            color: darkblue;
+            font-weight: bold;
+            text-align: center;
+            background: deeppink;
+            display: inline-block;
+            margin: 2px;
+            font-size: clamp(12px, 2vw, 16px);
+        }
         #score{
             color: darkblue;
             font-weight: bold;
@@ -39,6 +48,8 @@
 </head>
 <body>
 <h1>贪吃蛇喵</h1>
+<h2>你的鱼干:<span id="fish">0</span></h2><br>
+<h2>（每分可以获得50鱼干）</h2>
 <div style="text-align: center"><div id="score">分数:0分喵</div><br><div id="times">你已游玩0次</div></div>
 <canvas id = "Snakegame" style=" width:100% ;max-width: 400px; height:auto"></canvas><hr>
 <button class = "opbtm" id = "up" onclick="move(0,-1)">↑</button>
@@ -53,10 +64,57 @@
 <br><button id = "shutdownbtn" onclick="freeze()">暂停/继续</button >
 
 </body>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
+const supabaseUrl = 'https://rvzfjypuxbptqxyxcmzu.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+const playerID = localStorage.getItem('logPlayerID');
+async function loadFish(){
+    const {data,error} = await supabaseClient
+        .from("player")
+        .select("fish")
+        .eq("id",playerID)
+        .maybeSingle()
+    if (error) {
+        console.log(error)
+        return
+    }
+    if(!data){
+        console.log("用户不存在")
+        return
+    }
+    document.getElementById("fish").innerHTML=data.fish
+}
+async function addFish(amount){
+     const {data,error} = await supabaseClient
+      .from("player")
+      .select("fish")
+      .eq("id",playerID)
+      .maybeSingle()
+    if (error) {
+        console.log(error)
+        return
+    }
+    if(!data){
+        console.log("用户不存在")
+        return
+    }
+    const newFish = data.fish + amount
+    const {error:updateError} = await supabaseClient
+    .from("player")
+    .update({fish:newFish})
+    .eq("id",playerID)
+    if (updateError){
+        console.log(error)
+        return
+    }
+    document.getElementById("fish").innerHTML=newFish
+}
 addEventListener("resize", updateScreen)
 addEventListener("load", updateScreen)
 addEventListener("load", clearCanvas)
+addEventListener("load", loadFish)
 const canvas = document.getElementById("Snakegame");
 let SnakeSize = 0.05 * canvas.width;
 const ctx = canvas.getContext("2d");
@@ -121,6 +179,7 @@ function moveSnake() {
         alert("似了喵T T")
         gametimes +=1
         document.getElementById("times").innerHTML = "你已游玩"+gametimes+"次";
+        addFish((Number(score)*50))
         reset()
     }
     else {

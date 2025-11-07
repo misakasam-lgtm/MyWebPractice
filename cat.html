@@ -90,13 +90,12 @@
 
 <body>
     <h1>猫咪赛跑</h1>
-    <h2>游戏说明: 开局拥有2000鱼干，赢得1万鱼干即可获胜，结算后低于200鱼干将会失败<br>
-        开始赛跑后，每秒会获得20鱼干，猫的状态会影响获胜奖励</h2>
+    <h2>游戏说明: 开始赛跑后，每秒会获得20鱼干，猫的状态会影响获胜奖励</h2>
     <div class="tips">
         <canvas id="canvas"  style="border:1px solid deeppink;width:100%; max-width:800px; height:auto"></canvas><br>
     </div>
 
-    <div class="tips"> 你的鱼干： <span  id="fish">2000</span> </div>
+    <div class="tips"> 你的鱼干： <span  id="fish">0</span> </div>
     <div class="tips"><label>你要使用:<input id = "user_bet" class=tips type="number"></label>给</div>
     <div class="tips">
         <label><input type="radio" name="chooseCat" value="Ace Taffy">Ace Taffy</label>
@@ -126,8 +125,57 @@
         </tr>
     </table>
 </body>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
+       //这里开始是网络数据库部分
+
+     const supabaseUrl = 'https://rvzfjypuxbptqxyxcmzu.supabase.co'
+     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'
+     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+      const playerID = localStorage.getItem('logPlayerID');
+
+    async function loadFish() {
+        const {data,error} = await supabaseClient
+            .from("player")
+            .select("fish")
+            .eq("id",playerID)
+            .maybeSingle();
+        if(error&&error.code !== "PGRST116"){console.error(error);return 0}
+        let fish = data? data.fish : 0
+        document.getElementById("fish").innerHTML = fish
+        return fish
+    }
+
+    async function addFish(amount) {
+        const {data:existing,error} = await supabaseClient
+        .from("player")
+         .select("fish")
+        .eq("id",playerID)
+        .maybeSingle();
+        if(error){
+            console.error(error)
+            return;
+        }
+        if(!existing){
+            console.log("账号不存在")
+            return;
+        }
+        const newFish = existing.fish + amount;
+        const {error:updateError} = await supabaseClient
+        .from("player")
+        .update({fish:newFish})
+        .eq("id",playerID)
+        if(updateError){
+            console.error(error)
+            return
+        }
+        document.getElementById("fish").innerHTML = newFish;
+    }
+
+
+    //游戏主体
     addEventListener("load", clearcanvans)
+    addEventListener("load",loadFish)
     addEventListener("load", updateRate)
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -334,10 +382,9 @@
                 return;
             }
             user_choice.cat = user_cat;
-            user_choice.amount = user_bet;
+            user_choice.amount = Math.round(Number(user_bet));
             alert("你给" + user_choice.cat + "投喂了" + user_choice.amount);
-            let last_fish = Number(document.getElementById("fish").innerText) - Number(user_choice.amount);
-            document.getElementById("fish").innerHTML = `${last_fish}`;
+            addFish((-user_choice.amount));
             choiceon = false;
             main()
         }
@@ -346,46 +393,23 @@
         }
     }
     let winfish = 0
-    let gamewin = false
     function winner_check(){
         winfish = 0
         if (user_choice.cat === winner.name){
             winfish = Math.round(winner.rate* user_choice.amount);
-            let newfish = Number(document.getElementById("fish").innerText) + winfish
-            document.getElementById("fish").innerHTML = `${Math.round(Number(newfish))}`;
-            if(Number(newfish)>10000 && !gamewin) {
-                gamewin = true
-                let again = confirm("你通关了喵，确认：挑战更高分，取消：重新开始")
-                if (!again) {
-                    document.getElementById("fish").innerHTML = "2000"
-                    gamewin = false
-                }
-            }
-                else {
-                    alert(winner.name+"获胜"+"你赢得了"+winfish+"个鱼干");
-                }
-
+            addFish(winfish)
+            alert("你赢了喵，获得了"+winfish+"条鱼");
             }
         else {
-            if (Number(document.getElementById("fish").innerText) <= 200) {
-                alert("破产了喵,点击重新开始")
-                document.getElementById("fish").innerHTML = "2000"
-                gamewin = false
-            }
-
-            else {
             alert("没猜中，你的鱼被吃完了喵，获胜者是"+winner.name)
-                    }
         }
     }
-    setInterval(function setloop() {if(!gameReady)document.getElementById("fish").innerText = Number(document.getElementById("fish").innerText) + 20},1000
-    )
 
     function updateRate(){
         cats.forEach(cat=>{cat.catSpeed = 0.01+Math.random()*0.05})
         const tableBody = document.getElementById("betRate");
         const tr = document.createElement("tr");
-          while (tableBody.rows.length > 1) { // 如果你上面加了说明行就 >2，否则 >1
+          while (tableBody.rows.length > 1) { // 如果上面加了说明行就 >2，否则 >1
           tableBody.deleteRow(2 - 1); // 从第二行开始删（保持表头）
             }
         const average = cats.reduce((acc, item) => acc+item.catSpeed,0)/cats.length;
@@ -401,6 +425,7 @@
         `
         tableBody.appendChild(tr)
     }
+
 
 </script>
 

@@ -23,15 +23,66 @@
 </head>
 <body>
 <h1>小鸟游戏</h1>
-<div class="title">分数:<span id="score">0</span>分喵</div><hr>
+<div class="title">分数:<span id="score">0</span>分喵</div>
+<br>
+<div class="title" style="font-size: clamp(10px,3vw,18px)">你的鱼干:<span id="fish">0</span>(每分可以获得50鱼干)</div>
+<hr>
 <canvas id="canvas" style="max-width: 800px ;height:auto" onclick="jump()"></canvas>
 <hr>
 <button id = "startbtn" onclick="startGame()">开始</button>
 <button onclick="freeze()">暂停/继续</button>
 </body>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
+const supabaseUrl = 'https://rvzfjypuxbptqxyxcmzu.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+const playerID = localStorage.getItem('logPlayerID');
+async function loadFish(){
+    const {data,error} = await supabaseClient
+        .from("player")
+        .select("fish")
+        .eq("id",playerID)
+        .maybeSingle()
+    if (error) {
+        console.log(error)
+        return
+    }
+    if(!data){
+        console.log("用户不存在")
+        return
+    }
+    document.getElementById("fish").innerHTML=data.fish
+}
+async function addFish(amount) {
+    const {data, error} = await supabaseClient
+        .from("player")
+        .select("fish")
+        .eq("id", playerID)
+        .maybeSingle()
+    if (error) {
+        console.log(error)
+        return
+    }
+    if (!data) {
+        console.log("用户不存在")
+        return
+    }
+    const newFish = data.fish + amount
+    const {error: updateError} = await supabaseClient
+        .from("player")
+        .update({fish: newFish})
+        .eq("id", playerID)
+    if (updateError) {
+        console.log(error)
+        return
+    }
+    document.getElementById("fish").innerHTML = newFish
+}
+
     addEventListener("resize",updateScreen)
     addEventListener("load",reset)
+    addEventListener("load",loadFish)
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     let birdbody
@@ -106,32 +157,34 @@
           }
         bird.y += weight/8*birdbody + birdbody;
         ctx.fillRect(bird.x, bird.y, birdbody, birdbody)
-        weight +=1
+        weight +=1.5
         Wincheck()
     }
     function drawBlock(){
         block1.forEach(setment=>{
                     setment.x -=birdbody
                     ctx.fillStyle = "darkblue"
-                    ctx.fillRect(setment.x,0,birdbody,setment.y)
+                    ctx.fillRect(setment.x,0,birdbody*2,setment.y)
                 })
         block2.forEach(setment=>{
                     setment.x -=birdbody
                     ctx.fillStyle = "darkblue"
-                    ctx.fillRect(setment.x,setment.y,birdbody,canvas.height-setment.y)
+                    ctx.fillRect(setment.x,setment.y,birdbody*2,canvas.height-setment.y)
                 })
 
     }
 
     function moveblock() {
-        if (birdbody>=block1[0].x-bird.x){
-            if (bird.y < block1[0].y-0.5*birdbody || bird.y > block2[0].y+0.5*birdbody){
+        if (birdbody>=block1[0].x-bird.x&& block1[0].x-bird.x>=-birdbody){
+            if (bird.y < block1[0].y-0.5*birdbody || bird.y > block2[0].y-0.5*birdbody){
                 gameLife = false
             }
             else {
                 scorePlus()
                 drawBlock()
-                newBlock()
+                if(block1[0].x-bird.x<-birdbody) {
+                    newBlock()
+                }
             }
         }
         else {
@@ -142,11 +195,12 @@
     }
 
     function jump(){
-        weight = -15
+        weight = -17
     }
     function Wincheck(){
         if(!gameLife){
             alert("似了喵")
+            addFish((Number(score)*50))
             startGame()
             }
     }
@@ -170,7 +224,7 @@
     }
     function speedUp(){
         if (speed>50) {
-            speed -= 1
+            speed -= 2
             clearInterval(gameLoop)
             main()
         }

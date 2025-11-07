@@ -3,26 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>请输入密码</title>
+    <title>登录页</title>
     <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-
-<div style="text-align: center;margin-top: clamp(100px,60vw,200px)">
-<h1>请输入密码</h1>
-    <div style="display: inline-block">
-        <span style="display: inline-block;font-size: clamp(12px,5vw,25px);
+    <style>
+        label{
+            width: clamp(50px, 30vw, 150px);
+            display: block;
+            text-align: right;
+            font-size: clamp(10px, 4vw, 25px);
+            margin-right: 1vw;
     font-weight: 700;
     color: yellowgreen;
      text-shadow:
         1px 0 white,
        -1px 0 white,
         0 1px white,
-        0 -1px white;">喵喵喵:   <input type=password id="passcode" placeholder="请输入密码" style="font-size: 25px;text-align: center;border: 5px solid purple;"></span>
-    <br><br>
-    <button class="ButtonText" style="background: coral ;border-radius: 8px;" onclick="passcode()">登录</button>
-    <script src="./coldq_wqdf.js"></script>
+        0 -1px white;
+        }
+        input{
+            height: clamp(10px,5vw,25px);
+            width: clamp(80px,50vw,150px);
+            margin-bottom: 1vw;
+            margin-top: 5px;
+        }
+        button{
+            background: coral ;border-radius: 8px;
+            margin: 2vw;
+        }
+        .loginbtn{
+            display: block;
+            text-align: center;
+        }
+        .Formbox{
+            display: none;
+            text-align: center;        /* 让整体内容居中 */
+            margin: 0 auto;            /* 居中块元素 */
+            width: fit-content;        /* 宽度随内容 */
+        }
+        .Formbox.active{
+            display: block;
+        }
+        .formbox-row{
+            display: flex;
+            align-items: center;
+            justify-content:flex-end;
+            margin-right: 8vw;
+        }
+    </style>
+</head>
+<body>
+
+<div style="text-align: center;margin-top: clamp(100px,60vw,200px)">
+<h1>欢迎来到喵喵屋</h1>
+    <div class="Formbox active" id = "LoginCard">
+        <div class="formbox-row">
+        <label for="name">昵称: </label><input type=text id="name" placeholder="请输入昵称">
+        </div>
+            <div class="formbox-row">
+        <label for="password">密码: </label><input type=password id="password" placeholder="请输入密码">
+            </div>
+        <div class="loginbtn">
+    <button class="ButtonText" id= "Login" onclick="loginUser()">登录</button>
+    <button class="ButtonText" id= "RegisterSwitch" onclick="SwitchCard ('register')">注册</button>
+        </div>
     </div>
+    <div class="Formbox" id = "RegisterCard">
+        <div class="formbox-row">
+        <label for="ReName">昵称: </label><input type=text id="ReName" placeholder="请输入昵称">
+        </div>
+         <div class="formbox-row">
+        <label for="RePassword">密码: </label><input type=password id="RePassword" placeholder="请输入密码">
+         </div>
+         <div class="formbox-row">
+        <label for="RePassword2">确认密码: </label><input type=password id="RePassword2" placeholder="请再次请输入密码">
+         </div>
+         <div class="loginbtn">
+        <button class="ButtonText" id= "Register" onclick="registerUser()">注册</button>
+        <button class="ButtonText" id= "back" onclick="SwitchCard ('login')">返回</button>
+         </div>
+    </div>
+
 </div>
 </body>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="./coldq_wqdf.js"></script>
 </html>

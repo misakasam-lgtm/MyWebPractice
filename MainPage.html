@@ -18,6 +18,7 @@
 </div>
 <!--<img src="Headimg.png" alt="加载不出了喵" class="full-width">-->
 <hr>
+<p id="hello">欢迎</p>
 <p>这是一些练习用的小工具</p>
 <div class="button-container">
     <a href="BMICalculator.html"><button class="MainBotton ButtonText">BMI计算器</button></a>
@@ -31,5 +32,12 @@
 
 
 </body>
+<script>
+    addEventListener("load", hello)
+     const playerName = localStorage.getItem('logPlayerName');
+     function hello(){
+         document.getElementById('hello').innerHTML = playerName+",欢迎回来喵";
+     }
+</script>
 
 </html>
