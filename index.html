@@ -54,7 +54,7 @@
 <body>
 
 <div style="text-align: center;margin-top: clamp(100px,60vw,200px)">
-<h1>欢迎来到喵喵屋</h1>
+<h1>欢迎来到喵屋</h1>
     <div class="Formbox active" id = "LoginCard">
         <div class="formbox-row">
         <label for="name">昵称: </label><input type=text id="name" placeholder="请输入昵称">
@@ -77,6 +77,10 @@
          <div class="formbox-row">
         <label for="RePassword2">确认密码: </label><input type=password id="RePassword2" placeholder="请再次请输入密码">
          </div>
+        <div class="formbox-row">
+        <label for="invite">喵请码: </label><input type=text id="invite" placeholder="请输入邀请码">
+         </div>
+
          <div class="loginbtn">
         <button class="ButtonText" id= "Register" onclick="registerUser()">注册</button>
         <button class="ButtonText" id= "back" onclick="SwitchCard ('login')">返回</button>

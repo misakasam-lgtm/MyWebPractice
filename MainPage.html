@@ -23,23 +23,31 @@
 <div class="button-container">
     <a href="BMICalculator.html"><button class="MainBotton ButtonText">BMI计算器</button></a>
     <a href="calculator.html"><button class="MainBotton ButtonText">普通计算器(测试版)</button></a>
-    <a href="Snake.html"><button class="MainBotton ButtonText">贪吃蛇</button> </a>
     <a href="bird.html"><button class = "MainBotton ButtonText">小鸟游戏</button></a>
+    </div>
+    <hr>
+    <div>
+        <p>使用鱼干的游戏</p>
+    </div>
+<div class="button-container">
+    <a href="Snake.html"><button class="MainBotton ButtonText">贪吃蛇</button> </a>
     <a href="cat.html"><button class = "MainBotton ButtonText">猫咪赛跑</button></a>
     <a href="new_bird.html"><button class = "MainBotton ButtonText">小鸟游戏(新)</button></a>
 </div>
 <p>更新中。。。<span class="spinner"></span> </p>
 
-
 </body>
 <script>
     addEventListener("load", hello)
-     const playerName = localStorage.getItem('logPlayerName');
      function hello(){
-         document.getElementById('hello').innerHTML = playerName+",欢迎回来喵";
+        const playerName = sessionStorage.getItem('logPlayerName');
+         if (playerName) {
+         document.getElementById('hello').innerHTML = playerName+",欢迎回来喵";}
+         else {
+             alert("请先登录喵")
+             window.location.href = "./index.html";
+         }
      }
 </script>
 
 </html>
-
-
