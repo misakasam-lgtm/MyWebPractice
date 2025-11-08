@@ -69,7 +69,7 @@
 const supabaseUrl = 'https://rvzfjypuxbptqxyxcmzu.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
-const playerID = sessionStorage.getItem('logPlayerID');
+const playerID = localStorage.getItem('logPlayerID');
 async function loadFish(){
      if(!playerID){
          alert("请先登录喵")

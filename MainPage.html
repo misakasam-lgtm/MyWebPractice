@@ -40,7 +40,7 @@
 <script>
     addEventListener("load", hello)
      function hello(){
-        const playerName = sessionStorage.getItem('logPlayerName');
+        const playerName = localStorage.getItem('logPlayerName');
          if (playerName) {
          document.getElementById('hello').innerHTML = playerName+",欢迎回来喵";}
          else {
