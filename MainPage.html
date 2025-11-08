@@ -38,11 +38,12 @@
 
 </body>
 <script>
+      const playerName = localStorage.getItem('logPlayerName');
+      const playerID = localStorage.getItem('logPlayerID');
     addEventListener("load", hello)
      function hello(){
-        const playerName = localStorage.getItem('logPlayerName');
-         if (playerName) {
-         document.getElementById('hello').innerHTML = playerName+",欢迎回来喵";}
+         if (playerID) {
+         document.getElementById('hello').innerHTML = `${playerName}(uid:${playerID}),欢迎回来喵`;}
          else {
              alert("请先登录喵")
              window.location.href = "./index.html";
