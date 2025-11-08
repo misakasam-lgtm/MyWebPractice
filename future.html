@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫の神社</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+            background-color: deeppink;
+            background-image:
+            repeating-linear-gradient(90deg, darkgray 0 3px, transparent 5px 30px);
+        }
+        canvas {
+         position: fixed;   /* 固定在屏幕上 */
+        top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         pointer-events: none; /* 鼠标事件穿透，不挡按钮点击 */
+         z-index: 0;          /* 放在最底层 */
+            }
+        label{
+            font-weight: 600;
+            display: block;
+            font-size:clamp(18px, 3vw, 30px);
+            margin-bottom: 1vw;
+            color: red;
+            text-shadow:   2px 0 white,
+                          -2px 0 white,
+                           0 2px white,
+                           0 -2px white;
+        }
+        input{
+            width: 50vw;
+            height: 2vw;
+            background: red;
+            color: white;
+            border-radius: 10px;
+            padding: 5px;
+            outline: none;
+            border: 1vw solid white;
+            font-size: clamp(12px, 3vw, 20px);
+        }
+        button{
+            border-radius: 10px;
+            background-color: red;
+        }
+        #result{
+            background-color: lightgreen;
+            height: clamp(50px, 15vh, 300px);
+            width: 50vw;
+            color: black;
+            border-radius: 10px;
+            padding: 5px;
+            outline: none;
+            border: 1vw solid white;
+            font-size: clamp(12px, 3vw, 20px);
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<h1>猫の神社</h1>
+<h1 style="font-size: clamp(30px,15vw,80px)">🐈‍⛩️🐈‍</h1>
+<div style="margin-top: clamp(30px, 20vw, 50px);)">
+<label for="things">你今天要占卜的事是？</label>
+<input id="things" type="text" placeholder="今天能吃到鱼吗？">
+    <br>
+<button style="margin: 2vw" onclick="getFortune()">抽签</button><br>
+    <label for="result" >解签</label><textarea id="result" type="text" readonly placeholder="祝你好运喵"></textarea>
+</div>
+<img src="img/right01.jpg" alt="图没了喵" style="position: fixed;right: 1px;bottom:1px;width: auto;max-height:30vh">
+<img src="img/left01.jpg" alt="图没了喵" style="position: fixed;left: 1px;bottom:1px;width: auto;max-height:30vh">
+</body>
+
+<script>
+    const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+});
+
+// 创建樱花
+const petals = [];
+const petalCount = 20;
+
+for (let i = 0; i < petalCount; i++) {
+  petals.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    size: 5 + Math.random() * 10,
+    speedY: 1 + Math.random() * 2,
+    speedX: Math.random() * 1 - 0.5,
+    angle: Math.random() * 360,
+    rotationSpeed: Math.random() * 0.02 - 0.01
+  });
+}
+
+// 绘制樱花
+function drawPetal(p) {
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.angle);
+  ctx.fillStyle = 'pink';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.restore();
+}
+
+// 动画循环
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+
+  for (let p of petals) {
+    p.y += p.speedY;
+    p.x += p.speedX;
+    p.angle += p.rotationSpeed;
+
+    if (p.y > height) {
+      p.y = -10;
+      p.x = Math.random() * width;
+    }
+
+    if (p.x > width) p.x = 0;
+    if (p.x < 0) p.x = width;
+
+    drawPetal(p);
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+//占卜
+const playerID = localStorage.getItem('logPlayerID');
+const playerName = localStorage.getItem('logPlayerName');
+const today = new Date().toISOString().slice(0, 10);
+addEventListener('load', logCheck);
+function logCheck() {
+    if (!playerID) {
+        alert("请先登录喵")
+        window.location.href = "./index.html";
+    }
+}
+const results = ['💖💖💖💖💖:出乎意料的好运喵，本猫觉得你今天很适合{q}喵',
+    '💖💖💖💖:好运喵，据说{q}的时候心里喵喵叫就不会有问题了喵',
+    '💖💖💖:喵呜，本猫也感觉困惑了喵，{q}这件事似乎喜忧参半呢',
+    '💖💖:如果你是个冒险家的话，值得在今天尝试下{q}喵',
+    '💖:恐怖喵，本猫建议你今天最好不要{q}喵'
+    ];
+function hashString(str) {
+  let hash = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    hash ^= str.charCodeAt(i);
+    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+  }
+  return hash >>> 0;
+}
+
+function seededRandom(s) {
+  s = (s * 9301 + 49297) % 233280;
+  return s / 233280;
+}
+function getFortune() {
+  const question = document.getElementById('things').value
+    if (!question) {
+        alert("不可以什么也不问喵!")
+        return
+    }
+  const seed = hashString(question + today + playerID);
+  const index = Math.floor(seededRandom(seed) * results.length);
+  const text = results[index].replace('{q}',question);
+  document.getElementById('result').value = `由于你的虔诚参拜，猫咪回应你:
+  ${text}。
+  (${playerName}于${today}参拜)`;
+}
+</script>
+</html>
