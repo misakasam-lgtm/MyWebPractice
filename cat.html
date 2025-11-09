@@ -96,7 +96,7 @@
     </div>
 
     <div class="tips"> 你的鱼干： <span  id="fish">0</span> </div>
-    <div class="tips"><label>你要使用:<input id = "user_bet" class=tips type="number"></label>给</div>
+    <div class="tips"><label>你要使用:<input id = "user_bet" class=tips></label>给</div>
     <div class="tips">
         <label><input type="radio" name="chooseCat" value="Ace Taffy">Ace Taffy</label>
         <label> <input type="radio" name="chooseCat" value="Seren Azuma">Seren Azuma</label>
@@ -181,6 +181,13 @@
     addEventListener("load", clearcanvans)
     addEventListener("load",loadFish)
     addEventListener("load", updateRate)
+    const input_user_bet = document.getElementById("user_bet")
+    function remove(){
+        this.value = this.value
+        .replace(/\D/g,"")
+    }
+    input_user_bet.addEventListener("input", remove);
+
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = canvas.offsetWidth;
@@ -304,9 +311,9 @@
                 requestAnimationFrame(moveCat);
             } else {
                 winner = cats.find(cat => (cat.x > canvas.width - 0.12*canvas.width));
-                winner_check();
+                const gainFish = winner_check();
                 clearcanvans();
-                winnerCollect(winner.name,user_choice.cat,(winfish - user_choice.amount));
+                winnerCollect(winner.name,user_choice.cat,(gainFish - user_choice.amount));
                 reset()
             }
     }
@@ -343,8 +350,10 @@
         choiceon = true;
         user_choice = {cat:null,amount:0}
         updateRate()
+        winner = null
     }
     let gametimes = 0
+
 
 
     function winnerCollect(a,b,c) {
@@ -396,17 +405,17 @@
             alert("没鱼了喵")
         }
     }
-    let winfish = 0
-    function winner_check(){
-        winfish = 0
+    async function winner_check(){
+        let winfish = 0
         if (user_choice.cat === winner.name){
             winfish = Math.round(winner.rate* user_choice.amount);
-            addFish(winfish)
+            await addFish(winfish)
             alert("你赢了喵，获得了"+winfish+"条鱼");
             }
         else {
             alert("没猜中，你的鱼被吃完了喵，获胜者是"+winner.name)
         }
+        return winfish;
     }
 
     function updateRate(){
