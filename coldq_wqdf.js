@@ -22,25 +22,26 @@ async function registerUser() {
     const ReNickName = document.getElementById("ReName").value.trim();
     const RePassword = document.getElementById("RePassword").value;
     const  RePassword2 = document.getElementById("RePassword2").value;
-    const{data:invite_key,error:updateError} = await supabaseClient
+
+     if(!ReNickName||!RePassword||!RePassword2) {
+        alert("请填写完整");
+        return;
+    }
+    if (!safeNamePattern.test(ReNickName)) {
+        alert("昵称有违规字符喵！");
+        return;
+        }
+    if(RePassword !== RePassword2) {
+        alert("两次密码不一致")
+        return
+    }
+     const{data:invite_key,error:updateError} = await supabaseClient
         .from ("invite_key")
         .select("key")
         .eq("id",1)
         .maybeSingle()
     if(updateError){
         console.log("error")
-        return
-    }
-    if (!safeNamePattern.test(ReNickName)) {
-        alert("昵称有违规字符喵！");
-        return;
-        }
-    if(!ReNickName||!RePassword||!RePassword2) {
-        alert("请填写完整");
-        return;
-    }
-    if(RePassword !== RePassword2) {
-        alert("两次密码不一致")
         return
     }
     if (inviteCode !== invite_key.key) {
