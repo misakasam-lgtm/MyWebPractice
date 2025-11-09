@@ -149,7 +149,7 @@ animate();
 //占卜
 const playerID = localStorage.getItem('logPlayerID');
 const playerName = localStorage.getItem('logPlayerName');
-const today = new Date().toISOString().slice(0, 10);
+const today = new Date().toLocaleDateString("zh-CN",{timeZone:'Asia/Shanghai'}).replace(/\//g,'-');
 addEventListener('load', logCheck);
 function logCheck() {
     if (!playerID) {
