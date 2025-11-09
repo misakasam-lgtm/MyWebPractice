@@ -17,9 +17,24 @@ function SwitchCard(Card) {
      const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
 async function registerUser() {
+    const inviteCode = await sha256(document.getElementById("invite").value.trim())
     const ReNickName = document.getElementById("ReName").value.trim();
     const RePassword = document.getElementById("RePassword").value;
     const  RePassword2 = document.getElementById("RePassword2").value;
+    const{data:invite_key,error:updateError} = await supabaseClient
+        .from ("invite_key")
+        .select("key")
+        .eq("id",1)
+        .maybeSingle()
+    if(updateError){
+        console.log("error")
+        return
+    }
+    if (inviteCode !== invite_key.key) {
+        alert("请向管理员询问正确的喵请码")
+        return
+    }
+
     if(!ReNickName||!RePassword||!RePassword2) {
         alert("请填写完整");
         return;
@@ -43,7 +58,7 @@ async function registerUser() {
         .from('player')
         .insert([{name:ReNickName,password:hashedPassword,fish:8000}])
     if(error){alert("注册失败"); return}
-    alert('欢迎加入喵喵屋')
+    alert('欢迎加入喵屋')
     SwitchCard('login')
 }
 
