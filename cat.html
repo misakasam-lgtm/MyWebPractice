@@ -298,7 +298,7 @@
 
     let gameReady = true;
 
-    function moveCat() {
+    async function moveCat() {
             clearcanvans();
             cats.forEach(cat => {
                 let speed = cat.catSpeed+ Math.random()
@@ -311,9 +311,9 @@
                 requestAnimationFrame(moveCat);
             } else {
                 winner = cats.find(cat => (cat.x > canvas.width - 0.12*canvas.width));
-                const gainFish = winner_check();
+                const gainFish = await winner_check();
                 clearcanvans();
-                winnerCollect(winner.name,user_choice.cat,(gainFish - user_choice.amount));
+                winnerCollect(winner.name,user_choice.cat,Number(gainFish) - user_choice.amount);
                 reset()
             }
     }
