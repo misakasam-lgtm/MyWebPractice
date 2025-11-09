@@ -17,6 +17,7 @@ function SwitchCard(Card) {
      const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
 async function registerUser() {
+    const safeNamePattern = /^[\u4e00-\u9fa5a-zA-Z0-9_\-\s]+$/;
     const inviteCode = await sha256(document.getElementById("invite").value.trim())
     const ReNickName = document.getElementById("ReName").value.trim();
     const RePassword = document.getElementById("RePassword").value;
@@ -30,11 +31,10 @@ async function registerUser() {
         console.log("error")
         return
     }
-    if (inviteCode !== invite_key.key) {
-        alert("请向管理员询问正确的喵请码")
-        return
-    }
-
+    if (!safeNamePattern.test(ReNickName)) {
+        alert("昵称有违规字符喵！");
+        return;
+        }
     if(!ReNickName||!RePassword||!RePassword2) {
         alert("请填写完整");
         return;
@@ -43,6 +43,12 @@ async function registerUser() {
         alert("两次密码不一致")
         return
     }
+    if (inviteCode !== invite_key.key) {
+        alert("请向管理员询问正确的喵请码")
+        return
+    }
+
+
      const hashedPassword = await sha256(RePassword);
     
     const {data:existing, error:checkError} = await supabaseClient
