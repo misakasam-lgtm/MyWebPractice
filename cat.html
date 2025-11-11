@@ -125,55 +125,54 @@
         </tr>
     </table>
 </body>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
        //这里开始是网络数据库部分
 
-     const supabaseUrl = 'https://rvzfjypuxbptqxyxcmzu.supabase.co'
-     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'
-     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
       const playerID = localStorage.getItem('logPlayerID');
+      const playerName = localStorage.getItem('logPlayerName');
 
     async function loadFish() {
-        if(!playerID){
+        if (!playerID) {
             alert("请先登录喵")
             window.location.href = "./index.html";
         }
-        const {data,error} = await supabaseClient
-            .from("player")
-            .select("fish")
-            .eq("id",playerID)
-            .maybeSingle();
-        if(error&&error.code !== "PGRST116"){console.error(error);return 0}
-        let fish = data? data.fish : 0
-        document.getElementById("fish").innerHTML = fish
-        return fish
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "load",
+                payload: {
+                id: playerID,
+                name: playerName,
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok){
+        alert(result.message||"更新鱼干失败喵")
+        return
+    }
+    document.getElementById("fish").innerHTML=result.fish
     }
 
     async function addFish(amount) {
-        const {data:existing,error} = await supabaseClient
-        .from("player")
-         .select("fish")
-        .eq("id",playerID)
-        .maybeSingle();
-        if(error){
-            console.error(error)
-            return;
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "add",
+                payload: {
+                id: playerID,
+                name: playerName,
+                amount: amount
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok) {
+            alert(result.message || "更新鱼干失败喵")
         }
-        if(!existing){
-            console.log("账号不存在")
-            return;
-        }
-        const newFish = existing.fish + amount;
-        const {error:updateError} = await supabaseClient
-        .from("player")
-        .update({fish:newFish})
-        .eq("id",playerID)
-        if(updateError){
-            console.error(error)
-            return
-        }
-        document.getElementById("fish").innerHTML = newFish;
+        document.getElementById("fish").innerHTML = result.fish;
     }
 
 
