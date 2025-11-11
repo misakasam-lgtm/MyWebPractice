@@ -36,8 +36,7 @@ async function registerUser() {
     const hashedPassword = await sha256(RePassword2);
     const res =  await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/register",{
         method: "POST",
-        headers: {"Content-Type": "application/json",
-        "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'},
+        headers: {"Content-Type": "application/json"},
         body:JSON.stringify({
             action: "register",
             payload: {
@@ -74,8 +73,7 @@ async function loginUser() {
     
      const res =  await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/register",{
         method: "POST",
-        headers: {"Content-Type": "application/json",
-        "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'},
+        headers: {"Content-Type": "application/json"},
         body:JSON.stringify({
             action: "login",
             payload: {
