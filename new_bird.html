@@ -32,57 +32,53 @@
 <button id = "startbtn" onclick="startGame()">开始</button>
 <button onclick="freeze()">暂停/继续</button>
 </body>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
-const supabaseUrl = 'https://rvzfjypuxbptqxyxcmzu.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'
-const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
-const playerID = localStorage.getItem('logPlayerID');
-async function loadFish(){
-     if(!playerID){
-         alert("请先登录喵")
+      const playerID = localStorage.getItem('logPlayerID');
+      const playerName = localStorage.getItem('logPlayerName');
+
+    async function loadFish() {
+        if (!playerID) {
+            alert("请先登录喵")
             window.location.href = "./index.html";
         }
-    const {data,error} = await supabaseClient
-        .from("player")
-        .select("fish")
-        .eq("id",playerID)
-        .maybeSingle()
-    if (error) {
-        console.log(error)
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "load",
+                payload: {
+                id: playerID,
+                name: playerName,
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok){
+        alert(result.message||"更新鱼干失败喵")
         return
     }
-    if(!data){
-        console.log("用户不存在")
-        return
+    document.getElementById("fish").innerHTML=result.fish
     }
-    document.getElementById("fish").innerHTML=data.fish
-}
-async function addFish(amount) {
-    const {data, error} = await supabaseClient
-        .from("player")
-        .select("fish")
-        .eq("id", playerID)
-        .maybeSingle()
-    if (error) {
-        console.log(error)
-        return
+
+    async function addFish(amount) {
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "add",
+                payload: {
+                id: playerID,
+                name: playerName,
+                amount: amount
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok) {
+            alert(result.message || "更新鱼干失败喵")
+        }
+        document.getElementById("fish").innerHTML = result.fish;
     }
-    if (!data) {
-        console.log("用户不存在")
-        return
-    }
-    const newFish = data.fish + amount
-    const {error: updateError} = await supabaseClient
-        .from("player")
-        .update({fish: newFish})
-        .eq("id", playerID)
-    if (updateError) {
-        console.log(error)
-        return
-    }
-    document.getElementById("fish").innerHTML = newFish
-}
 
     addEventListener("resize",updateScreen)
     addEventListener("load",reset)
