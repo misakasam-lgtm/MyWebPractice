@@ -12,18 +12,16 @@ function SwitchCard(Card) {
         register.classList.remove("active")
     }
 }
-     const supabaseUrl = 'https://rvzfjypuxbptqxyxcmzu.supabase.co'
-     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'
-     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
 async function registerUser() {
     const safeNamePattern = /^[\u4e00-\u9fa5a-zA-Z0-9_\-\s]+$/;
-    const inviteCode = await sha256(document.getElementById("invite").value.trim())
+    const invite = document.getElementById("invite").value.trim()
+    const inviteCode = await sha256(invite)
     const ReNickName = document.getElementById("ReName").value.trim();
     const RePassword = document.getElementById("RePassword").value;
     const  RePassword2 = document.getElementById("RePassword2").value;
 
-     if(!ReNickName||!RePassword||!RePassword2) {
+     if(!ReNickName||!RePassword||!RePassword2||!invite) {
         alert("请填写完整");
         return;
     }
@@ -35,37 +33,26 @@ async function registerUser() {
         alert("两次密码不一致")
         return
     }
-     const{data:invite_key,error:updateError} = await supabaseClient
-        .from ("invite_key")
-        .select("key")
-        .eq("id",1)
-        .maybeSingle()
-    if(updateError){
-        console.log("error")
+    const hashedPassword = await sha256(RePassword2);
+    const res =  await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/register",{
+        method: "POST",
+        headers: {"Content-Type": "application/json",
+        "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'},
+        body:JSON.stringify({
+            action: "register",
+            payload: {
+                name:ReNickName,
+                password: hashedPassword,
+                invite:inviteCode
+            }
+        })
+    })
+    const result = await res.json();
+    if(!res.ok){
+        alert(result.message||"注册失败了喵")
         return
     }
-    if (inviteCode !== invite_key.key) {
-        alert("请向管理员询问正确的喵请码")
-        return
-    }
-
-
-     const hashedPassword = await sha256(RePassword);
-    
-    const {data:existing, error:checkError} = await supabaseClient
-        .from('player')
-        .select('id')
-        .eq('name',ReNickName)
-        .maybeSingle()
-    
-    if(checkError){ console.log(checkError); return}
-    if(existing){alert('昵称已存在');return}
-    
-    const {data, error} = await supabaseClient
-        .from('player')
-        .insert([{name:ReNickName,password:hashedPassword,fish:8000}])
-    if(error){alert("注册失败"); return}
-    alert('欢迎加入喵屋')
+    alert(result.message)
     SwitchCard('login')
 }
 
@@ -85,25 +72,30 @@ async function loginUser() {
     }
     const hashedPassword = await sha256(password);
     
-    const {data, error} = await supabaseClient
-    .from('player')
-    .select('id,name')
-    .eq('name',nickName)
-    .eq('password',hashedPassword)
-    .maybeSingle()
-    
-    if(error){
-        console.log(error)
-        alert("电波异常喵")
-        return;
-    }
-    if(!data){
-        alert("昵称或密码错误")
+     const res =  await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/register",{
+        method: "POST",
+        headers: {"Content-Type": "application/json",
+        "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2emZqeXB1eGJwdHF4eXhjbXp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxODIwNTksImV4cCI6MjA3Nzc1ODA1OX0.PYx4KzJgafbG8O_PPJbYQCVJs-iwTjIvVFoeiau0vnc'},
+        body:JSON.stringify({
+            action: "login",
+            payload: {
+                name:nickName,
+                password: hashedPassword,
+            }
+        })
+    })
+    const result = await res.json();
+    if(!res.ok){
+        alert(result.message||"登录失败了喵")
         return
     }
-    localStorage.setItem('logPlayerID',data.id);
-    localStorage.setItem('logPlayerName',data.name)
-    alert("欢迎回家喵")
-    window.location.href = "./MainPage.html";
     
+    if (!result.success) {
+    alert(result.message || "登录失败");
+    return;
+        }
+    localStorage.setItem('logPlayerID',result.id);
+    localStorage.setItem('logPlayerName',result.name)
+    alert(result.message)
+    window.location.href = "./MainPage.html";
 }
