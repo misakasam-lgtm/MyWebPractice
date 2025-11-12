@@ -115,7 +115,8 @@ async function loginUser() {
         alert(result.message)
         window.location.href = "./MainPage.html";
     } catch (error) {
-        alert("未知错误:" + error)
+        alert("未知错误");
+        console.log(error);
     } finally {
         loadAnime("stop");
     }
