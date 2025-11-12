@@ -49,6 +49,38 @@
             justify-content:flex-end;
             margin-right: 8vw;
         }
+        #logAnime{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: rgba(200, 200,255, 0.5);
+            font-size: clamp(10px, 4vw, 25px);
+           font-weight: 700;
+           color: lightpink;
+           text-shadow:
+               1px 0 white,
+               -1px 0 white,
+               0 1px white,
+               0 -1px white;
+        }
+        #loop{
+            border: 6px solid white;
+            border-top: 6px solid aqua;
+            border-radius: 50%;
+            width: clamp(10px,5vw,25px);
+            height: clamp(10px,5vw,25px);
+            animation: loop 1s linear infinite;
+        }
+        @keyframes loop {
+            0%{transform:rotate(0deg);}
+            100%{transform:rotate(360deg);}
+        }
     </style>
 </head>
 <body>
@@ -87,6 +119,10 @@
          </div>
     </div>
 
+</div>
+<!--正文结束，下方是加载动画-->
+<div id = "logAnime">
+ 加载中。。。<div id = "loop"></div>
 </div>
 </body>
 <script src="./coldq_wqdf.js"></script>
