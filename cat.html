@@ -85,10 +85,17 @@
         #fish {
             background: deeppink
         }
+        .resultcard {
+            max-height: none;
+            overflow-y: auto;
+        }
     </style>
 </head>
 
 <body>
+<a href="MainPage.html" class="home-button">返回</a>
+<div class="gamecard-container">
+    <div class="gamecard">
     <h1>猫咪赛跑</h1>
     <h2>游戏说明: 猜中即可获得奖励倍数的鱼干，猫的状态会影响获胜奖励</h2>
     <div class="tips">
@@ -106,6 +113,8 @@
     <div class="tips">
         <button onclick="bet()">确认</button>
     </div>
+</div>
+<div class="resultcard card">
     <h2>获胜奖励</h2>
     <table id="betRate">
         <tr>
@@ -124,62 +133,16 @@
             <th>鱼干变动</th>
         </tr>
     </table>
+        </div>
+</div>
 </body>
+<script src="fish.js"></script>
 <script>
-       //这里开始是网络数据库部分
-
-      const playerID = localStorage.getItem('logPlayerID');
-      const playerName = localStorage.getItem('logPlayerName');
-
-    async function loadFish() {
-        if (!playerID) {
-            alert("请先登录喵")
-            window.location.href = "./index.html";
-        }
-        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                action: "load",
-                payload: {
-                id: playerID,
-                name: playerName,
-                }
-            })
-        })
-        const result = await res.json();
-        if(!res.ok){
-        alert(result.message||"更新鱼干失败喵")
-        return
-    }
-    document.getElementById("fish").innerHTML=result.fish
-    }
-
-    async function addFish(amount) {
-        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                action: "add",
-                payload: {
-                id: playerID,
-                name: playerName,
-                amount: amount
-                }
-            })
-        })
-        const result = await res.json();
-        if(!res.ok) {
-            alert(result.message || "更新鱼干失败喵")
-        }
-        document.getElementById("fish").innerHTML = result.fish;
-    }
-
-
     //游戏主体
     addEventListener("load", clearcanvans)
     addEventListener("load",loadFish)
     addEventListener("load", updateRate)
+    addEventListener("resize",clearcanvans)
     const input_user_bet = document.getElementById("user_bet")
     function remove(){
         this.value = this.value

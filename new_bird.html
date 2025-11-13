@@ -7,11 +7,10 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         .title{
-            font-size: clamp(18px, 5vw, 30px);
-            color: darkblue;
+            font-size: clamp(10px, 3vw, 18px);
+            color: #ff6f91;
             font-weight: bold;
             text-align: center;
-            background: deeppink;
             display: inline-block;
             margin: 2px;
         }
@@ -22,6 +21,9 @@
     </style>
 </head>
 <body>
+<a href="MainPage.html" class="home-button">返回</a>
+<div class="gamecard-container">
+    <div class="gamecard">
 <h1>小鸟游戏</h1>
 <div class="title">分数:<span id="score">0</span>分喵</div>
 <br>
@@ -31,55 +33,11 @@
 <hr>
 <button id = "startbtn" onclick="startGame()">开始</button>
 <button onclick="freeze()">暂停/继续</button>
+    </div>
+</div>
 </body>
+<script src="fish.js"></script>
 <script>
-      const playerID = localStorage.getItem('logPlayerID');
-      const playerName = localStorage.getItem('logPlayerName');
-
-    async function loadFish() {
-        if (!playerID) {
-            alert("请先登录喵")
-            window.location.href = "./index.html";
-        }
-        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                action: "load",
-                payload: {
-                id: playerID,
-                name: playerName,
-                }
-            })
-        })
-        const result = await res.json();
-        if(!res.ok){
-        alert(result.message||"更新鱼干失败喵")
-        return
-    }
-    document.getElementById("fish").innerHTML=result.fish
-    }
-
-    async function addFish(amount) {
-        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                action: "add",
-                payload: {
-                id: playerID,
-                name: playerName,
-                amount: amount
-                }
-            })
-        })
-        const result = await res.json();
-        if(!res.ok) {
-            alert(result.message || "更新鱼干失败喵")
-        }
-        document.getElementById("fish").innerHTML = result.fish;
-    }
-
     addEventListener("resize",updateScreen)
     addEventListener("load",reset)
     addEventListener("load",loadFish)

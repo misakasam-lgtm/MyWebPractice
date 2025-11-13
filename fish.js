@@ -1,0 +1,46 @@
+const playerID = localStorage.getItem('logPlayerID');
+const playerName = localStorage.getItem('logPlayerName');
+
+    async function loadFish() {
+        if (!playerID) {
+            alert("请先登录喵")
+            window.location.href = "./index.html";
+        }
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "load",
+                payload: {
+                id: playerID,
+                name: playerName,
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok){
+        alert(result.message||"更新鱼干失败喵")
+        return
+    }
+    document.getElementById("fish").innerHTML=result.fish
+    }
+
+    async function addFish(amount) {
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "add",
+                payload: {
+                id: playerID,
+                name: playerName,
+                amount: amount
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok) {
+            alert(result.message || "更新鱼干失败喵")
+        }
+        document.getElementById("fish").innerHTML = result.fish;
+    }

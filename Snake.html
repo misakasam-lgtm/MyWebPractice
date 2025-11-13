@@ -6,23 +6,24 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        h1{
+            margin:0;
+        }
         body{
             text-align: center;
         }
         h2{
-            color: darkblue;
+            color:  #ff6f91;
             font-weight: bold;
             text-align: center;
-            background: deeppink;
             display: inline-block;
             margin: 2px;
             font-size: clamp(12px, 2vw, 16px);
         }
         #score{
-            color: darkblue;
+            color: #ff6f91;
             font-weight: bold;
             text-align: center;
-            background: deeppink;
             display: inline-block;
             margin: 2px;
         }
@@ -38,79 +39,33 @@
             width: clamp(20px,12vw,70px);
             height: clamp(20px,12vw,70px);
         }
-        hr{
-            width: 60%;
+        #fish{
+            background-color: rgba(200,80,80,0.3);
         }
-        button:hover {
-    transform: scale(1.05);
-    background: #ffafc4;}
+
     </style>
 </head>
 <body>
+<a href="MainPage.html" class="home-button">返回</a>
+<div class="gamecard-container">
+    <div class="gamecard">
 <h1>贪吃蛇喵</h1>
-<h2>你的鱼干:<span id="fish">0</span></h2><br>
-<h2>（每分可以获得50鱼干）</h2>
-<div style="text-align: center"><div id="score">分数:0分喵</div><br><div id="times">你已游玩0次</div></div>
+<h2>你的鱼干:<span id="fish">0</span>（每分可以获得50鱼干）</h2><br>
+<div id="score" style="display: block">分数:0分喵</div>
 <canvas id = "Snakegame" style=" width:100% ;max-width: 400px; height:auto"></canvas><hr>
 <button class = "opbtm" id = "up" onclick="move(0,-1)">↑</button>
 <br>
 <button class = "opbtm" id = "left" onclick="move(-1,0)" style="">←</button>
 <button class = "opbtm" id ="down" onclick="move(0,1)">↓</button>
 <button class = "opbtm" id = "right" onclick="move(1,0)" style="">→</button>
-
-
 <hr>
 <button id = "startbtn" onclick="gamestart()">开始喵！</button>
-<br><button id = "shutdownbtn" onclick="freeze()">暂停/继续</button >
-
+<br><button id = "shutdownbtn" onclick="freeze()">暂停/继续</button>
+    </div>
+</div>
 </body>
+<script src="fish.js"></script>
 <script>
-      const playerID = localStorage.getItem('logPlayerID');
-      const playerName = localStorage.getItem('logPlayerName');
-
-    async function loadFish() {
-        if (!playerID) {
-            alert("请先登录喵")
-            window.location.href = "./index.html";
-        }
-        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                action: "load",
-                payload: {
-                id: playerID,
-                name: playerName,
-                }
-            })
-        })
-        const result = await res.json();
-        if(!res.ok){
-        alert(result.message||"更新鱼干失败喵")
-        return
-    }
-    document.getElementById("fish").innerHTML=result.fish
-    }
-
-    async function addFish(amount) {
-        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                action: "add",
-                payload: {
-                id: playerID,
-                name: playerName,
-                amount: amount
-                }
-            })
-        })
-        const result = await res.json();
-        if(!res.ok) {
-            alert(result.message || "更新鱼干失败喵")
-        }
-        document.getElementById("fish").innerHTML = result.fish;
-    }
 addEventListener("resize", updateScreen)
 addEventListener("load", updateScreen)
 addEventListener("load", clearCanvas)
@@ -244,5 +199,6 @@ function reset(){
     setposition()
     document.getElementById("score").innerHTML = "分数:"+0+"分喵"
 }
+
 </script>
 </html>

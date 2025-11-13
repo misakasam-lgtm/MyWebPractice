@@ -22,6 +22,7 @@
     </style>
 </head>
 <body>
+<a href="MainPage.html" class="home-button">返回</a>
 <h1>小鸟游戏</h1>
 <div id="score">分数:0分喵</div><hr>
 <canvas id="canvas" style="max-width: 800px ;height:auto" onclick="jump()"></canvas>
@@ -61,21 +62,15 @@
         ctx.roundRect(5*birdbody, 3*birdbody, 10*birdbody , 3*birdbody,3*birdbody);//云
         ctx.roundRect(canvas.width-3*birdbody, 3*birdbody, 10*birdbody , 5*birdbody,3*birdbody);
         ctx.fill()
-        ctx.shadowBlur = 0
     }
     function drawbird() {
         ctx.fillStyle = "yellow";
           if(bird[0].y >canvas.height+birdbody||bird[0].y <0-2*birdbody){
             gamelife = false;
-          startgame()}
-        ctx.fillRect(bird[0].x, bird[0].y, birdbody, birdbody);
-    }
-    function createblock(){
-        ctx.fillStyle = "darkblue";
-        block1.forEach(setment=>{ctx.fillRect(setment.x, setment.y, birdbody, -setment.y)
-    })
-        block2.forEach(setment=>{ctx.fillRect(setment.x, setment.y, birdbody, canvas.height-setment.y)
-    })
+          reset()}
+        bird.forEach(a=>
+            a.y+=dy+birdbody/5,
+            ctx.fillRect(a.x, a.y, birdbody, birdbody));
     }
     function movebird() {
         const birdposition = {x:bird[0].x ,y:bird[0].y + dy};
@@ -93,8 +88,7 @@
     }
     let scoreplus = true
     function moveblock() {
-        const blockposition1 = {x: block1[0].x + dx, y: block1[0].y};
-        const blockposition2 = {x: block2[0].x + dx, y: block2[0].y};
+         clearCanvas()
         if(-birdbody>bird[0].x -block1[0].x){
             scoreplus = true;
         }
@@ -103,32 +97,49 @@
                 gamelife = false;
                 startgame()
             } else {
+                nextblock()
                 if(scoreplus) {
                     score += 1
                     scoreplus = false
                 }
-                block1.unshift(blockposition1)
-                block2.unshift(blockposition2)
-                block1.pop()
-                block2.pop()
-                document.getElementById("score").innerHTML= "分数:"+score+"分喵"
-                speedup()
+                movebird()
+                block1.forEach(setment=>{
+                    setment.x -=birdbody
+                    ctx.fillStyle = "darkblue"
+                    ctx.fillRect(setment.x,setment.y,birdbody,-setment.y)
+                })
+                block2.forEach(setment=>{
+                    setment.x -=birdbody
+                    ctx.fillStyle = "darkblue"
+                    ctx.fillRect(setment.x,setment.y,birdbody,canvas.height-setment.y)
+                })
             }
         } else {
-            block1.unshift(blockposition1)
-            block2.unshift(blockposition2)
+                movebird()
+                nextblock()
+              block1.forEach(setment=>{
+                    setment.x +=birdbody
+                    ctx.fillStyle = "darkblue"
+                    ctx.fillRect(setment.x,setment.y,birdbody,-setment.y)
+                })
+                block2.forEach(setment=>{
+                    setment.x +=birdbody
+                    ctx.fillStyle = "darkblue"
+                    ctx.fillRect(setment.x,setment.y,birdbody,canvas.height-setment.y)
+                })
+        }
+    }
+    function newblock() {
+        const newblock = Math.floor(Math.random() * canvas.height*3/4)
+        block1.unshift({x:canvas.width + dx,y:newblock});
+        block2.unshift({x:canvas.width + dx,y:newblock + 6*birdbody});
+        while (block1.length>2) {
             block1.pop()
             block2.pop()
         }
     }
-    function newblock() {
-        block1.unshift({x:canvas.width + dx,y:Math.floor(Math.random() * canvas.height*3/4)});
-        block2.unshift({x:canvas.width + dx,y:block1[0].y + 6*birdbody});
-            block1.pop()
-            block2.pop()
-    }
     function nextblock() {
-        if (bird[0].x > block1[0].x) {
+        if (2*birdbody > block1[0].x) {
             newblock()
         }
     }
@@ -139,19 +150,16 @@
     }
     let pause = false
     function main() {
-        gameloop = setInterval(function game() {
-                    clearCanvas()
-                    if (!pause) {
-                        movebird()
-                        moveblock()
-                        createblock()
-                        nextblock()
-                    }
-            }, speed);
+        setInterval(function() {
+            if (!pause) {
+                moveblock()
+            }
+        },200)
     }
     let gametimes = 0
     function startgame(){
         updatescreen();
+        reset()
         gametimes += 1;
         if(gamelife) {
             if (gametimes < 2) {
@@ -172,18 +180,14 @@
         bird = [
         {x:canvas.width*0.3,y:canvas.height*0.5},
     ]
-       block1 = []
-        block2 = []
-    // 初始化第一根柱子
-         block1.push(
-        {x:canvas.width*0.6,y:canvas.height*0.6},);
-         block2.push({x:canvas.width*0.6,y:canvas.height*0.6+6*birdbody});
+       block1 = [{x:canvas.width*0.6,y:canvas.height*0.6}]
+        block2 = [{x:canvas.width*0.6,y:canvas.height*0.6+6*birdbody}]
+        newblock()
          scoreplus = true
         dx = -birdbody
         dy = birdbody
     }
     function reset(){
-        clearInterval(gameloop)
         resetposition()
         clearCanvas()
         score = 0

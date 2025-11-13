@@ -1,82 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>这是一个目录</title>
       <link rel="stylesheet" href="./style.css">
     <style>
- .card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-}
-
-.card {
-  background: rgba(255, 192, 203, 0.5);
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
-  padding: 30px;
-  text-align: center;
-  font-size: 18px;
-  transition: 0.3s;
-  backdrop-filter: blur(8px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
+       .information{
+           text-align: left;
+       }
+       h3{
+            font-size: clamp(10px,4vw,20px);
+            font-weight: 800;
+             color: rgba(100,100,100,0.8);
+           margin: 1vh;
+       }
 
 .card:hover {
      box-shadow: 0 6px 20px rgba(255, 192, 203, 0.6);
      transform: translateY(-5px);
 }
-    </style>
+.selfInfo{
+    margin-top:0;
+    color:rgba(255,255,255,0.8);
+    font-weight: 600;
+    font-size: clamp(10px,4vw,20px);
+}
+.skill{
+    background: linear-gradient(50deg, rgba(255,255,255,0.5),rgba(200,80,80,0.5));
+    border-radius: 5px;
+    transition: 0.5s;
+}
+.skill:hover{
+    background: linear-gradient(135deg, white,rgba(200,80,80,0.5));
+    transform: scale(1.05);
+}
+.welcomeBox{
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%);
+    padding: 2vh 10vw 2vh 10vw;
+    border-radius: 50px;
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(10,10,10,0.6);
+    transition: opacity 0.8s, top 0.8s;
+    font-size: clamp(10px,4vw,20px);
+    z-index: 9999;
+}
+.welcomeBox.show{
+    opacity: 1;
+    top: 10%;
+}
+</style>
 
 
 </head>
 <body>
+<div class="welcomeBox" id="welcome">欢迎回家喵</div>
 <div style=" background-image: url(img/Headimg.jpg)  ;background-size: cover;  background-position: center ;display: flex
 ;justify-content: center;align-items: center">
 <h1>这是一个目录喵</h1>
 </div>
 <!--<img src="Headimg.png" alt="加载不出了喵" class="full-width">-->
-<hr>
-<p id="hello">欢迎</p>
+<br>
+
 <div class="card-container">
+    <div class="card information">
+        <div class="selfInfo">喵险者信息<hr class="cardLine"></div>
+<h3><span id="hello"></span>，欢迎回来喵</h3> <img style="border-radius: 15px;position: fixed;right: 5px;top: 5px;max-width: clamp(50px,20vw,100px);border:white solid 3px" alt= "图炸了喵" src="./img/userhead.jpg">
+        <h3>你的鱼干 :<span id="fish"></span> 个</h3>
+        <h3>喵险者等级 :<span id="level"></span></h3>
+        <h3>——Adventurer's Guild——</h3>
+        <h3>EXP: </h3><div><canvas style="margin-left:8px;width:90%;height: 20px" id="canvas"></canvas></div>
+        <h3>Skill: <span class="skill">吃鱼</span></h3>
+    </div>
     <div class="card">
         <p>这是一些练习用的小工具</p>
         <div class="button-container">
-            <a href="BMICalculator.html"><button class="MainBotton ButtonText">BMI计算器</button></a>
-            <a href="calculator.html"><button class="MainBotton ButtonText">普通计算器(测试版)</button></a>
-            <a href="bird.html"><button class="MainBotton ButtonText">小鸟游戏</button></a>
-            <a href="future.html"><button class="MainBotton ButtonText">占卜</button></a>
+            <a href="BMICalculator.html"><button class="MainBotton">BMI计算器</button></a>
+            <a href="calculator.html"><button class="MainBotton">普通计算器(测试版)</button></a>
+            <a href="bird.html"><button class="MainBotton">小鸟游戏</button></a>
+            <a href="future.html"><button class="MainBotton">占卜</button></a>
         </div>
     </div>
 
     <div class="card">
         <p>使用鱼干的游戏</p>
         <div class="button-container">
-            <a href="Snake.html"><button class="MainBotton ButtonText">贪吃蛇</button></a>
-            <a href="cat.html"><button class="MainBotton ButtonText">猫咪赛跑</button></a>
-            <a href="new_bird.html"><button class="MainBotton ButtonText">小鸟游戏(新)</button></a>
+            <a href="Snake.html"><button class="MainBotton">贪吃蛇</button></a>
+            <a href="cat.html"><button class="MainBotton">猫咪赛跑</button></a>
+            <a href="new_bird.html"><button class="MainBotton">小鸟游戏(新)</button></a>
         </div>
     </div>
 </div>
 <p>更新中。。。<span class="spinner"></span> </p>
 
 </body>
+<script src="fish.js"></script>
 <script>
-      const playerName = localStorage.getItem('logPlayerName');
-      const playerID = localStorage.getItem('logPlayerID');
     addEventListener("load", hello)
-     function hello(){
-         if (playerID) {
-         document.getElementById('hello').textContent = `${playerName},欢迎回来喵`;}
-         else {
-             alert("请先登录喵")
-             window.location.href = "./index.html";
-         }
+     async function hello(){
+         await loadFish()
+         welcome()
+         document.getElementById('hello').textContent = `${playerName}`;
+         level()
      }
+
+     function level(){
+        const playerFish = Number(document.getElementById("Fish").textContent);
+        levelEXP = [10000,30000,60000,90000,200000,500000]
+         let user_lv = null;
+        switch(true){
+            case (playerFish<=levelEXP[0]):user_lv = "白瓷"
+                break
+            case (playerFish<=levelEXP[1]):user_lv = "铁"
+                break
+            case (playerFish<=levelEXP[2]):user_lv = "银"
+                break
+            case (playerFish<=levelEXP[3]):user_lv = "金"
+                break
+            case (playerFish<=levelEXP[4]):user_lv = "黄金"
+                break
+            case (playerFish<=levelEXP[5]):user_lv = "秘银"
+                break
+            default:user_lv = "精钢"
+        }
+        document.getElementById("level").textContent = user_lv
+        drawEXP()
+     }
+     function drawEXP(){
+          const canvas = document.getElementById("canvas");
+          const ctx = canvas.getContext("2d");
+          let EXP = 0
+          canvas.width = canvas.offsetWidth;
+          canvas.height = canvas.offsetHeight
+          ctx.fillStyle = "white";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          switch (user_lv){
+              case "白瓷":EXP = playerFish/levelEXP[0]*canvas.width
+                  break;
+              case "铁":EXP = playerFish/levelEXP[1]*canvas.width
+                  break;
+              case "银":EXP = playerFish/levelEXP[2]*canvas.width
+                  break;
+              case "金":EXP = playerFish/levelEXP[3]*canvas.width
+                  break;
+              case "黄金":EXP = playerFish/levelEXP[4]*canvas.width
+                  break;
+              case "秘银":EXP = playerFish/levelEXP[5]*canvas.width
+                  break;
+              default: EXP = canvas.width
+          }
+          ctx.fillStyle = "#ff6f91";
+          ctx.fillRect(0, 0, EXP, canvas.height);
+      }
+      function welcome(){
+        document.getElementById("welcome").classList.add("show");
+        setTimeout(()=>{
+            document.getElementById("welcome").classList.remove("show");
+        },1500)
+      }
+
 </script>
 
 </html>

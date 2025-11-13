@@ -112,7 +112,7 @@ async function loginUser() {
         }
         localStorage.setItem('logPlayerID', result.id);
         localStorage.setItem('logPlayerName', result.name)
-        alert(result.message)
+        console.log(result.message);
         window.location.href = "./MainPage.html";
     } catch (error) {
         alert("未知错误");
