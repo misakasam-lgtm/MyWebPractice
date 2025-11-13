@@ -112,7 +112,7 @@
 
      function level(){
         const playerFish = Number(document.getElementById("fish").textContent);
-        levelEXP = [10000,30000,60000,90000,200000,500000]
+        const levelEXP = [10000,30000,60000,90000,200000,500000]
          let user_lv = null;
         switch(true){
             case (playerFish<=levelEXP[0]):user_lv = "白瓷"
@@ -130,9 +130,9 @@
             default:user_lv = "精钢"
         }
         document.getElementById("level").textContent = user_lv
-        drawEXP()
+        drawEXP(levelEXP,playerFish,user_lv)
      }
-     function drawEXP(){
+     function drawEXP(levelEXP,playerFish,user_lv){
           const canvas = document.getElementById("canvas");
           const ctx = canvas.getContext("2d");
           let EXP = 0
