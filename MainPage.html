@@ -111,7 +111,7 @@
      }
 
      function level(){
-        const playerFish = Number(document.getElementById("Fish").textContent);
+        const playerFish = Number(document.getElementById("fish").textContent);
         levelEXP = [10000,30000,60000,90000,200000,500000]
          let user_lv = null;
         switch(true){
@@ -159,10 +159,13 @@
           ctx.fillRect(0, 0, EXP, canvas.height);
       }
       function welcome(){
-        document.getElementById("welcome").classList.add("show");
-        setTimeout(()=>{
-            document.getElementById("welcome").classList.remove("show");
-        },1500)
+         const justLoggedIn = sessionStorage.getItem("justLoggedIn");
+         if (justLoggedIn === "true") {
+      document.getElementById("welcome").classList.add("show");
+      setTimeout(() => {
+          document.getElementById("welcome").classList.remove("show");
+      }, 1500)
+      }
       }
 
 </script>

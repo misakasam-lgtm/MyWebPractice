@@ -112,6 +112,7 @@ async function loginUser() {
         }
         localStorage.setItem('logPlayerID', result.id);
         localStorage.setItem('logPlayerName', result.name)
+        sessionStorage.setItem("justLoggedIn", "true")
         console.log(result.message);
         window.location.href = "./MainPage.html";
     } catch (error) {
