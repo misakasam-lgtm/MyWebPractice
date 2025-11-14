@@ -46,10 +46,9 @@
     </style>
 </head>
 <body>
-<a href="MainPage.html" class="home-button">返回</a>
+<div id = "HeadLine"></div>
 <div class="gamecard-container">
     <div class="gamecard">
-<h1>贪吃蛇喵</h1>
 <h2>你的鱼干:<span id="fish">0</span>（每分可以获得50鱼干）</h2><br>
 <div id="score" style="display: block">分数:0分喵</div>
 <canvas id = "Snakegame" style=" width:100% ;max-width: 400px; height:auto"></canvas><hr>
@@ -64,8 +63,10 @@
     </div>
 </div>
 </body>
+<script src="HeadLine.js"></script>
 <script src="fish.js"></script>
 <script>
+addEventListener("load",loadHeadLine);
 addEventListener("resize", updateScreen)
 addEventListener("load", updateScreen)
 addEventListener("load", clearCanvas)
@@ -126,15 +127,14 @@ function  drawFood(){
     ctx.fillStyle = "green";
     ctx.fillRect(food.x,food.y,SnakeSize,SnakeSize);
 }
-function moveSnake() {
+async function moveSnake() {
     dx = movefeetx
     dy = movefeety
     const head = {x: snake[0].x + dx, y: snake[0].y + dy}
     if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height||snake.some(segment=> segment.x===head.x && segment.y===head.y)) {
         alert("似了喵T T")
         gametimes +=1
-        document.getElementById("times").innerHTML = "你已游玩"+gametimes+"次";
-        addFish((Number(score)*50))
+        await addFish((Number(score)*50))
         reset()
     }
     else {

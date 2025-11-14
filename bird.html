@@ -22,8 +22,7 @@
     </style>
 </head>
 <body>
-<a href="MainPage.html" class="home-button">返回</a>
-<h1>小鸟游戏</h1>
+<div id = "HeadLine"></div>
 <div id="score">分数:0分喵</div><hr>
 <canvas id="canvas" style="max-width: 800px ;height:auto" onclick="jump()"></canvas>
 <hr>
@@ -31,7 +30,9 @@
 <button onclick="freeze()">暂停/继续</button>
 
 </body>
+<script src="HeadLine.js"></script>
 <script>
+    addEventListener("load",loadHeadLine);
     addEventListener("resize",updatescreen)
     addEventListener("load",updatescreen)
     addEventListener("load",clearCanvas)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,47 +7,39 @@
     <link rel="stylesheet" href="./style.css">
     <style>
         label{
-            width: clamp(50px, 30vw, 150px);
-            display: block;
-            text-align: right;
-            font-size: clamp(10px, 4vw, 25px);
-            margin-right: 1vw;
-    font-weight: 700;
-    color: yellowgreen;
-     text-shadow:
-        1px 0 white,
-       -1px 0 white,
-        0 1px white,
-        0 -1px white;
+          font-size: clamp(10px,4vw,20px);
+          font-weight: 700;
+          color: #ff6f91;
+          text-shadow:
+                1px 0 white,
+                -1px 0 white,
+                0 1px white,
+                0 -1px white;
         }
         input{
             height: clamp(10px,5vw,25px);
             width: clamp(80px,50vw,150px);
-            margin-bottom: 1vw;
-            margin-top: 5px;
+            margin-top: 1vh;
+            border-radius: 5px;
+            border: 2px solid #ff6f91;
         }
         button{
-            background: coral ;border-radius: 8px;
-            margin: 2vw;
-        }
-        .loginbtn{
-            display: block;
-            text-align: center;
+            width: clamp(50px,15vw,70px);
+            height: clamp(30px,5vh,50px);
+            margin: 16px;
+            font-size: clamp(10px,4vw,16px);
+            padding: 0
         }
         .Formbox{
-            display: none;
-            text-align: center;        /* 让整体内容居中 */
-            margin: 0 auto;            /* 居中块元素 */
-            width: fit-content;        /* 宽度随内容 */
-        }
-        .Formbox.active{
             display: block;
+            text-align: right;
+           transform: translate(-25%);
         }
-        .formbox-row{
-            display: flex;
-            align-items: center;
-            justify-content:flex-end;
-            margin-right: 8vw;
+        .card{
+            display: none
+        }
+        .card.active{
+            display: block;
         }
         #logAnime{
             display: none;
@@ -81,44 +73,39 @@
             0%{transform:rotate(0deg);}
             100%{transform:rotate(360deg);}
         }
+        .card:hover {
+          box-shadow: 0 6px 20px rgba(255, 192, 203, 0.6);
+          transform: translateY(-5px);
+}
     </style>
 </head>
 <body>
 
 <div style="text-align: center;margin-top: clamp(100px,60vw,200px)">
-<h1>欢迎来到喵屋</h1>
-    <div class="Formbox active" id = "LoginCard">
-        <div class="formbox-row">
-        <label for="name">昵称: </label><input type=text id="name" placeholder="请输入昵称">
-        </div>
-            <div class="formbox-row">
-        <label for="password">密码: </label><input type=password id="password" placeholder="请输入密码">
-            </div>
-        <div class="loginbtn">
-    <button class="ButtonText" id= "Login" onclick="loginUser()">登录</button>
-    <button class="ButtonText" id= "RegisterSwitch" onclick="SwitchCard ('register')">注册</button>
-        </div>
-    </div>
-    <div class="Formbox" id = "RegisterCard">
-        <div class="formbox-row">
-        <label for="ReName">昵称: </label><input type=text id="ReName" placeholder="请输入昵称">
-        </div>
-         <div class="formbox-row">
-        <label for="RePassword">密码: </label><input type=password id="RePassword" placeholder="请输入密码">
-         </div>
-         <div class="formbox-row">
-        <label for="RePassword2">确认密码: </label><input type=password id="RePassword2" placeholder="请再次输入密码">
-         </div>
-        <div class="formbox-row">
-        <label for="invite">喵请码: </label><input type=text id="invite" placeholder="请输入邀请码">
-         </div>
 
-         <div class="loginbtn">
-        <button class="ButtonText" id= "Register" onclick="registerUser()">注册</button>
-        <button class="ButtonText" id= "back" onclick="SwitchCard ('login')">返回</button>
+<div class="card-container" style="justify-content: center;">
+    <div class="card active" id = "LoginCard">
+        <h1>欢迎来到喵屋</h1>
+        <div class="Formbox">
+        <label for="name">昵称: </label><input type=text id="name" placeholder="请输入昵称"><br>
+        <label for="password">密码: </label><input type=password id="password" placeholder="请输入密码"><br>
+    <button  id= "Login" onclick="loginUser()">登录</button>
+    <button  id= "RegisterSwitch" onclick="SwitchCard ('register')">注册</button>
          </div>
     </div>
+    <div class="card" id = "RegisterCard">
+        <h1>欢迎注册</h1>
+    <div class="Formbox">
+        <label for="ReName">昵称: </label><input type=text id="ReName" placeholder="请输入昵称"><br>
+        <label for="RePassword">密码: </label><input type=password id="RePassword" placeholder="请输入密码"><br>
+        <label for="RePassword2">确认密码: </label><input type=password id="RePassword2" placeholder="请再次输入密码"><br>
+        <label for="invite">喵请码: </label><input type=text id="invite" placeholder="请输入邀请码"><br>
 
+        <button id= "Register" onclick="registerUser()">注册</button>
+        <button id= "back" onclick="SwitchCard ('login')">返回</button>
+    </div>
+    </div>
+        </div>
 </div>
 <!--正文结束，下方是加载动画-->
 <div id = "logAnime">

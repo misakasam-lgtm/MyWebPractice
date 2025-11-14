@@ -93,10 +93,9 @@
 </head>
 
 <body>
-<a href="MainPage.html" class="home-button">返回</a>
+<div id = "HeadLine"></div>
 <div class="gamecard-container">
     <div class="gamecard">
-    <h1>猫咪赛跑</h1>
     <h2>游戏说明: 猜中即可获得奖励倍数的鱼干，猫的状态会影响获胜奖励</h2>
     <div class="tips">
         <canvas id="canvas"  style="border:1px solid deeppink;width:100%; max-width:800px; height:auto"></canvas><br>
@@ -137,7 +136,9 @@
 </div>
 </body>
 <script src="fish.js"></script>
+<script src="HeadLine.js"></script>
 <script>
+    addEventListener("load",loadHeadLine);
     //游戏主体
     addEventListener("load", clearcanvans)
     addEventListener("load",loadFish)

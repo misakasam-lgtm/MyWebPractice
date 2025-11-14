@@ -22,8 +22,7 @@ input{
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<a href="MainPage.html" class="home-button">返回</a>
-<h1>这是一个BMI计算器</h1>
+<div id = "HeadLine"></div>
 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
 <div class="word">体重(kg): <input placeholder="kg" id= "user_weight"><br>
     身高(cm): <input  placeholder="cm" id= "user_height">
@@ -33,7 +32,9 @@ input{
 <button class="cart-button" onclick="BMIcalculate()" style="display: block; margin: 0 auto">计算
 </button>
 </body>
+<script src="HeadLine.js"></script>
 <script>
+    addEventListener("load",loadHeadLine);
     const input_weight = document.getElementById("user_weight");
     const input_height = document.getElementById("user_height");
     function remove(){

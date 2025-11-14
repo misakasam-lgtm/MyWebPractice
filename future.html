@@ -67,9 +67,8 @@
     </style>
 </head>
 <body>
-<a href="MainPage.html" class="home-button">返回</a>
+<div id = "HeadLine"></div>
 <canvas id="canvas"></canvas>
-<h1>猫の神社</h1>
 <h1 style="font-size: clamp(30px,15vw,80px)">🐈‍⛩️🐈‍</h1>
 <div style="margin-top: clamp(30px, 20vw, 50px);)">
 <label for="things">你今天要占卜的事是？</label>
@@ -81,8 +80,9 @@
 <img src="img/right01.jpg" alt="图没了喵" style="position: fixed;right: 1px;bottom:1px;width: auto;max-height:30vh">
 <img src="img/left01.jpg" alt="图没了喵" style="position: fixed;left: 1px;bottom:1px;width: auto;max-height:30vh">
 </body>
-
+<script src="HeadLine.js"></script>
 <script>
+    addEventListener("load",loadHeadLine)
     const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 

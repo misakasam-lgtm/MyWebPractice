@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>这是一个目录</title>
+    <title>公会大厅</title>
       <link rel="stylesheet" href="./style.css">
     <style>
        .information{
@@ -60,18 +60,15 @@
 
 </head>
 <body>
-<div class="welcomeBox" id="welcome">欢迎回家喵</div>
-<div style=" background-image: url(img/Headimg.jpg)  ;background-size: cover;  background-position: center ;display: flex
-;justify-content: center;align-items: center">
-<h1>这是一个目录喵</h1>
-</div>
+<div id = "HeadLine"></div>
+<div class="welcomeBox" id="welcome"></div>
 <!--<img src="Headimg.png" alt="加载不出了喵" class="full-width">-->
 <br>
 
 <div class="card-container">
     <div class="card information">
         <div class="selfInfo">喵险者信息<hr class="cardLine"></div>
-<h3><span id="hello"></span>，欢迎回来喵</h3> <img style="border-radius: 15px;position: fixed;right: 5px;top: 5px;max-width: clamp(50px,20vw,100px);border:white solid 3px" alt= "图炸了喵" src="./img/userhead.jpg">
+<h3>喵险者: <span id="hello"></span></h3> <img style="border-radius: 15px;position: fixed;right: 5px;top: 5px;max-width: clamp(50px,20vw,100px);border:white solid 3px" alt= "图炸了喵" src="./img/userhead.jpg">
         <h3>你的鱼干: <span id="fish"></span> 个</h3>
         <h3>喵险者等级: <span id="level"></span></h3>
         <h3>——Adventurer's Guild——</h3>
@@ -79,7 +76,7 @@
         <h3>Skill: <span class="skill">吃鱼</span></h3>
     </div>
     <div class="card">
-        <p>这是一些练习用的小工具</p>
+        <p>冒险小工具</p>
         <div class="button-container">
             <a href="BMICalculator.html"><button class="MainBotton">BMI计算器</button></a>
             <a href="calculator.html"><button class="MainBotton">普通计算器(测试版)</button></a>
@@ -89,7 +86,7 @@
     </div>
 
     <div class="card">
-        <p>使用鱼干的游戏</p>
+        <p>鱼干任务板</p>
         <div class="button-container">
             <a href="Snake.html"><button class="MainBotton">贪吃蛇</button></a>
             <a href="cat.html"><button class="MainBotton">猫咪赛跑</button></a>
@@ -97,22 +94,22 @@
         </div>
     </div>
 </div>
-<p>更新中。。。<span class="spinner"></span> </p>
 
 </body>
 <script src="fish.js"></script>
+<script src="HeadLine.js"></script>
 <script>
+    addEventListener("load",loadHeadLine)
     addEventListener("load", hello)
      async function hello(){
          await loadFish()
-         welcome()
          document.getElementById('hello').textContent = `${playerName}`;
          level()
      }
 
      function level(){
         const playerFish = Number(document.getElementById("fish").textContent);
-        const levelEXP = [10000,30000,60000,90000,200000,500000]
+        const levelEXP = [10000,30000,10000,200000,1000000,2000000]
          let user_lv = null;
         switch(true){
             case (playerFish<=levelEXP[0]):user_lv = "白瓷"
@@ -131,6 +128,8 @@
         }
         document.getElementById("level").textContent = user_lv
         drawEXP(levelEXP,playerFish,user_lv)
+         const text = `这不是${user_lv}级喵险者的${playerName}吗？欢迎来到公会`;
+         welcome(text,1500)
      }
      function drawEXP(levelEXP,playerFish,user_lv){
           const canvas = document.getElementById("canvas");
@@ -158,13 +157,15 @@
           ctx.fillStyle = "#ff6f91";
           ctx.fillRect(0, 0, EXP, canvas.height);
       }
-      function welcome(){
+      function welcome(text,time){
+        document.getElementById("welcome").textContent = text;
          const justLoggedIn = sessionStorage.getItem("justLoggedIn");
          if (justLoggedIn === "true") {
       document.getElementById("welcome").classList.add("show");
+      sessionStorage.setItem("justLoggedIn", "false")
       setTimeout(() => {
           document.getElementById("welcome").classList.remove("show");
-      }, 1500)
+      }, time)
       }
       }
 

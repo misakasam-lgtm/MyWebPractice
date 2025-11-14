@@ -4,6 +4,7 @@ body {
   background-image:
     repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 6px, transparent 6px 12px);
             text-align: center;
+    padding-top: 8vh;
 }
 
 /* 这是h1的样式 */
@@ -189,4 +190,13 @@ box-shadow:  8px 8px 8px #d68599,
     border:none;
     box-shadow: none;
     max-width: 400px
+}
+@media (max-width: 350px) {
+    .card {
+        flex: 1 1 100%;  /* 小屏幕卡片占满宽度 */
+        padding: 5px;
+    }
+    .card-container {
+        padding: 1px;
+    }
 }

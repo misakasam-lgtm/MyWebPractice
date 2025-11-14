@@ -21,10 +21,9 @@
     </style>
 </head>
 <body>
-<a href="MainPage.html" class="home-button">返回</a>
+<div id = "HeadLine"></div>
 <div class="gamecard-container">
     <div class="gamecard">
-<h1>小鸟游戏</h1>
 <div class="title">分数:<span id="score">0</span>分喵</div>
 <br>
 <div class="title" style="font-size: clamp(10px,3vw,18px)">你的鱼干:<span id="fish">0</span>(每分可以获得50鱼干)</div>
@@ -36,8 +35,10 @@
     </div>
 </div>
 </body>
+<script src="HeadLine.js"></script>
 <script src="fish.js"></script>
 <script>
+    addEventListener("load",loadHeadLine)
     addEventListener("resize",updateScreen)
     addEventListener("load",reset)
     addEventListener("load",loadFish)
