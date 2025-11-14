@@ -141,15 +141,15 @@
           switch (user_lv){
               case "白瓷":EXP = playerFish/levelEXP[0]*canvas.width
                   break;
-              case "铁":EXP = playerFish/levelEXP[1]*canvas.width
+              case "铁":EXP = (playerFish-levelEXP[0])/levelEXP[1]*canvas.width
                   break;
-              case "银":EXP = playerFish/levelEXP[2]*canvas.width
+              case "银":EXP = (playerFish-levelEXP[1])/levelEXP[2]*canvas.width
                   break;
-              case "金":EXP = playerFish/levelEXP[3]*canvas.width
+              case "金":EXP = (playerFish-levelEXP[2])/levelEXP[3]*canvas.width
                   break;
-              case "黄金":EXP = playerFish/levelEXP[4]*canvas.width
+              case "黄金":EXP = (playerFish-levelEXP[3])/levelEXP[4]*canvas.width
                   break;
-              case "秘银":EXP = playerFish/levelEXP[5]*canvas.width
+              case "秘银":EXP = (playerFish-levelEXP[4])/levelEXP[5]*canvas.width
                   break;
               default: EXP = canvas.width
           }
