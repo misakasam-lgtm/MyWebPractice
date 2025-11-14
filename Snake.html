@@ -38,6 +38,8 @@
         .opbtm{
             width: clamp(20px,12vw,70px);
             height: clamp(20px,12vw,70px);
+            text-align: center;
+            font-weight: 700;
         }
         #fish{
             background-color: rgba(200,80,80,0.3);
@@ -71,6 +73,22 @@ addEventListener("resize", updateScreen)
 addEventListener("load", updateScreen)
 addEventListener("load", clearCanvas)
 addEventListener("load", loadFish)
+addEventListener("keydown",function(e){
+    switch(e.key){
+        case "ArrowLeft":move(-1,0)
+            e.preventDefault();
+            break;
+        case "ArrowRight":move(1,0)
+            e.preventDefault();
+            break;
+        case "ArrowUp":move(0,-1)
+            e.preventDefault();
+            break;
+        case "ArrowDown":move(0,1)
+            e.preventDefault();
+        break;
+    }
+})
 const canvas = document.getElementById("Snakegame");
 let SnakeSize = 0.05 * canvas.width;
 const ctx = canvas.getContext("2d");
@@ -84,7 +102,6 @@ function updateScreen() {
     reset()
     clearCanvas();
 }
-
 
 let score = 0;
 let snake =[]
@@ -109,6 +126,7 @@ let dy = 0
 let movefeetx = dx
 let movefeety = dy
 function move(a,b) {
+    paused = false
     if ((dx===0 && b*SnakeSize === -dy)||(dy===0 && a*SnakeSize === -dx)) return
         movefeetx = a * SnakeSize;
         movefeety = b * SnakeSize;
@@ -128,12 +146,14 @@ function  drawFood(){
     ctx.fillRect(food.x,food.y,SnakeSize,SnakeSize);
 }
 async function moveSnake() {
+
     dx = movefeetx
     dy = movefeety
     const head = {x: snake[0].x + dx, y: snake[0].y + dy}
     if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height||snake.some(segment=> segment.x===head.x && segment.y===head.y)) {
         alert("似了喵T T")
         gametimes +=1
+        setposition()
         await addFish((Number(score)*50))
         reset()
     }
@@ -187,8 +207,9 @@ function setposition(){
     {x:9*SnakeSize,y:10*SnakeSize},
     {x:8*SnakeSize,y:10*SnakeSize},
         ]
-     score = 0
+
     speed = 200
+    paused = true
     movefeetx = SnakeSize;
     movefeety = 0
     drawSnake()
@@ -197,6 +218,8 @@ function setposition(){
 function reset(){
     clearTimeout(gameloop)
     setposition()
+    score = 0
+    move(0,0)
     document.getElementById("score").innerHTML = "分数:"+0+"分喵"
 }
 

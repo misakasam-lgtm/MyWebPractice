@@ -86,7 +86,7 @@ hr {
   backdrop-filter: blur(1px) saturate(150%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   flex: 1 1 280px;
-  width: clamp(600px,100vw,800px);
+  width: clamp(280px,100vw,800px);
     max-width: 800px;
         }
 

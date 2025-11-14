@@ -9,16 +9,16 @@
         body{
             background-color: #FFC1CC;
             background-image:
-            repeating-linear-gradient(90deg, darkgray 0 3px, transparent 5px 30px);
+            repeating-linear-gradient(90deg, rgba(100,100,100,0.1) 0 3px, transparent 5px 30px);
         }
         canvas {
-         position: fixed;   /* 固定在屏幕上 */
+         position: fixed;
         top: 0;
          left: 0;
          width: 100%;
          height: 100%;
-         pointer-events: none; /* 鼠标事件穿透，不挡按钮点击 */
-         z-index: 0;          /* 放在最底层 */
+         pointer-events: none;
+         z-index: 900;
             }
         label{
             font-weight: 600;
@@ -32,32 +32,36 @@
                            0 -2px white;
         }
         input{
-            width: 50vw;
-            height: 2vw;
+            width: 80%;
+            height: 5%;
             background: #C7B6FF;
             color: white;
             border-radius: 10px;
             padding: 5px;
             outline: none;
-            border: 1vw solid white;
+            border: 5px solid white;
             font-size: clamp(12px, 3vw, 20px);
         }
         input::placeholder{
             color: #E1E1E1;
         }
-        button{
-            border-radius: 10px;
+       .askBtm{
+           margin: 2vw ;
+           background-color: rgba(255,0,0,1);
+       }
+        .askBtm:hover{
+            color: white;
             background-color: red;
         }
         #result{
             background-color: #C7B6FF;
-            height: clamp(50px, 15vh, 300px);
-            width: 50vw;
+            height: clamp(120px, 15vh, 300px);
+            width: 80%;
             color: black;
             border-radius: 10px;
             padding: 5px;
             outline: none;
-            border: 1vw solid white;
+            border: 5px solid white;
             font-size: clamp(12px, 3vw, 20px);
             resize: none;
         }
@@ -69,21 +73,23 @@
 <body>
 <div id = "HeadLine"></div>
 <canvas id="canvas"></canvas>
+<div class="card-container" style="justify-content: center;">
+    <div class="card" style="background-color: rgba(200,200,250,0.3);">
 <h1 style="font-size: clamp(30px,15vw,80px)">🐈‍⛩️🐈‍</h1>
-<div style="margin-top: clamp(30px, 20vw, 50px);)">
 <label for="things">你今天要占卜的事是？</label>
 <input id="things" type="text" placeholder="今天能吃到鱼吗？">
     <br>
-<button style="margin: 2vw" onclick="getFortune()">抽签</button><br>
+<button class="askBtm" onclick="getFortune()">抽签</button><br>
     <label for="result" >解签</label><textarea id="result" type="text" readonly placeholder="祝你好运喵"></textarea>
+</div>
 </div>
 <img src="img/right01.jpg" alt="图没了喵" style="position: fixed;right: 1px;bottom:1px;width: auto;max-height:30vh">
 <img src="img/left01.jpg" alt="图没了喵" style="position: fixed;left: 1px;bottom:1px;width: auto;max-height:30vh">
 </body>
 <script src="HeadLine.js"></script>
 <script>
-    addEventListener("load",loadHeadLine)
-    const canvas = document.getElementById('canvas');
+addEventListener("load",loadHeadLine)
+const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 let width = canvas.width = window.innerWidth;
