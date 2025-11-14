@@ -8,29 +8,49 @@
 body{
     text-align: center;
 }
-.word{
-    text-align: right;
-    color: deeppink;
-    font-size: clamp(12px,6vw,28px);
-    font-weight: bold;
+.cart-button {
+    width: clamp(50px, 15vw, 70px);
+    height: clamp(30px, 5vh, 50px);
+    margin: 16px;
+    font-size: clamp(10px, 4vw, 16px);
+    padding: 0
 }
-input{
-    height: clamp(12px,6vw,28px);
-    font-weight: bold;
-}
+
+  label{
+          font-size: clamp(10px,4vw,20px);
+          font-weight: 700;
+          color: #ff6f91;
+          text-shadow:
+                1px 0 white,
+                -1px 0 white,
+                0 1px white,
+                0 -1px white;
+        }
+  input{
+      height: clamp(10px,5vw,25px);
+      width: clamp(80px,50vw,150px);
+      margin-top: 1vh;
+      margin-left: 1vw;
+      border-radius: 5px;
+      border: 2px solid #ff6f91;
+  }
+       .card:hover {
+          box-shadow: 0 6px 20px rgba(255, 192, 203, 0.6);
+          transform: translateY(-5px);
+    }
 </style>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <div id = "HeadLine"></div>
-<div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-<div class="word">体重(kg): <input placeholder="kg" id= "user_weight"><br>
-    身高(cm): <input  placeholder="cm" id= "user_height">
+<div class="card-container" style="justify-content: center; margin-top: 10vh">
+    <div class="card">
+        <label for="user_weight">体重(kg)</label><input placeholder="kg" id= "user_weight"><br>
+        <label for="user_height">身高(cm)</label><input  placeholder="cm" id= "user_height"><br>
+        <button class="cart-button" onclick="BMIcalculate()" >计算
+        </button>
+        </div>
 </div>
-</div>
-<br><br>
-<button class="cart-button" onclick="BMIcalculate()" style="display: block; margin: 0 auto">计算
-</button>
 </body>
 <script src="HeadLine.js"></script>
 <script>

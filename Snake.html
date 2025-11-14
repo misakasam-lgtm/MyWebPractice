@@ -151,6 +151,7 @@ async function moveSnake() {
     const head = {x: snake[0].x + dx, y: snake[0].y + dy}
     if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height||snake.some(segment=> segment.x===head.x && segment.y===head.y)) {
         alert("似了喵T T")
+        freeze()
         gametimes +=1
         setposition()
         await addFish((Number(score)*50))
@@ -171,9 +172,11 @@ function updatesocre(){
     document.getElementById("score").innerHTML = "分数:"+score+"分喵";
 }
 let gametimes = 0
+let paused = false
 function gamestart(){
     document.getElementById("score").innerHTML = "分数:"+0+"分喵"
     gametimes += 1;
+    paused = false;
     if(gametimes < 2){
         setposition()
         main()
@@ -185,7 +188,7 @@ function gamestart(){
     }
     document.getElementById("times").innerHTML = "你已游玩"+gametimes+"次";
 }
-let paused = false
+
 function freeze(){
     paused = !paused
 }
