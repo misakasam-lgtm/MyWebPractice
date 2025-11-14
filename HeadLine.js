@@ -8,7 +8,6 @@
          const headLineName = document.getElementById('HeadLineName')
          const sideMenu = document.getElementById('sideMenu')
          const menu_user_name = document.getElementById('menu_user_name');
-         const name = localStorage.getItem('userName')
          headLineName.textContent = document.title
 
          SideShowBtm.addEventListener('click', () => {
@@ -27,6 +26,7 @@
              shutdownBtm.classList.remove('show');
          }
          function SideShowUserName() {
+             const name = localStorage.getItem('logPlayerName')
              menu_user_name.textContent = `${name}`;
          }
      }
