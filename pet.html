@@ -241,7 +241,6 @@
     let frames = Object.values(spriteData.frames)
     let currentFrame = 0; 
     const waitWord = '天气不错喵'
-    addEventListener('load',loadfish)
     function draw() { 
         let frame = frames[currentFrame] 
         ctx.clearRect(0, 0, canvas_width, canvas_height) 
@@ -309,5 +308,6 @@
     document.getElementById('usingFish').addEventListener("input", remove);
 
 </script>
+
 
 </html>
