@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵险随从</title>
+    
+    <style>
+        input{
+            height: clamp(10px,5vw,25px);
+            width: clamp(80px,20vw,150px);
+            margin-top: 1vh;
+            border-radius: 5px;
+            border: 2px solid #ff6f91;
+        }
+        .bg {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100vw;
+              height: 100vh;
+              background-size: cover;      
+              background-position: center; 
+              background-repeat: no-repeat;
+              z-index: -1;
+              background-image: url("img/pet/background.jpg");       
+             }
+        
+        #gameCanvas {
+            image-rendering: pixelated;
+            width: clamp(300px,20vw,900px);
+            height: clamp(450px,30vw,1200px);
+            position: fixed;
+            transform: translate(-50%);
+            bottom: 10%;
+            left: 35%;
+            z-index: 1000;
+            cursor:crosshair;
+        }
+        #gameCanvas:hover{
+            transform: translate(-50%) scale(1.1);
+            bottom: 15%;
+        }
+        p{
+            margin: 0;
+            font-size: clamp(18px,4vw,30px);
+            color: rgba(220,100, 100,1);
+            font-weight: 700;
+            text-shadow:    
+            3px 0 white,
+            -3px 0 white,
+            0 3px white,
+            0 -3px white;
+            user-select: none;
+}
+        
+    button{
+    width: clamp(60px,13vw,200px);
+    height: clamp(35px,8vw,120px);
+    font-size: clamp(10px,4vw,50px);
+    font-weight: 700;
+    background:linear-gradient(150deg,rgba(200, 150,150, 1),rgba(200, 50,50, 1));
+    color: white;
+    border: 5PX solid white;
+    border-radius: 2vw;
+    cursor: pointer;
+    image-rendering: pixelated; 
+    transition: transform  0.2s;
+    margin-left: 10px;
+    user-select: none;
+    }
+
+    button:active {
+        transform:scale(0.9);
+        background: #ffaa00;
+    }
+    
+    button:hover{
+        transform: scale(1.1);
+        background: rgba(200, 50,50, 1);
+    }
+    .abillity{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;   
+        background-color: rgba(255,255, 255,0.6);
+        border-radius: 5px;
+        box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
+        padding: 5px;
+        text-align: left;
+        transition: 0.3s;
+        backdrop-filter: blur(5px) saturate(150%);
+        border: 5px solid rgba(255, 255, 255, 0.6);
+        flex: 1 1 280px;
+        width: clamp(150px,30vw,500px);
+        position: fixed;
+        top: 1%;
+        right: 1%;
+        user-select: none;
+    }
+    .abillity:hover{
+        transform: scale(1.05);
+        top: 2%;
+    }
+    .buttonCantainer{
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+    .bottomLine{  
+        background-color: rgba(0,0, 0,0.8);
+        border-radius: 5px;
+        padding: 5px;
+        text-align: left;
+        transition: 0.3s;
+        color: white;
+        font-weight: 700;
+        backdrop-filter: blur(5px) saturate(150%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        width: 98vw;
+        position: fixed;
+        transform: translateX(50%);
+        right: 50%;
+        bottom: 0;
+        z-index: 1000;
+        font-size: 4vh;
+        user-select: none;
+    }
+    #alernText{
+        font-size: 3vh;
+        text-align: center;
+    }
+    #EXPcanvas{
+        left: 1%;
+        margin-left:8px;
+        width:90%;
+        height: 3vh;
+    }
+    .buttonCantainer{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width:clamp(150px,30vw,500px);
+        height: 30vh;
+        background: linear-gradient(150deg,rgba(255,255, 255,0.6),rgba(255,255, 255,0.3),rgba(255,255, 255,0.1));
+        border-radius: 15px;
+        padding-left: 10px;
+        text-align: left;
+        transition: 1s;
+        color: white;
+        font-weight: 700;
+        backdrop-filter: blur(1px) saturate(150%);
+        border: 3px solid rgba(255, 255, 255, 0.6);
+        position: fixed;
+        transform: translateX(50vw);
+        bottom: 20%;
+        right: 35vw;
+        z-index: 1000;
+        font-size: 4vh;
+        user-select: none;
+    }
+    .buttonCantainer:hover{
+    right: 50vw;
+    }
+    .feedFish{
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        right: 50%; 
+        top: 35%;
+        transform: translatex(50%);
+        z-index: 1000;
+        background-color: rgba(255,255, 255,0.6);
+        border-radius: 5px;
+        box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
+        padding: 5px;
+        text-align: left;
+        transition: 0.3s;
+        backdrop-filter: blur(5px) saturate(150%);
+        border: 5px solid rgba(255, 255, 255, 0.6);
+        width: clamp(200px,30vw,500px);
+        flex: 1 1 280px;
+         font-size: clamp(18px,4vw,50px);
+            color: rgba(220,100, 100,1);
+            font-weight: 700;
+            text-shadow:    
+            3px 0 white,
+            -3px 0 white,
+            0 3px white,
+            0 -3px white;
+    }
+    .feedFish.show{
+        display: flex;
+    }
+       
+    </style>
+</head>
+
+<body>
+    <div class="bg"></div>
+    <canvas id="gameCanvas"></canvas>
+    <div class="abillity">
+    <p>你的喵险随从</p>
+    <p>名称：^ω^</p>
+    <p>等级：</p>
+    <p>你的鱼干：<span id="fish"></span></p>
+    <p>EXP：<span id="petEXP"></span></p>
+    </div>
+    <div class="buttonCantainer">
+        <p>行动</p>
+        <div>
+            <button id="feedBtm">喂食</button>
+            <button><s>冒险</s></button>
+        </div>
+    </div>
+    <div id='feedFishiWin' class = "feedFish">
+        <label for="usingFish">你要投喂</label><input type="text" id="usingFish">
+        <button id='feedup'style="width: auto;height: auto;margin: 5px;font-size: clamp(10px,3vw,30px)">提交</button>
+    </div>
+    <div class="bottomLine">
+        <div id="alernText">天气不错喵</div>
+        <div style="width: 100%;">EXP:<canvas id="EXPcanvas"></canvas></div>
+    </div>
+    
+
+</body>
+<script src="fish.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.6.4/dist/tween.umd.js"></script>
+<script type="module">
+    const spriteData = await fetch('./img/pet/stand.json').then(r => r.json()); 
+    console.log("spriteData")
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d"); 
+    let canvas_width = canvas.width; 
+    let canvas_height = canvas.height;
+    let pet_img = new Image(); pet_img.src = "./img/pet/stand.png"; 
+    let frames = Object.values(spriteData.frames)
+    let currentFrame = 0; 
+    const waitWord = '天气不错喵'
+    addEventListener('load',loadfish)
+    function draw() { 
+        let frame = frames[currentFrame] 
+        ctx.clearRect(0, 0, canvas_width, canvas_height) 
+        ctx.drawImage(
+             pet_img, 
+             frame.frame.x, frame.frame.y, frame.frame.w, frame.frame.h, 
+              0, 0, 
+             canvas_width, canvas_height 
+             ) 
+    currentFrame = (currentFrame + 1) % frames.length 
+    }
+    function animeFrame(speed){
+        setInterval(function(){draw()},speed)
+    }
+
+    pet_img.onload = () => { animeFrame(200)
+        drawEXP()
+    }  
+
+    function drawEXP(){
+        const canvas = document.getElementById("EXPcanvas");
+        const ctx = canvas.getContext("2d");
+        let EXP = 0
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    let back = null
+    canvas.addEventListener('click',taptap)
+    function taptap(){
+        const replyWord = [
+        '有什么事喵？',
+        '要去冒险吗？',
+        '别摸耳朵喵！',
+        '要喂我鱼干吗？',
+        '王牌级喵险家参上喵',
+        '呃呃喵'
+        ]
+        const reply = Math.floor(Math.random()*replyWord.length)
+        document.getElementById("alernText").textContent = replyWord[reply]
+        clearTimeout(back)
+        back = setTimeout(() => {
+            document.getElementById("alernText").textContent = waitWord
+        }, 2000);
+    }
+    async function feed(amount){
+        amount = Number(document.getElementById('usingFish').values)
+        await feedPet(amount)
+        document.getElementById("alernText").textContent = '哦呀，你也有大方的时候嘛'
+        back = setTimeout(() => {
+            document.getElementById("alernText").textContent = waitWord
+        }, 2000);
+         document.getElementById('feedFishiWin').classList.remove('show')
+    }
+    document.getElementById("feedup").addEventListener('click',feed)
+    document.getElementById("feedBtm").addEventListener('click',showfeed)
+    function showfeed(){
+        document.getElementById('feedFishiWin').classList.add('show')
+    }
+    function remove(){
+        this.value = this.value
+        .replace(/\D/g,"")
+    }
+    document.getElementById('usingFish').addEventListener("input", remove);
+
+</script>
+
+</html>

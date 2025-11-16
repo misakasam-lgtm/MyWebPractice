@@ -44,3 +44,23 @@ const playerName = localStorage.getItem('logPlayerName');
         }
         document.getElementById("fish").innerHTML = result.fish;
     }
+
+    async function feedPet(amount) {
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "feedPet",
+                payload: {
+                id: playerID,
+                name: playerName,
+                amount: amount
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok) {
+            alert(result.message || "投喂失败喵")
+        }
+        document.getElementById("petEXP").innerHTML = result.petEXP;
+    }
