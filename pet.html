@@ -184,7 +184,7 @@
         border: 5px solid rgba(255, 255, 255, 0.6);
         width: clamp(200px,30vw,500px);
         flex: 1 1 280px;
-         font-size: clamp(18px,4vw,50px);
+        font-size: clamp(18px,4vw,50px);
             color: rgba(220,100, 100,1);
             font-weight: 700;
             text-shadow:    
@@ -195,6 +195,24 @@
     }
     .feedFish.show{
         display: flex;
+    }
+    #feedExit{
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0;
+        border: 2px  solid white;
+        border-radius: 5px;
+        width: clamp(20px,6vw,30px);
+        height: clamp(20px,6vw,30px);
+        font-size: clamp(12px,5vw,25px);
+        margin: none;
+    }
+    #feedup{
+        width: clamp(50px,15vw,100px);
+        height: clamp(30px,6vw,60px);
+        margin-top: 15px;
+        font-size: clamp(10px,3vw,30px)
     }
        
     </style>
@@ -207,7 +225,7 @@
     <p>你的喵险随从</p>
     <p>名称：^ω^</p>
     <p>等级：</p>
-    <p>你的鱼干：<span id="fish"></span></p>
+    <p>你的鱼干：<span id="fish">0</span></p>
     <p>EXP：<span id="petEXP"></span></p>
     </div>
     <div class="buttonCantainer">
@@ -218,8 +236,9 @@
         </div>
     </div>
     <div id='feedFishiWin' class = "feedFish">
-        <label for="usingFish">你要投喂</label><input type="text" id="usingFish">
-        <button id='feedup'style="width: auto;height: auto;margin: 5px;font-size: clamp(10px,3vw,30px)">提交</button>
+        <button id="feedExit">×</button>
+        <label for="usingFish" style="font-size: clamp(20px,6vw,35px);">你要投喂</label><input type="text" id="usingFish">
+        <button id='feedup'style="">提交</button>
     </div>
     <div class="bottomLine">
         <div id="alernText">天气不错喵</div>
@@ -241,6 +260,10 @@
     let frames = Object.values(spriteData.frames)
     let currentFrame = 0; 
     const waitWord = '天气不错喵'
+    addEventListener('load',hello)
+    async function hello() {
+        await loadfish()
+    }
     function draw() { 
         let frame = frames[currentFrame] 
         ctx.clearRect(0, 0, canvas_width, canvas_height) 
@@ -287,7 +310,7 @@
             document.getElementById("alernText").textContent = waitWord
         }, 2000);
     }
-    async function feed(amount){
+    async function feed(){
         amount = Number(document.getElementById('usingFish').values)
         await feedPet(amount)
         document.getElementById("alernText").textContent = '哦呀，你也有大方的时候嘛'
@@ -298,6 +321,9 @@
     }
     document.getElementById("feedup").addEventListener('click',feed)
     document.getElementById("feedBtm").addEventListener('click',showfeed)
+    document.getElementById("feedExit").addEventListener('click',()=>{
+        document.getElementById('feedFishiWin').classList.remove('show')
+    })
     function showfeed(){
         document.getElementById('feedFishiWin').classList.add('show')
     }
@@ -308,6 +334,5 @@
     document.getElementById('usingFish').addEventListener("input", remove);
 
 </script>
-
 
 </html>
