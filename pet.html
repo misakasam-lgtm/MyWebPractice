@@ -201,18 +201,33 @@
         top: 0;
         right: 0;
         padding: 0;
-        border: 2px  solid white;
-        border-radius: 5px;
+        border: none;
+        background: none;
+        border-radius: 0;
         width: clamp(20px,6vw,30px);
         height: clamp(20px,6vw,30px);
-        font-size: clamp(12px,5vw,25px);
-        margin: none;
+        font-size: clamp(20px,6vw,30px);
+        color: rgba(200, 150,150, 1);
+        margin: 0;
     }
     #feedup{
         width: clamp(50px,15vw,100px);
         height: clamp(30px,6vw,60px);
         margin-top: 15px;
         font-size: clamp(10px,3vw,30px)
+    }
+    .spinner{
+        display: inline-block;
+        width: clamp(8px,4vw,16px);
+        height: clamp(8px,4vw,16px);
+        border: 6px solid rgba(255, 255, 255, 0.8);
+        border-top: 6px solid rgba(200, 150, 150, 0.8);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
        
     </style>
@@ -224,9 +239,9 @@
     <div class="abillity">
     <p>你的喵险随从</p>
     <p>名称：^ω^</p>
-    <p>等级：</p>
-    <p>你的鱼干：<span id="fish">0</span></p>
-    <p>EXP：<span id="petEXP"></span></p>
+        <p>等级：<span id = 'level'><span class="spinner"></span></span></p>
+    <p>你的鱼干：<span id="fish"><span class="spinner"></span></span></p>
+    <p>EXP：<span id="petEXP"><span class="spinner"></span></span></p>
     </div>
     <div class="buttonCantainer">
         <p>行动</p>
@@ -238,7 +253,7 @@
     <div id='feedFishiWin' class = "feedFish">
         <button id="feedExit">×</button>
         <label for="usingFish" style="font-size: clamp(20px,6vw,35px);">你要投喂</label><input type="text" id="usingFish">
-        <button id='feedup'style="">提交</button>
+        <button id='feedup' style="">提交</button>
     </div>
     <div class="bottomLine">
         <div id="alernText">天气不错喵</div>
@@ -258,12 +273,8 @@
     let canvas_height = canvas.height;
     let pet_img = new Image(); pet_img.src = "./img/pet/stand.png"; 
     let frames = Object.values(spriteData.frames)
-    let currentFrame = 0; 
+    let currentFrame = 0;
     const waitWord = '天气不错喵'
-    addEventListener('load',hello)
-    async function hello() {
-        await loadfish()
-    }
     function draw() { 
         let frame = frames[currentFrame] 
         ctx.clearRect(0, 0, canvas_width, canvas_height) 
@@ -280,18 +291,8 @@
     }
 
     pet_img.onload = () => { animeFrame(200)
-        drawEXP()
     }  
 
-    function drawEXP(){
-        const canvas = document.getElementById("EXPcanvas");
-        const ctx = canvas.getContext("2d");
-        let EXP = 0
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight
-        ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
     let back = null
     canvas.addEventListener('click',taptap)
     function taptap(){
@@ -310,19 +311,50 @@
             document.getElementById("alernText").textContent = waitWord
         }, 2000);
     }
-    async function feed(){
-        amount = Number(document.getElementById('usingFish').values)
-        await feedPet(amount)
-        document.getElementById("alernText").textContent = '哦呀，你也有大方的时候嘛'
+
+
+</script>
+<script>
+     addEventListener('load',async ()=>{
+         await loadFish()
+         await feedPet(0)
+         updateLevel()
+     })
+      async function feed(){
+        let amount = Number(document.getElementById('usingFish').value)
+          if(amount<=0){
+              alert("太小气了喵")
+              return }
+          await feedPet(amount)
+          feedReply(amount)
+          updateLevel()
+         document.getElementById('feedFishiWin').classList.remove('show')
+    }
+    function feedReply(amount){
+         let reply = null
+         if(amount<=2000){reply = 0}
+         else if(amount<=5000){reply = 1}
+         else if(amount<=10000){reply = 2}
+         else if(amount<=20000){reply = 3}
+         else if(amount<=50000){reply = 4}
+         else {reply = 5}
+         const relyText=[
+             '虽然不多，但是谢谢了喵',
+             '谢谢喵，看来今天可以吃饱了',
+             '哦呀，没想到你还挺大方的喵',
+             '难得的丰盛喵，你今天赛跑猜中了？',
+             '今天的任务很困难吗？。。',
+             '你你你，挑战领主的任务我可不去哦？！'
+         ]
+        document.getElementById("alernText").textContent = relyText[reply]
         back = setTimeout(() => {
             document.getElementById("alernText").textContent = waitWord
         }, 2000);
-         document.getElementById('feedFishiWin').classList.remove('show')
     }
     document.getElementById("feedup").addEventListener('click',feed)
     document.getElementById("feedBtm").addEventListener('click',showfeed)
     document.getElementById("feedExit").addEventListener('click',()=>{
-        document.getElementById('feedFishiWin').classList.remove('show')
+    document.getElementById('feedFishiWin').classList.remove('show')
     })
     function showfeed(){
         document.getElementById('feedFishiWin').classList.add('show')
@@ -332,6 +364,22 @@
         .replace(/\D/g,"")
     }
     document.getElementById('usingFish').addEventListener("input", remove);
+     function updateLevel(){
+        const EXP = Number(document.getElementById('petEXP').textContent);
+        document.getElementById("level").textContent = `${Math.floor(EXP/10000)+1}级`
+         drawEXP(EXP)
+     }
+     function drawEXP(EXP){
+        const canvas = document.getElementById("EXPcanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight
+        let EXPline = (EXP %10000)/10000 * canvas.width;
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "green";
+        ctx.fillRect(0, 0, EXPline, canvas.height);
+    }
 
 </script>
 

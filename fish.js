@@ -1,5 +1,5 @@
-const playerID = localStorage.getItem('logPlayerID');
-const playerName = localStorage.getItem('logPlayerName');
+    const playerID = localStorage.getItem('logPlayerID');
+    const playerName = localStorage.getItem('logPlayerName');
 
     async function loadFish() {
         if (!playerID) {
@@ -22,6 +22,10 @@ const playerName = localStorage.getItem('logPlayerName');
         alert(result.message||"更新鱼干失败喵")
         return
     }
+        if(!result.success){
+            alert(result.message || "更新鱼干失败喵")
+            return
+        }
     document.getElementById("fish").innerHTML=result.fish
     }
 
@@ -42,10 +46,14 @@ const playerName = localStorage.getItem('logPlayerName');
         if(!res.ok) {
             alert(result.message || "更新鱼干失败喵")
         }
+        if(!result.success){
+            alert(result.message || "操作失败喵")
+        }
         document.getElementById("fish").innerHTML = result.fish;
     }
 
     async function feedPet(amount) {
+        await addFish(-amount);
         const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -61,6 +69,11 @@ const playerName = localStorage.getItem('logPlayerName');
         const result = await res.json();
         if(!res.ok) {
             alert(result.message || "投喂失败喵")
+            return
+        }
+        if(!result.success){
+            alert(result.message || "投喂失败喵")
+            return
         }
         document.getElementById("petEXP").innerHTML = result.petEXP;
     }
