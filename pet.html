@@ -229,6 +229,35 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    .battleArea{
+        display: none;
+        position: fixed;
+        transform: translateX(50%) translateY(-50%);
+        top: 50%;
+        right: 50%;
+        width: clamp(300px,100vw,800px);
+        height: clamp(200px,70vw,400px);
+        background-color: rgba(255, 255, 255, 1);
+        z-index: 2000;
+    }
+    .battleArea.show{
+        display: block;
+    }
+    #battleCanvas{
+        width: 20%;height: 33%;
+        position: absolute;
+        left: 15%;
+        bottom: 50%;
+    }
+    #battleEscape{
+        position: absolute;
+        right: 5%;
+        bottom: 5%;
+        width: clamp(60px,10vw,100px);
+        height: auto;
+        font-size: clamp(12px,4vw,20px);
+        border-radius: 10px;
+    }
        
     </style>
 </head>
@@ -247,7 +276,7 @@
         <p>行动</p>
         <div>
             <button id="feedBtm">喂食</button>
-            <button><s>冒险</s></button>
+            <button id="battle">冒险</button>
         </div>
     </div>
     <div id='feedFishiWin' class = "feedFish">
@@ -258,6 +287,10 @@
     <div class="bottomLine">
         <div id="alernText">天气不错喵</div>
         <div style="width: 100%;">EXP:<canvas id="EXPcanvas"></canvas></div>
+    </div>
+    <div id='battleWin' class="battleArea">
+        <canvas id="battleCanvas" style=""></canvas>
+        <button id="battleEscape">逃跑</button>
     </div>
     
 
@@ -315,6 +348,7 @@
 
 </script>
 <script>
+     const waitWord = '天气不错喵'
      addEventListener('load',async ()=>{
          await loadFish()
          await feedPet(0)
@@ -381,6 +415,41 @@
         ctx.fillRect(0, 0, EXPline, canvas.height);
     }
 
-</script>
 
+</script>
+<script type="module">
+ //战斗部分
+    const battleCanvas = document.getElementById("battleCanvas");
+     const ctx = battleCanvas.getContext("2d");
+     let swordAction = await fetch('./img/pet/sword.json').then(r => r.json());
+     let swordImg = new Image();
+     swordImg.src = "./img/pet/sword.png";
+     let currentFrame = 0;
+     let frames = Object.values(swordAction.frames)
+     function battleDraw() {
+        let frame = frames[currentFrame]
+        ctx.clearRect(0, 0, battleCanvas.width, battleCanvas.height);
+        ctx.drawImage(
+             swordImg,
+             frame.frame.x, frame.frame.y, frame.frame.w, frame.frame.h,
+              0,0,
+             battleCanvas.width, battleCanvas.height,
+             )
+    currentFrame = (currentFrame + 1) % frames.length
+    }
+    let battlePet = null
+    function battleWait(speed){
+        battlePet = setInterval(function(){battleDraw()},speed)
+    }
+    function showBattle(){
+         document.getElementById('battleWin').classList.add('show')
+         battleWait(60)
+    }
+    function Escape(){
+         clearInterval(battlePet);
+         document.getElementById('battleWin').classList.remove('show')
+    }
+     document.getElementById('battle').addEventListener('click',showBattle);
+     document.getElementById('battleEscape').addEventListener('click',Escape);
+</script>
 </html>

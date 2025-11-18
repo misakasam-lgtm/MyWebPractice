@@ -1,0 +1,116 @@
+{"frames": {
+
+"1stand_0000_图层-50.png":
+{
+	"frame": {"x":0,"y":0,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0001_图层-48.png":
+{
+	"frame": {"x":200,"y":0,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0002_图层-46.png":
+{
+	"frame": {"x":400,"y":0,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0003_图层-42.png":
+{
+	"frame": {"x":600,"y":0,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0004_图层-40.png":
+{
+	"frame": {"x":800,"y":0,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0005_图层-36.png":
+{
+	"frame": {"x":0,"y":295,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0006_图层-34.png":
+{
+	"frame": {"x":200,"y":295,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0007_图层-32.png":
+{
+	"frame": {"x":400,"y":295,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0008_图层-30.png":
+{
+	"frame": {"x":600,"y":295,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0009_图层-28.png":
+{
+	"frame": {"x":800,"y":295,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0010_图层-24.png":
+{
+	"frame": {"x":0,"y":590,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0011_图层-22.png":
+{
+	"frame": {"x":200,"y":590,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+},
+"1stand_0012_图层-20.png":
+{
+	"frame": {"x":400,"y":590,"w":200,"h":295},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":295},
+	"sourceSize": {"w":200,"h":295}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "stand.png",
+	"format": "RGBA8888",
+	"size": {"w":1000,"h":885},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:bf6e9688f64e330e7eaaaddd0b16a24d:3c031cc3641272aae6fa94e6c75d3b0f:5deffa88ae143db30b77696f691e26c0$"
+}
+}
