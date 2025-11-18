@@ -344,6 +344,14 @@
             document.getElementById("alernText").textContent = waitWord
         }, 2000);
     }
+        window.switchAnimation = async function(path) {
+        const newData = await fetch(path.json).then(r => r.json());
+        frames = Object.values(newData.frames);  // 更新帧
+        currentFrame = 0;
+
+        pet_img.src = path.img;                  // 切换图片
+        pet_img.onload = () => animeFrame(path.speed || 200);
+    };
 
 
 </script>
@@ -360,6 +368,11 @@
               alert("太小气了喵")
               return }
           await feedPet(amount)
+           window.switchAnimation({
+         img: "./img/pet/eat.png",
+         json: "./img/pet/eat.json",
+         speed: 200,
+             });
           feedReply(amount)
           updateLevel()
          document.getElementById('feedFishiWin').classList.remove('show')
