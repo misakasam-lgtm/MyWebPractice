@@ -258,6 +258,12 @@
         font-size: clamp(12px,4vw,20px);
         border-radius: 10px;
     }
+    #enemyCanvas{
+        width: 20%;height: 50%;
+        position: absolute;
+        left: 65%;
+        bottom: 50%;
+    }
        
     </style>
 </head>
@@ -282,52 +288,53 @@
     <div id='feedFishiWin' class = "feedFish">
         <button id="feedExit">×</button>
         <label for="usingFish" style="font-size: clamp(20px,6vw,35px);">你要投喂</label><input type="text" id="usingFish">
-        <button id='feedup' style="">提交</button>
+        <button id='feedup' >提交</button>
     </div>
     <div class="bottomLine">
         <div id="alernText">天气不错喵</div>
         <div style="width: 100%;">EXP:<canvas id="EXPcanvas"></canvas></div>
     </div>
     <div id='battleWin' class="battleArea">
-        <canvas id="battleCanvas" style=""></canvas>
+        <canvas id="battleCanvas"></canvas>
+        <canvas id="enemyCanvas"></canvas>
         <button id="battleEscape">逃跑</button>
     </div>
     
 
 </body>
 <script src="fish.js"></script>
+<script src="animetion.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.6.4/dist/tween.umd.js"></script>
-<script type="module">
-    const spriteData = await fetch('./img/pet/stand.json').then(r => r.json()); 
-    console.log("spriteData")
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d"); 
-    let canvas_width = canvas.width; 
-    let canvas_height = canvas.height;
-    let pet_img = new Image(); pet_img.src = "./img/pet/stand.png"; 
-    let frames = Object.values(spriteData.frames)
-    let currentFrame = 0;
-    const waitWord = '天气不错喵'
-    function draw() { 
-        let frame = frames[currentFrame] 
-        ctx.clearRect(0, 0, canvas_width, canvas_height) 
-        ctx.drawImage(
-             pet_img, 
-             frame.frame.x, frame.frame.y, frame.frame.w, frame.frame.h, 
-              0, 0, 
-             canvas_width, canvas_height 
-             ) 
-    currentFrame = (currentFrame + 1) % frames.length 
-    }
-    function animeFrame(speed){
-        setInterval(function(){draw()},speed)
-    }
-
-    pet_img.onload = () => { animeFrame(200)
-    }  
-
+<script>
+    const playerPet = 0
+    const playerEnemy = 0
+     const imgIndex = [
+        {name:"red",
+        actions:{
+            stand:{src:'./img/pet/stand.png',json:'./img/pet/stand.json',speed:200},
+            eat:{src:"./img/pet/eat.png",json:"./img/pet/eat.json",speed:100},
+            sword:{src:"./img/pet/sword.png",json:"./img/pet/sword.json",speed:60}
+                }
+        }   
+    ]
+    const enemyIndex = [
+        {name:"enemy1",
+        actions:{
+            stand:{src:'./img/pet/enemy1.png',json:'./img/pet/enemy1.json',speed:200},
+                }
+        }   
+    ]
+    const pet = new spriteAnimate('gameCanvas',imgIndex,playerPet)
+    addEventListener('load',async ()=>{
+         await feedPet(0)
+         updateLevel()
+         await pet.start('stand')
+     })
+   
+   
+    const mainCanvas = document.getElementById('gameCanvas')
     let back = null
-    canvas.addEventListener('click',taptap)
+    mainCanvas.addEventListener('click',taptap)
     function taptap(){
         const replyWord = [
         '有什么事喵？',
@@ -344,35 +351,18 @@
             document.getElementById("alernText").textContent = waitWord
         }, 2000);
     }
-        window.switchAnimation = async function(path) {
-        const newData = await fetch(path.json).then(r => r.json());
-        frames = Object.values(newData.frames);  // 更新帧
-        currentFrame = 0;
 
-        pet_img.src = path.img;                  // 切换图片
-        pet_img.onload = () => animeFrame(path.speed || 200);
-    };
-
-
-</script>
-<script>
      const waitWord = '天气不错喵'
-     addEventListener('load',async ()=>{
-         await loadFish()
-         await feedPet(0)
-         updateLevel()
-     })
+    let eatback = null
       async function feed(){
         let amount = Number(document.getElementById('usingFish').value)
           if(amount<=0){
               alert("太小气了喵")
               return }
           await feedPet(amount)
-           window.switchAnimation({
-         img: "./img/pet/eat.png",
-         json: "./img/pet/eat.json",
-         speed: 200,
-             });
+          pet.setAction('eat')
+          clearTimeout(eatback)
+          eatback = setTimeout(()=>{pet.setAction('stand')},5000)
           feedReply(amount)
           updateLevel()
          document.getElementById('feedFishiWin').classList.remove('show')
@@ -428,41 +418,24 @@
         ctx.fillRect(0, 0, EXPline, canvas.height);
     }
 
-
-</script>
-<script type="module">
  //战斗部分
-    const battleCanvas = document.getElementById("battleCanvas");
-     const ctx = battleCanvas.getContext("2d");
-     let swordAction = await fetch('./img/pet/sword.json').then(r => r.json());
-     let swordImg = new Image();
-     swordImg.src = "./img/pet/sword.png";
-     let currentFrame = 0;
-     let frames = Object.values(swordAction.frames)
-     function battleDraw() {
-        let frame = frames[currentFrame]
-        ctx.clearRect(0, 0, battleCanvas.width, battleCanvas.height);
-        ctx.drawImage(
-             swordImg,
-             frame.frame.x, frame.frame.y, frame.frame.w, frame.frame.h,
-              0,0,
-             battleCanvas.width, battleCanvas.height,
-             )
-    currentFrame = (currentFrame + 1) % frames.length
-    }
-    let battlePet = null
-    function battleWait(speed){
-        battlePet = setInterval(function(){battleDraw()},speed)
-    }
+    const battlePet = new spriteAnimate('battleCanvas',imgIndex,playerPet)
+    const enemy = new spriteAnimate('enemyCanvas',enemyIndex,playerEnemy)
+   
     function showBattle(){
          document.getElementById('battleWin').classList.add('show')
-         battleWait(60)
+         battlePet.start('sword')
+         enemy.start('stand')
     }
     function Escape(){
-         clearInterval(battlePet);
-         document.getElementById('battleWin').classList.remove('show')
+        battlePet.stop()
+        enemy.stop()
+        document.getElementById('battleWin').classList.remove('show')
     }
      document.getElementById('battle').addEventListener('click',showBattle);
      document.getElementById('battleEscape').addEventListener('click',Escape);
+
+     
+
 </script>
 </html>
