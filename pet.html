@@ -362,7 +362,7 @@
           await feedPet(amount)
           await pet.setAction('eat')
           clearTimeout(eatback)
-          eatback = setTimeout(()=>{pet.setAction('stand')},5000)
+          eatback = setTimeout(()=>{pet.setAction('stand')},4000)
           feedReply(amount)
           updateLevel()
          document.getElementById('feedFishiWin').classList.remove('show')
@@ -440,3 +440,4 @@
 </script>
 
 </html>
+
