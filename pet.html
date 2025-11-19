@@ -360,7 +360,7 @@
               alert("太小气了喵")
               return }
           await feedPet(amount)
-          pet.setAction('eat')
+          await pet.setAction('eat')
           clearTimeout(eatback)
           eatback = setTimeout(()=>{pet.setAction('stand')},5000)
           feedReply(amount)
@@ -422,10 +422,10 @@
     const battlePet = new spriteAnimate('battleCanvas',imgIndex,playerPet)
     const enemy = new spriteAnimate('enemyCanvas',enemyIndex,playerEnemy)
    
-    function showBattle(){
+    async function showBattle(){
          document.getElementById('battleWin').classList.add('show')
-         battlePet.start('sword')
-         enemy.start('stand')
+         await battlePet.start('sword')
+         await enemy.start('stand')
     }
     function Escape(){
         battlePet.stop()
@@ -438,4 +438,5 @@
      
 
 </script>
+
 </html>
