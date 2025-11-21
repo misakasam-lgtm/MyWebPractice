@@ -237,20 +237,55 @@
         right: 50%;
         width: clamp(300px,100vw,800px);
         height: clamp(200px,70vw,400px);
-        background-color: rgba(255, 255, 255, 1);
+        background-image: url("img/pet/battlebackground.jpg");
+        background-size: cover;      
+        background-position: center; 
+        background-repeat: no-repeat;
         z-index: 2000;
     }
     .battleArea.show{
         display: block;
     }
-    #battleCanvas{
-        width: 20%;height: 33%;
+    .battleShow{
+        display: block;
+        transition: 1s;
         position: absolute;
-        left: 15%;
-        bottom: 50%;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        background-color: rgba(200, 50,50, 0);
+        pointer-events: none;
+        z-index: 2001;
     }
+    .battleShow.attack{
+        background-color: rgba(200, 50,50, 0.8);
+        transform:scale(1.06)
+    }
+    .battleShow.heal{
+        background-color: rgba(50,200,50, 0.8);
+        transform: scale(1.06)
+    }
+   
+    .battleCover{
+        display: none;
+        width: 200%;
+        height: 200%;
+        position: fixed;
+        transform: translateX(50%) translateY(-50%);
+        top: 50%;
+        right: 50%;
+        z-index: 1999;
+        background-color: rgba(255,255,255, 0.2);
+        pointer-events: none;
+    }
+    .battleCover.show{
+        display: block;
+        pointer-events:initial;
+    }
+
     #battleEscape{
-        position: absolute;
+        position: fixed;
         right: 5%;
         bottom: 5%;
         width: clamp(60px,10vw,100px);
@@ -258,11 +293,54 @@
         font-size: clamp(12px,4vw,20px);
         border-radius: 10px;
     }
-    #enemyCanvas{
-        width: 20%;height: 50%;
-        position: absolute;
+    #petBattleCanvas{
+        width: 20%;
+        height: 33%;
+        position: fixed;
+        left: 15%;
+        bottom: 40%;
+    }
+    #enemyBattleCanvas{
+        position: fixed;
+        width: 20%;
+        height: 50%;
         left: 65%;
-        bottom: 50%;
+        bottom: 40%;
+    }
+    .skillBtm{
+        width: clamp(60px,10vw,100px);
+        height: auto;
+        font-size: clamp(12px,4vw,20px);
+        border-radius: 10px;
+    }
+    .skillContainer{
+        display: flex;
+        align-items: left;
+        justify-content: left;
+        position: fixed;
+        left: 5%;
+        bottom: 5%;
+        width: 30%;
+        height: 20%;
+    }
+    .battletop{
+        display: block;
+        text-align: center;
+        background: rgba(0, 0,0, 0.6);
+        height: clamp(20px,6vw,40px);
+    }
+    .tipsText{
+        position: absolute;
+        font-size: clamp(16px,4vw,30px);
+        color: lightpink;
+        font-weight: 700;
+    }
+    #enemyLevel{
+        display: inline-block;
+        position: fixed;
+        top:10%;
+        right: 2%;
+        background:rgba(0, 0,0, 0.6)
     }
        
     </style>
@@ -286,7 +364,7 @@
         </div>
     </div>
     <div id='feedFishiWin' class = "feedFish">
-        <button id="feedExit">×</button>
+        <button id="feedExit">X</button>
         <label for="usingFish" style="font-size: clamp(20px,6vw,35px);">你要投喂</label><input type="text" id="usingFish">
         <button id='feedup' >提交</button>
     </div>
@@ -294,11 +372,26 @@
         <div id="alernText">天气不错喵</div>
         <div style="width: 100%;">EXP:<canvas id="EXPcanvas"></canvas></div>
     </div>
+    <div id="battleCover" class="battleCover"></div>
     <div id='battleWin' class="battleArea">
-        <canvas id="battleCanvas"></canvas>
-        <canvas id="enemyCanvas"></canvas>
+        <div id="battleShow" class="battleShow"></div>
+        
+        <div class="battletop">
+        <span id='playerLife' class='tipsText'style="left:2%"></span>
+        <span id='battletips'class='tipsText' style="transform: translateX(-50%); left:50%"></span>
+        <span id='enemyLife'class='tipsText'style="right:2%"></span>
+        <span id='enemyLevel'class='tipsText'></span>
+        </div>
+        <canvas id="petBattleCanvas"></canvas>
+        <canvas id="enemyBattleCanvas"></canvas>
+        <div class="skillContainer">
+        <button id="skill1" class="skillBtm">攻击</button>
+        <button id="skill2" class="skillBtm">回复</button>
+        <button id="skill3" class="skillBtm">吸血</button>
+        </div>
         <button id="battleEscape">逃跑</button>
     </div>
+    
     
 
 </body>
@@ -306,9 +399,9 @@
 <script src="animetion.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.6.4/dist/tween.umd.js"></script>
 <script>
-    const playerPet = 0
-    const playerEnemy = 0
-     const imgIndex = [
+    let canBattle=false
+    const petAnimeIndex = [
+        null,
         {name:"red",
         actions:{
             stand:{src:'./img/pet/stand.png',json:'./img/pet/stand.json',speed:200},
@@ -317,18 +410,13 @@
                 }
         }   
     ]
-    const enemyIndex = [
-        {name:"enemy1",
-        actions:{
-            stand:{src:'./img/pet/enemy1.png',json:'./img/pet/enemy1.json',speed:200},
-                }
-        }   
-    ]
-    const pet = new spriteAnimate('gameCanvas',imgIndex,playerPet)
+   
+    const pet = new spriteAnimate('player',1,'gameCanvas')
     addEventListener('load',async ()=>{
          await feedPet(0)
          updateLevel()
          await pet.start('stand')
+         canBattle=true
      })
    
    
@@ -352,7 +440,7 @@
         }, 2000);
     }
 
-     const waitWord = '天气不错喵'
+    const waitWord = '天气不错喵'
     let eatback = null
       async function feed(){
         let amount = Number(document.getElementById('usingFish').value)
@@ -419,23 +507,38 @@
     }
 
  //战斗部分
-    const battlePet = new spriteAnimate('battleCanvas',imgIndex,playerPet)
-    const enemy = new spriteAnimate('enemyCanvas',enemyIndex,playerEnemy)
-   
-    async function showBattle(){
-         document.getElementById('battleWin').classList.add('show')
-         await battlePet.start('sword')
-         await enemy.start('stand')
+        const playerBattleIndex = [
+        null,
+        {name:'red',life:100,speed:10,attack:50,heal:20,skill1:'攻击',skillkey1:'attack',skill2:'治愈',skillkey2:'heal',skill3:'吸血',skillkey3:'vampire'},   
+    ]
+     const enemyAnimeIndex = [
+        null,
+        {name:"enemy1",
+        actions:{
+            stand:{src:'./img/pet/enemy1.png',json:'./img/pet/enemy1.json',speed:200},
+                }
+        }   
+    ]
+        const enemyBattleIndex = [
+        null,
+        {name:1,life:200,speed:10,attack:20,heal:20}
+        ]
+    let gm = null
+    function loadGame(){
+        if(!canBattle){return console.log('加载未完成')}
+        gm = new gameManager()
+        gm.gameStart()
     }
-    function Escape(){
-        battlePet.stop()
-        enemy.stop()
-        document.getElementById('battleWin').classList.remove('show')
+    function destroyGame(){
+        gm = null
     }
-     document.getElementById('battle').addEventListener('click',showBattle);
-     document.getElementById('battleEscape').addEventListener('click',Escape);
-
-     
+    
+       
+    document.getElementById('battle').addEventListener('click',loadGame);
+    document.getElementById('battleEscape').addEventListener('click',()=>gm.escape());
+    document.getElementById('skill1').addEventListener('click',()=>gm.playerAction(gm.player.skillkey1));
+    document.getElementById('skill2').addEventListener('click',()=>gm.playerAction(gm.player.skillkey2));
+    document.getElementById('skill3').addEventListener('click',()=>gm.playerAction(gm.player.skillkey3));     
 
 </script>
 

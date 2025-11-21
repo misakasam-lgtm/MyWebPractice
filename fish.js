@@ -76,4 +76,30 @@
             return
         }
         document.getElementById("petEXP").innerHTML = result.petEXP;
+        localStorage.setItem('petEXP', result.petEXP)
+        localStorage.setItem('petEnemy', result.petEnemy)
+    }
+    async function newEnemy(isWin) {
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "newEnemy",
+                payload: {
+                id: playerID,
+                name: playerName,
+                win: isWin
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok) {
+            alert(result.message || "战斗结算出现问题")
+            return
+        }
+        if(!result.success){
+            alert(result.message || "战斗结算出现问题")
+            return
+        }
+        localStorage.setItem('petEnemy', result.petEnemy)
     }
