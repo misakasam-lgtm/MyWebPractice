@@ -283,6 +283,7 @@ class gameManager{
         }
         else{this.enemy.attack(this.player)
             this.battleShow('attack')
+            this.enemyAnime.move()
         }
         setTimeout(()=> {
         this.winnerCheck()
@@ -329,4 +330,5 @@ class gameManager{
         this.closeGame()
         destroyGame()
     }
+
 }
