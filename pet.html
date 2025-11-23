@@ -342,6 +342,38 @@
         right: 2%;
         background:rgba(0, 0,0, 0.6)
     }
+       #logAnime{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            z-index: 5000;
+            background-color: rgba(200, 200,255, 0.5);
+            font-size: clamp(10px, 4vw, 25px);
+           font-weight: 700;
+           color: lightpink;
+           text-shadow:
+               1px 0 white,
+               -1px 0 white,
+               0 1px white,
+               0 -1px white;
+        }
+        #loop{
+            border: 6px solid white;
+            border-top: 6px solid aqua;
+            border-radius: 50%;
+            width: clamp(10px,5vw,25px);
+            height: clamp(10px,5vw,25px);
+            animation: loop 1s linear infinite;
+        }
+        @keyframes loop {
+            0%{transform:rotate(0deg);}
+            100%{transform:rotate(360deg);}
+        }
        
     </style>
 </head>
@@ -393,6 +425,9 @@
         <button id="battleEscape">逃跑</button>
     </div>
     
+<div id = "logAnime">
+ 加载中。。。<div id = "loop"></div>
+</div>
     
 
 </body>
@@ -421,24 +456,35 @@
                 }
         },  
     ]
-   
+
+   function loadAnime(a) {
+    if(a === "run"){document.getElementById("logAnime").style.display = "flex"}
+    if(a === "stop"){document.getElementById("logAnime").style.display = "none"}
+}
+
     const pet = new spriteAnimate('player',petID,'gameCanvas')
     addEventListener('load',async ()=>{
+        try{
+         loadAnime("run");
          await feedPet(0)
          updateLevel()
          await pet.start('stand')
-         canBattle=true
+         canBattle=true}catch{console.log('error')}
+         finally{loadAnime("stop")}
      })
 
      const switchbtm = document.getElementById('switch')
      let switchpet = true
      switchbtm.addEventListener('click',async()=>{
         if(!switchpet) return
+        switchpet = false
         alert('此功能目前仅做测试！仅观赏，看完记得刷新')
         pet.stop()
+        try{
+        loadAnime("run")
         const pet2 = new spriteAnimate('player',2,'gameCanvas')
-        await pet2.start('stand')
-        switchpet = false
+        await pet2.start('stand')}catch{console.log('error')}
+        finally{loadAnime("stop")}
      })
    
    
@@ -466,16 +512,21 @@
     let eatback = null
       async function feed(){
         let amount = Number(document.getElementById('usingFish').value)
-          if(amount<=0){
+        if(amount<=0){
               alert("太小气了喵")
               return }
+        try{
+          loadAnime("run")
           await feedPet(amount)
           await pet.setAction('eat')
-          clearTimeout(eatback)
-          eatback = setTimeout(()=>{pet.setAction('stand')},4000)
-          feedReply(amount)
-          updateLevel()
-         document.getElementById('feedFishiWin').classList.remove('show')
+        }
+          catch{console.log('error')}
+          finally{ loadAnime("stop")}
+        clearTimeout(eatback)
+        eatback = setTimeout(()=>{pet.setAction('stand')},4000)
+        feedReply(amount)
+        updateLevel()
+        document.getElementById('feedFishiWin').classList.remove('show')
     }
     function feedReply(amount){
          let reply = null
@@ -546,10 +597,14 @@
         {name:1,life:200,speed:10,attack:20,heal:30}
         ]
     let gm = null
-    function loadGame(){
+    async function loadGame(){
         if(!canBattle){return console.log('加载未完成')}
         gm = new gameManager()
-        gm.gameStart()
+        try{
+        loadAnime("run")
+        await gm.gameStart()}
+        catch{console.log('error')}
+        finally{loadAnime("stop")}
     }
     function destroyGame(){
         gm = null
