@@ -361,6 +361,7 @@
         <div>
             <button id="feedBtm">喂食</button>
             <button id="battle">冒险</button>
+            <button id="switch">切换</button>
         </div>
     </div>
     <div id='feedFishiWin' class = "feedFish">
@@ -399,24 +400,45 @@
 <script src="animetion.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.6.4/dist/tween.umd.js"></script>
 <script>
+    let petID = 1
     let canBattle=false
     const petAnimeIndex = [
         null,
-        {name:"red",
+        {name:"Aka",
         actions:{
             stand:{src:'./img/pet/stand.png',json:'./img/pet/stand.json',speed:200},
             eat:{src:"./img/pet/eat.png",json:"./img/pet/eat.json",speed:100},
+            wait:{src:"./img/pet/wait.png",json:"./img/pet/wait.json",speed:100},
             sword:{src:"./img/pet/sword.png",json:"./img/pet/sword.json",speed:60}
                 }
-        }   
+        },
+        {name:"Shiro",
+        actions:{
+            stand:{src:'./img/pet/stand2.png',json:'./img/pet/stand2.json',speed:100},
+            eat:{src:"./img/pet/eat.png",json:"./img/pet/eat.json",speed:100},
+            wait:{src:"./img/pet/wait.png",json:"./img/pet/wait.json",speed:100},
+            sword:{src:"./img/pet/sword.png",json:"./img/pet/sword.json",speed:60}
+                }
+        },  
     ]
    
-    const pet = new spriteAnimate('player',1,'gameCanvas')
+    const pet = new spriteAnimate('player',petID,'gameCanvas')
     addEventListener('load',async ()=>{
          await feedPet(0)
          updateLevel()
          await pet.start('stand')
          canBattle=true
+     })
+
+     const switchbtm = document.getElementById('switch')
+     let switchpet = true
+     switchbtm.addEventListener('click',async()=>{
+        if(!switchpet) return
+        alert('此功能目前仅做测试！仅观赏，看完记得刷新')
+        pet.stop()
+        const pet2 = new spriteAnimate('player',2,'gameCanvas')
+        await pet2.start('stand')
+        switchpet = false
      })
    
    
@@ -509,7 +531,7 @@
  //战斗部分
         const playerBattleIndex = [
         null,
-        {name:'red',life:100,speed:10,attack:50,heal:20,skill1:'攻击',skillkey1:'attack',skill2:'治愈',skillkey2:'heal',skill3:'吸血',skillkey3:'vampire'},   
+        {name:'red',life:100,speed:10,attack:50,heal:60,skill1:'攻击',skillkey1:'attack',skill2:'治愈',skillkey2:'heal',skill3:'吸血',skillkey3:'vampire'},   
     ]
      const enemyAnimeIndex = [
         null,
@@ -521,7 +543,7 @@
     ]
         const enemyBattleIndex = [
         null,
-        {name:1,life:200,speed:10,attack:20,heal:20}
+        {name:1,life:200,speed:10,attack:20,heal:30}
         ]
     let gm = null
     function loadGame(){
@@ -539,6 +561,8 @@
     document.getElementById('skill1').addEventListener('click',()=>gm.playerAction(gm.player.skillkey1));
     document.getElementById('skill2').addEventListener('click',()=>gm.playerAction(gm.player.skillkey2));
     document.getElementById('skill3').addEventListener('click',()=>gm.playerAction(gm.player.skillkey3));     
+
+
 
 </script>
 

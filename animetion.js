@@ -224,7 +224,7 @@ class gameManager{
     async showBattleWin(){
         document.getElementById('battleWin').classList.add('show')
         document.getElementById('battleCover').classList.add('show')
-        await this.petAnime.start('sword')
+        await this.petAnime.start('wait')
         await this.enemyAnime.start('stand')
     }
     showTips(word){
@@ -244,27 +244,38 @@ class gameManager{
             setTimeout(()=>{el.classList.remove('heal')},500)
             }
     }
-    playerAction(act){
+    async playerAction(act){
         if(!this.gameon) return
         if(!this.playerTurn) return
         if (act==='attack'){
+            this.playerTurn = false
+            this.enemyTurn = true
+            await this.petAnime.setAction('sword')
+            await new Promise(r => setTimeout(r, 1000));
             this.player.attack(this.enemy)
             this.petAnime.move()
         }
         if (act==='heal'){
+            this.playerTurn = false
+            this.enemyTurn = true
             this.player.heal()
         }
         if(act==='vampire'){
+            this.playerTurn = false
+            this.enemyTurn = true
+            await this.petAnime.setAction('sword')
+            await new Promise(r => setTimeout(r, 1000));
             this.player.vampire(this.enemy)
             act = 'attack'
             this.petAnime.move()
         }
-        this.battleShow(act)
         this.playerTurn = false
         this.enemyTurn = true
+        this.battleShow(act)
         this.showTips('敌方回合')
         setTimeout(()=>{
             this.winnerCheck()
+            this.petAnime.setAction('wait')
             this.enemyAction()
         },2000)
     }
@@ -326,9 +337,12 @@ class gameManager{
         }
     }
     escape(){
+        if(!this.gameon) return
+        if(!this.playerTurn) return
+        this.playerTurn = false
+        this.enemyTurn = false
         this.gameon = false
         this.closeGame()
         destroyGame()
     }
-
 }
