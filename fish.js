@@ -53,6 +53,10 @@
     }
 
     async function feedPet(amount) {
+        if (!playerID) {
+            alert("请先登录喵")
+            window.location.href = "./index.html";
+        }
         await addFish(-amount);
         const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
             method: "POST",
