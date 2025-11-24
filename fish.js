@@ -82,6 +82,7 @@
         document.getElementById("petEXP").innerHTML = result.petEXP;
         localStorage.setItem('petEXP', result.petEXP)
         localStorage.setItem('petEnemy', result.petEnemy)
+        localStorage.setItem('canChangePet', result.changeON)
     }
     async function newEnemy(isWin) {
         const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
@@ -106,4 +107,31 @@
             return
         }
         localStorage.setItem('petEnemy', result.petEnemy)
+    }
+
+    async function changePet(ID) {
+        const res = await fetch("https://rvzfjypuxbptqxyxcmzu.supabase.co/functions/v1/addfish", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: "changePet",
+                payload: {
+                id: playerID,
+                name: playerName,
+                choose: ID
+                }
+            })
+        })
+        const result = await res.json();
+        if(!res.ok) {
+            alert(result.message || "网络错误")
+            return
+        }
+        if(!result.success){
+            alert(result.message || "网络错误")
+            return
+        }
+        alert(result.message)
+        localStorage.setItem('petID', result.petID)
+        localStorage.setItem('canChangePet', result.changeON)
     }

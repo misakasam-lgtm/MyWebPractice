@@ -47,8 +47,55 @@ class spriteAnimate{
         this.currentFrame = 0
     }
 
-    async setAction(action) {
+    async preLoad(){
+        const actions = this.imgIndex[this.id].actions
+        const promises = []
+        for(const actionName in actions){
+            promises.push (this.loadAction(actionName))
+        }
+        await  Promise.all(promises)
+        await this.setAction('stand')
+        console.log('预加载完成')
+    }
+
+    async setAction(action,action2) {
         await this.loadAction(action)
+        this.running = false
+        if(action==='stand'||action==='wait')
+        {
+        this.running = true
+        this.currentFrame = 0;
+        requestAnimationFrame(this.loop.bind(this));
+        }
+        else{
+        this.currentFrame = 0;
+        this.playOnece(action2)
+        }
+    }
+
+    playOnece(nextAction='stand'){
+        const oneceAnime =(time)=>{
+        if (time-this.lastTime>=this.speed){
+        const ctx = this.ctx
+        ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
+        
+        const f = this.frames[this.currentFrame]
+        ctx.drawImage(
+            this.img,
+            f.frame.x,f.frame.y,f.frame.w,f.frame.h,
+            0,0,
+            this.canvas.width,this.canvas.height
+        );
+        this.currentFrame = this.currentFrame+1
+        this.lastTime = time
+        }
+        if (this.currentFrame >= this.frames.length) {
+            this.setAction(nextAction);
+            return;
+        }
+        requestAnimationFrame(oneceAnime)
+        }
+        requestAnimationFrame(oneceAnime)
     }
 
     async start(action=null){
@@ -171,7 +218,7 @@ class battleUnit {
 class gameManager{
     constructor(){
         this.showTimer = null
-        this.playerID = 1
+        this.playerID = petID
         this.playerLevel = (Math.floor(parseInt(localStorage.getItem('petEXP')))/10000+1)
         this.enemyID = 1
         this.enemyLevel = parseInt(localStorage.getItem('petEnemy'))
@@ -192,8 +239,10 @@ class gameManager{
         this.gameon = true
         this.player = new battleUnit('player',this.playerID,this.playerLevel)
         this.enemy = new battleUnit('enemy',this.enemyID,this.enemyLevel)
+        console.log('战斗实例已加载')
         this.petAnime = new spriteAnimate('player',this.playerID)
         this.enemyAnime = new spriteAnimate('enemy',this.enemyID)
+        console.log('动画实例已加载')
         await this.showBattleWin()
         this.showskillBtm()
         this.player.updateLife()
@@ -250,8 +299,8 @@ class gameManager{
         if (act==='attack'){
             this.playerTurn = false
             this.enemyTurn = true
-            await this.petAnime.setAction('sword')
-            await new Promise(r => setTimeout(r, 1000));
+            await this.petAnime.setAction('sword','wait')
+            await new Promise (r=>setTimeout(r,500))
             this.player.attack(this.enemy)
             this.petAnime.move()
         }
@@ -263,8 +312,8 @@ class gameManager{
         if(act==='vampire'){
             this.playerTurn = false
             this.enemyTurn = true
-            await this.petAnime.setAction('sword')
-            await new Promise(r => setTimeout(r, 1000));
+            await this.petAnime.setAction('sword','wait')
+            await new Promise (r=>setTimeout(r,500))
             this.player.vampire(this.enemy)
             act = 'attack'
             this.petAnime.move()
@@ -275,7 +324,6 @@ class gameManager{
         this.showTips('敌方回合')
         setTimeout(()=>{
             this.winnerCheck()
-            this.petAnime.setAction('wait')
             this.enemyAction()
         },2000)
     }

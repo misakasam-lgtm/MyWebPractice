@@ -2,444 +2,507 @@
 
 "图层 2.png":
 {
-	"frame": {"x":0,"y":0,"w":199,"h":380},
+	"frame": {"x":0,"y":0,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 3.png":
 {
-	"frame": {"x":199,"y":0,"w":199,"h":380},
+	"frame": {"x":250,"y":0,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 4.png":
 {
-	"frame": {"x":398,"y":0,"w":199,"h":380},
+	"frame": {"x":500,"y":0,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 5.png":
 {
-	"frame": {"x":597,"y":0,"w":199,"h":380},
+	"frame": {"x":750,"y":0,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 6.png":
 {
-	"frame": {"x":796,"y":0,"w":199,"h":380},
+	"frame": {"x":1000,"y":0,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 7.png":
 {
-	"frame": {"x":995,"y":0,"w":199,"h":380},
+	"frame": {"x":1250,"y":0,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 8.png":
 {
-	"frame": {"x":1194,"y":0,"w":199,"h":380},
+	"frame": {"x":1500,"y":0,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 10.png":
 {
-	"frame": {"x":1393,"y":0,"w":199,"h":380},
+	"frame": {"x":1750,"y":0,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 11.png":
 {
-	"frame": {"x":0,"y":380,"w":199,"h":380},
+	"frame": {"x":0,"y":380,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 12.png":
 {
-	"frame": {"x":199,"y":380,"w":199,"h":380},
+	"frame": {"x":250,"y":380,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 13.png":
 {
-	"frame": {"x":398,"y":380,"w":199,"h":380},
+	"frame": {"x":500,"y":380,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 15.png":
 {
-	"frame": {"x":597,"y":380,"w":199,"h":380},
+	"frame": {"x":750,"y":380,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 16.png":
 {
-	"frame": {"x":796,"y":380,"w":199,"h":380},
+	"frame": {"x":1000,"y":380,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 17.png":
 {
-	"frame": {"x":995,"y":380,"w":199,"h":380},
+	"frame": {"x":1250,"y":380,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 18.png":
 {
-	"frame": {"x":1194,"y":380,"w":199,"h":380},
+	"frame": {"x":1500,"y":380,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 19.png":
 {
-	"frame": {"x":1393,"y":380,"w":199,"h":380},
+	"frame": {"x":1750,"y":380,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 20.png":
 {
-	"frame": {"x":0,"y":760,"w":199,"h":380},
+	"frame": {"x":0,"y":760,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 21.png":
 {
-	"frame": {"x":199,"y":760,"w":199,"h":380},
+	"frame": {"x":250,"y":760,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 22.png":
 {
-	"frame": {"x":398,"y":760,"w":199,"h":380},
+	"frame": {"x":500,"y":760,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 23.png":
 {
-	"frame": {"x":597,"y":760,"w":199,"h":380},
+	"frame": {"x":750,"y":760,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 24.png":
 {
-	"frame": {"x":796,"y":760,"w":199,"h":380},
+	"frame": {"x":1000,"y":760,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 25.png":
 {
-	"frame": {"x":995,"y":760,"w":199,"h":380},
+	"frame": {"x":1250,"y":760,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 26.png":
 {
-	"frame": {"x":1194,"y":760,"w":199,"h":380},
+	"frame": {"x":1500,"y":760,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 27.png":
 {
-	"frame": {"x":1393,"y":760,"w":199,"h":380},
+	"frame": {"x":1750,"y":760,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 28.png":
 {
-	"frame": {"x":0,"y":1140,"w":199,"h":380},
+	"frame": {"x":0,"y":1140,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 30.png":
 {
-	"frame": {"x":199,"y":1140,"w":199,"h":380},
+	"frame": {"x":250,"y":1140,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 31.png":
 {
-	"frame": {"x":398,"y":1140,"w":199,"h":380},
+	"frame": {"x":500,"y":1140,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 33.png":
 {
-	"frame": {"x":597,"y":1140,"w":199,"h":380},
+	"frame": {"x":750,"y":1140,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 36.png":
 {
-	"frame": {"x":796,"y":1140,"w":199,"h":380},
+	"frame": {"x":1000,"y":1140,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 37.png":
 {
-	"frame": {"x":995,"y":1140,"w":199,"h":380},
+	"frame": {"x":1250,"y":1140,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
 "图层 39.png":
 {
-	"frame": {"x":1194,"y":1140,"w":199,"h":380},
+	"frame": {"x":1500,"y":1140,"w":250,"h":380},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
+	"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+	"sourceSize": {"w":250,"h":380}
 },
-"图层 261.png":
-{
-	"frame": {"x":1194,"y":760,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 251.png":
-{
-	"frame": {"x":995,"y":760,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 241.png":
-{
-	"frame": {"x":796,"y":760,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 231.png":
-{
-	"frame": {"x":597,"y":760,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 221.png":
-{
-	"frame": {"x":398,"y":760,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 2111.png":
-{
-	"frame": {"x":199,"y":760,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 201.png":
-{
-	"frame": {"x":0,"y":760,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 191.png":
-{
-	"frame": {"x":1393,"y":380,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 181.png":
-{
-	"frame": {"x":1194,"y":380,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 171.png":
-{
-	"frame": {"x":995,"y":380,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 161.png":
-{
-	"frame": {"x":796,"y":380,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 151.png":
-{
-	"frame": {"x":597,"y":380,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 131.png":
-{
-	"frame": {"x":398,"y":380,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 121.png":
-{
-	"frame": {"x":199,"y":380,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 111.png":
-{
-	"frame": {"x":0,"y":380,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 101.png":
-{
-	"frame": {"x":1393,"y":0,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 811.png":
-{
-	"frame": {"x":1194,"y":0,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 711.png":
-{
-	"frame": {"x":995,"y":0,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 611.png":
-{
-	"frame": {"x":796,"y":0,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 511.png":
-{
-	"frame": {"x":597,"y":0,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 411.png":
-{
-	"frame": {"x":398,"y":0,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 311.png":
-{
-	"frame": {"x":199,"y":0,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-},
-"图层 211.png":
-{
-	"frame": {"x":0,"y":0,"w":199,"h":380},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":199,"h":380},
-	"sourceSize": {"w":199,"h":380}
-}
-},
+"图层 391.png":
+	{
+		"frame": {"x":1500,"y":1140,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 317.png":
+	{
+		"frame": {"x":1250,"y":1140,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 316.png":
+	{
+		"frame": {"x":1000,"y":1140,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 331.png":
+	{
+		"frame": {"x":750,"y":1140,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 3111.png":
+	{
+		"frame": {"x":500,"y":1140,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 301.png":
+	{
+		"frame": {"x":250,"y":1140,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 281.png":
+	{
+		"frame": {"x":0,"y":1140,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 271.png":
+	{
+		"frame": {"x":1750,"y":760,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 261.png":
+	{
+		"frame": {"x":1500,"y":760,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 251.png":
+	{
+		"frame": {"x":1250,"y":760,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 241.png":
+	{
+		"frame": {"x":1000,"y":760,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 231.png":
+	{
+		"frame": {"x":750,"y":760,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 221.png":
+	{
+		"frame": {"x":500,"y":760,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 2111.png":
+	{
+		"frame": {"x":250,"y":760,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 201.png":
+	{
+		"frame": {"x":0,"y":760,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 191.png":
+	{
+		"frame": {"x":1750,"y":380,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 181.png":
+	{
+		"frame": {"x":1500,"y":380,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 171.png":
+	{
+		"frame": {"x":1250,"y":380,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 161.png":
+	{
+		"frame": {"x":1000,"y":380,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 151.png":
+	{
+		"frame": {"x":750,"y":380,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 131.png":
+	{
+		"frame": {"x":500,"y":380,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 121.png":
+	{
+		"frame": {"x":250,"y":380,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 111.png":
+	{
+		"frame": {"x":0,"y":380,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 101.png":
+	{
+		"frame": {"x":1750,"y":0,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 811.png":
+	{
+		"frame": {"x":1500,"y":0,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 711.png":
+	{
+		"frame": {"x":1250,"y":0,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 611.png":
+	{
+		"frame": {"x":1000,"y":0,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 511.png":
+	{
+		"frame": {"x":750,"y":0,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 411.png":
+	{
+		"frame": {"x":500,"y":0,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 311.png":
+	{
+		"frame": {"x":250,"y":0,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	},
+	"图层 211.png":
+	{
+		"frame": {"x":0,"y":0,"w":250,"h":380},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":250,"h":380},
+		"sourceSize": {"w":250,"h":380}
+	}},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "stand2.png",
 	"format": "RGBA8888",
-	"size": {"w":1592,"h":1520},
+	"size": {"w":2000,"h":1520},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:a92e107e827cafaff4b52b2af072c359:aa40438dc55b3fda68597a3b01c91b41:889745f310a70623dd719df8527632c2$"
+	"smartupdate": "$TexturePacker:SmartUpdate:73539953b46b81715c52be295990fb7e:4a6c5f1a4e3fdd9ee770a09f8adafc95:889745f310a70623dd719df8527632c2$"
 }
 }

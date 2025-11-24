@@ -112,6 +112,8 @@ async function loginUser() {
         }
         localStorage.setItem('logPlayerID', result.id);
         localStorage.setItem('logPlayerName', result.name)
+        localStorage.setItem('petID', result.petID)
+        localStorage.setItem('canChangePet', result.changeON)
         sessionStorage.setItem("justLoggedIn", "true")
         console.log(result.message);
         window.location.href = "./MainPage.html";
